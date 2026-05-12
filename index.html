@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afrânio Cavalcante — Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #111110;
+      --ink-mid: #555552;
+      --ink-light: #999994;
+      --surface: #FAFAF8;
+      --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+      --accent: #1A1A18;
+      --tag-bg: #EBEBЕ6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 5vw;
+      background: rgba(250,250,248,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink-mid);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 5vw 6rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1.25rem;
+    }
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--ink-mid);
+    }
+    .hero-desc {
+      margin-top: 2rem;
+      max-width: 520px;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+    .hero-actions {
+      margin-top: 2.5rem;
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: #fff;
+      border: 1px solid var(--ink);
+    }
+    .btn-primary:hover { background: #333330; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink-mid);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: #999; color: var(--ink); }
+
+    /* SECTION BASE */
+    section {
+      padding: 6rem 5vw;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 3rem;
+    }
+
+    /* SOBRE */
+    #sobre .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+    .about-headline em { font-style: italic; color: var(--ink-mid); }
+    .about-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.8;
+    }
+    .about-text p + p { margin-top: 1rem; }
+    .tags {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .tag {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      background: var(--surface-alt);
+      color: var(--ink-mid);
+      border: 1px solid var(--border);
+    }
+
+    /* EXPERIÊNCIAS */
+    #experiencias .exp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+    .exp-meta {
+      padding-top: 0.2rem;
+    }
+    .exp-period {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+    .exp-company {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-top: 0.35rem;
+    }
+    .exp-role {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+    .exp-desc {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+    .exp-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .exp-tags .tag { font-size: 0.72rem; }
+
+    /* PRODUCT THINKING */
+    #product-thinking .pt-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .pt-card {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .pt-card:hover { transform: translateY(-3px); border-color: #ccc; }
+    .pt-number {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--ink-light);
+      margin-bottom: 1.25rem;
+    }
+    .pt-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.25rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+    .pt-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+    }
+    .pt-impact {
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink);
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .pt-impact::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--ink);
+    }
+
+    /* CONTATO */
+    #contato {
+      min-height: 50vh;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .contact-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .contact-headline em { font-style: italic; color: var(--ink-mid); }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      transition: all 0.2s;
+    }
+    .contact-link:hover {
+      background: var(--surface-alt);
+      border-color: #bbb;
+      transform: translateX(4px);
+    }
+    .contact-link-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-light); }
+    .contact-link-value { font-size: 0.95rem; font-weight: 500; margin-top: 0.15rem; }
+    .contact-arrow { font-size: 1.1rem; color: var(--ink-light); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 5vw;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    footer p { font-size: 0.8rem; color: var(--ink-light); }
+
+    /* RESPONSIVE */
+    @media (max-width: 700px) {
+      #sobre .about-grid,
+      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      nav { padding: 1rem 5vw; }
+      .nav-links { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">AC</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#experiencias">Experiências</a></li>
+      <li><a href="#product-thinking">Product Thinking</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow">Product Manager · Brasil</p>
+    <h1 class="hero-name">Afrânio<br /><em>Cavalcante</em></h1>
+    <p class="hero-desc">
+      Construo produtos centrados em pessoas, conectando estratégia de negócio,
+      dados e experiência do usuário para gerar impacto real e mensurável.
+    </p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn btn-primary">Entrar em contato →</a>
+      <a href="#product-thinking" class="btn btn-ghost">Ver projetos</a>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <p class="section-label">Sobre</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-headline">Produto que<br /><em>gera resultado</em></h2>
+        <div class="tags">
+          <span class="tag">Discovery</span>
+          <span class="tag">Roadmap</span>
+          <span class="tag">OKRs</span>
+          <span class="tag">Data-Driven</span>
+          <span class="tag">Agile</span>
+          <span class="tag">UX Research</span>
+          <span class="tag">Go-to-Market</span>
+          <span class="tag">Growth</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <p>
+          Sou Product Manager com experiência em [sua área de atuação — ex: fintechs, SaaS, marketplaces].
+          Tenho atuado na interseção entre negócio, tecnologia e design para construir soluções
+          que resolvem problemas reais de usuários e geram valor sustentável para a empresa.
+        </p>
+        <p>
+          Acredito em discovery contínuo, decisões baseadas em dados e times multidisciplinares
+          que colaboram com autonomia. Estou em busca de novos desafios onde possa aplicar
+          minha visão estratégica e minha paixão por produtos que fazem diferença.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIAS -->
+  <section id="experiencias">
+    <p class="section-label">Experiências</p>
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <p class="exp-period">2022 — 2024</p>
+          <p class="exp-company">Nome da Empresa</p>
+        </div>
+        <div>
+          <h3 class="exp-role">Product Manager Sênior</h3>
+          <p class="exp-desc">
+            Descreva aqui suas principais responsabilidades e conquistas nesse período.
+            Seja específico: qual produto você geriu, qual time liderou, que problemas resolveu.
+            Resultados com números sempre convencem mais.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">B2C</span>
+            <span class="tag">Mobile</span>
+            <span class="tag">Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <p class="exp-period">2019 — 2022</p>
+          <p class="exp-company">Nome da Empresa</p>
+        </div>
+        <div>
+          <h3 class="exp-role">Product Manager</h3>
+          <p class="exp-desc">
+            Descreva aqui suas principais responsabilidades e conquistas.
+            Inclua o contexto do produto, o tamanho do time, as metodologias utilizadas
+            e os principais resultados entregues.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">B2B</span>
+            <span class="tag">SaaS</span>
+            <span class="tag">Agile</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <p class="exp-period">2016 — 2019</p>
+          <p class="exp-company">Nome da Empresa</p>
+        </div>
+        <div>
+          <h3 class="exp-role">Analista de Produto</h3>
+          <p class="exp-desc">
+            Descreva seu início na área de produto: como foi a transição, quais projetos
+            tocou, o que aprendeu e de que forma isso moldou sua visão atual de produto.
+          </p>
+          <div class="exp-tags">
+            <span class="tag">Discovery</span>
+            <span class="tag">UX Research</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRODUCT THINKING -->
+  <section id="product-thinking">
+    <p class="section-label">Product Thinking</p>
+    <div class="pt-grid">
+
+      <div class="pt-card">
+        <p class="pt-number">01</p>
+        <h3 class="pt-title">Nome do Projeto ou Case</h3>
+        <p class="pt-body">
+          Descreva o problema que você identificou, como conduziu o discovery, quais hipóteses
+          levantou e que solução foi construída. O raciocínio importa tanto quanto o resultado.
+        </p>
+        <p class="pt-impact">Impacto: descreva um resultado mensurável</p>
+      </div>
+
+      <div class="pt-card">
+        <p class="pt-number">02</p>
+        <h3 class="pt-title">Nome do Projeto ou Case</h3>
+        <p class="pt-body">
+          Contexto do produto, desafio enfrentado e como você articulou stakeholders, dados de
+          uso e feedback de usuários para tomar a decisão certa no momento certo.
+        </p>
+        <p class="pt-impact">Impacto: descreva um resultado mensurável</p>
+      </div>
+
+      <div class="pt-card">
+        <p class="pt-number">03</p>
+        <h3 class="pt-title">Nome do Projeto ou Case</h3>
+        <p class="pt-body">
+          Um caso onde você precisou dizer não — ou priorizar de forma contraintuitiva — e como
+          essa decisão protegeu o foco do time e gerou valor no longo prazo.
+        </p>
+        <p class="pt-impact">Impacto: descreva um resultado mensurável</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <p class="section-label">Contato</p>
+    <div class="contact-grid">
+      <div>
+        <h2 class="contact-headline">Vamos<br /><em>conversar?</em></h2>
+        <p style="margin-top:1.5rem; font-size:1rem; font-weight:300; color:#777; line-height:1.75;">
+          Estou em recolocação e aberto a novas oportunidades como Product Manager.
+          Se quiser trocar uma ideia, me chame — adoro conversar sobre produto.
+        </p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:seuemail@email.com" class="contact-link">
+          <div>
+            <p class="contact-link-label">E-mail</p>
+            <p class="contact-link-value">seuemail@email.com</p>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="https://linkedin.com/in/seu-linkedin" target="_blank" class="contact-link">
+          <div>
+            <p class="contact-link-label">LinkedIn</p>
+            <p class="contact-link-value">linkedin.com/in/seu-linkedin</p>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="https://github.com/seu-github" target="_blank" class="contact-link">
+          <div>
+            <p class="contact-link-label">GitHub</p>
+            <p class="contact-link-value">github.com/seu-github</p>
+          </div>
+          <span class="contact-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2024 Afrânio Cavalcante</p>
+    <p>Feito com cuidado · Hospedado no GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
