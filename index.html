@@ -9,580 +9,344 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --ink: #111110;
-      --ink-mid: #555552;
-      --ink-light: #999994;
-      --surface: #FAFAF8;
-      --surface-alt: #F2F2EE;
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
       --border: rgba(0,0,0,0.09);
-      --accent: #1A1A18;
-      --tag-bg: #EBEBЕ6;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; cursor: none; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--surface);
-      color: var(--ink);
-      line-height: 1.6;
-      font-size: 16px;
-    }
+    /* CURSOR */
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+    .cursor.hover { width: 14px; height: 14px; }
+    .cursor-ring.hover { width: 48px; height: 48px; }
 
     /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.25rem 5vw;
-      background: rgba(250,250,248,0.88);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      letter-spacing: -0.01em;
-      color: var(--ink);
-      text-decoration: none;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding: .9rem 5vw; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--ink-mid);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; text-transform: uppercase; transition: color .2s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px; background: var(--ink); transition: width .25s; }
+    .nav-links a.active, .nav-links a:hover { color: var(--ink); }
+    .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
 
     /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 5vw;
-      position: relative;
-      overflow: hidden;
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5vw; position: relative; overflow: hidden; }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 88%);
+      mask-image: linear-gradient(to bottom, black 70%, transparent 88%);
     }
-    #hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cg fill='none' stroke='%23111110' stroke-width='1'%3E%3C!-- TOP LEFT: sparkline --%3E%3Cpolyline points='80,200 130,165 185,180 240,138 295,152 350,112 405,128' stroke-width='1.5' stroke-opacity='0.09'/%3E%3Ccircle cx='350' cy='112' r='3.5' fill='%23111110' fill-opacity='0.09' stroke='none'/%3E%3Ccircle cx='240' cy='138' r='2.5' fill='%23111110' fill-opacity='0.07' stroke='none'/%3E%3Crect x='80' y='216' width='90' height='5' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='80' y='228' width='62' height='4' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- TOP LEFT: bar chart --%3E%3Crect x='80' y='120' width='11' height='50' rx='1' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='97' y='104' width='11' height='66' rx='1' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='114' y='112' width='11' height='58' rx='1' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='131' y='94' width='11' height='76' rx='1' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='148' y='102' width='11' height='68' rx='1' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Cline x1='78' y1='170' x2='168' y2='170' stroke-opacity='0.04'/%3E%3C!-- TOP RIGHT: donut --%3E%3Ccircle cx='950' cy='145' r='75' stroke-opacity='0.045' stroke-width='22'/%3E%3Cpath d='M950 70 A75 75 0 1 1 885 183' stroke-opacity='0.095' stroke-width='22' stroke-linecap='round'/%3E%3Ccircle cx='950' cy='145' r='46' stroke-opacity='0.03'/%3E%3Crect x='920' y='137' width='60' height='7' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='926' y='151' width='48' height='5' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- TOP RIGHT: legend dots --%3E%3Ccircle cx='848' cy='76' r='4' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='858' y='72' width='52' height='5' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='848' cy='92' r='4' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='858' y='88' width='38' height='5' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3C!-- BOTTOM LEFT: horizontal bars --%3E%3Crect x='80' y='580' width='155' height='9' rx='2' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='80' y='597' width='112' height='9' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='80' y='614' width='190' height='9' rx='2' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='80' y='631' width='88' height='9' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='80' y='648' width='135' height='9' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Cline x1='77' y1='578' x2='77' y2='659' stroke-opacity='0.05'/%3E%3Crect x='80' y='672' width='80' height='4' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3C!-- BOTTOM RIGHT: area chart --%3E%3Cpath d='M740,700 L795,656 L855,670 L915,624 L980,638 L1045,596 L1105,609 L1160,572 L1160,730 L740,730 Z' fill='%23111110' fill-opacity='0.028' stroke='none'/%3E%3Cpolyline points='740,700 795,656 855,670 915,624 980,638 1045,596 1105,609 1160,572' stroke-width='1.5' stroke-opacity='0.09'/%3E%3Ccircle cx='915' cy='624' r='3.5' fill='%23111110' fill-opacity='0.09' stroke='none'/%3E%3Ccircle cx='1045' cy='596' r='3.5' fill='%23111110' fill-opacity='0.09' stroke='none'/%3E%3Ccircle cx='1160' cy='572' r='3.5' fill='%23111110' fill-opacity='0.09' stroke='none'/%3E%3C!-- RIGHT MIDDLE: metric stack --%3E%3Crect x='1010' y='350' width='85' height='5' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='1010' y='362' width='62' height='18' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='1010' y='388' width='85' height='5' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3Crect x='1010' y='400' width='62' height='18' rx='2' fill='%23111110' fill-opacity='0.045' stroke='none'/%3E%3Crect x='1010' y='426' width='85' height='5' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3Crect x='1010' y='438' width='62' height='18' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Cline x1='1008' y1='348' x2='1008' y2='458' stroke-opacity='0.04'/%3E%3C!-- LEFT MIDDLE: scatter --%3E%3Ccircle cx='160' cy='300' r='5' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='205' cy='274' r='7' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='132' cy='346' r='4' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='240' cy='322' r='5.5' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='178' cy='372' r='4.5' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='265' cy='290' r='4' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='122' cy='392' r='5.5' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='248' cy='378' r='4.5' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='192' cy='416' r='3.5' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Cline x1='118' y1='268' x2='118' y2='430' stroke-opacity='0.035'/%3E%3Cline x1='118' y1='430' x2='278' y2='430' stroke-opacity='0.035'/%3E%3C/g%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-      pointer-events: none;
-      z-index: 0;
-    }
-    #hero > * { position: relative; z-index: 1; }
+    #hero > *:not(#hero-canvas) { position: relative; z-index: 1; }
+
+    /* scroll line */
+    .scroll-line-wrap { position: fixed; right: 5vw; bottom: 2.5rem; z-index: 50; opacity: 0; animation: fadeUp .7s ease forwards 1.3s; transition: opacity .4s; }
+    .scroll-line-wrap.hidden { opacity: 0 !important; }
+    .scroll-line { width: 1px; height: 56px; background: var(--border); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%; background: var(--ink-light); animation: scrollDrop 1.8s ease-in-out infinite 1.6s; }
+
+    /* hero text */
     .hero-eyebrow {
-      font-size: 0.8rem;
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-light);
+      font-size: .75rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--ink-mid);
       margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp .7s ease forwards .1s;
     }
     .hero-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      color: var(--ink);
+      font-size: clamp(2.8rem,7vw,5.5rem);
+      line-height: .95; letter-spacing: -.03em; color: var(--ink);
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp .8s ease forwards .25s;
     }
-    .hero-name em {
-      font-style: italic;
-      color: #BBBBB6;
-    }
-    .hero-line {
-      width: 0;
-      height: 1px;
-      background: var(--ink);
-      margin: 2rem auto 0;
-      animation: drawLine 1s ease forwards 0.4s;
-    }
-    @keyframes drawLine {
-      to { width: 120px; }
-    }
+    .hero-name em { font-style: italic; color: #BBBBB6; }
+    .hero-line { width: 0; height: 1px; background: var(--ink); margin: 2rem auto 0; animation: drawLine 1s ease forwards .6s; }
     .hero-desc {
-      margin-top: 2rem;
-      max-width: 480px;
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      line-height: 1.8;
-      text-align: center;
+      margin-top: 2rem; max-width: 480px;
+      font-size: 1.15rem; font-weight: 400; color: var(--ink);
+      line-height: 1.7;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp .7s ease forwards .75s;
     }
-    .hero-actions {
-      margin-top: 2.5rem;
-      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center;
-      position: relative; z-index: 2;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.65rem 1.5rem;
-      border-radius: 100px;
-      font-size: 0.875rem;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--ink);
-      color: #fff;
-      border: 1px solid var(--ink);
-    }
-    .btn-primary:hover { background: #333330; }
-    .btn-ghost {
-      background: var(--surface);
-      color: var(--ink-mid);
-      position: relative;
-      z-index: 2;
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { border-color: #999; color: var(--ink); }
+    .hero-actions { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center; opacity: 0; transform: translateY(12px); animation: fadeUp .7s ease forwards .95s; }
 
-    /* SECTION BASE */
-    section {
-      padding: 6rem 5vw;
-      border-top: 1px solid var(--border);
-    }
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 3rem;
-    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes drawLine { to { width: 120px; } }
+    @keyframes scrollDrop { 0% { top: -100%; } 100% { top: 100%; } }
+
+    /* BTNS */
+    .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .65rem 1.5rem; border-radius: 100px; font-size: .875rem; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: none; text-decoration: none; transition: all .2s; }
+    .btn-primary { background: var(--ink); color: #fff; border: 1px solid var(--ink); }
+    .btn-primary:hover { background: #333330; transform: translateY(-1px); }
+    .btn-ghost { background: var(--surface); color: var(--ink-mid); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* SECTIONS */
+    section { padding: 6rem 5vw; border-top: 1px solid var(--border); }
+    .section-label { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 3rem; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
 
     /* SOBRE */
-    #sobre .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
-    }
-    .about-headline {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      line-height: 1.2;
-      letter-spacing: -0.01em;
-    }
+    #sobre .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+    .about-headline { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem,3vw,2.6rem); line-height: 1.2; letter-spacing: -.01em; }
     .about-headline em { font-style: italic; color: var(--ink-mid); }
-    .about-text {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      line-height: 1.8;
-    }
+    .about-text { font-size: 1rem; font-weight: 300; color: var(--ink-mid); line-height: 1.8; }
     .about-text p + p { margin-top: 1rem; }
-    .tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-      margin-top: 2rem;
-    }
-    .tag {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.85rem;
-      border-radius: 100px;
-      background: var(--surface-alt);
-      color: var(--ink-mid);
-      border: 1px solid var(--border);
-    }
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-size: .78rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); transition: border-color .2s, color .2s; }
+    .tag:hover { border-color: #aaa; color: var(--ink); }
 
-    /* EXPERIÊNCIAS */
-    #experiencias .exp-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 2rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--border);
-    }
+    /* EXP */
+    #experiencias .exp-list { display: flex; flex-direction: column; }
+    .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
     .exp-item:first-child { border-top: 1px solid var(--border); }
-    .exp-meta {
-      padding-top: 0.2rem;
-    }
-    .exp-period {
-      font-size: 0.8rem;
-      color: var(--ink-light);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-    }
-    .exp-company {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--ink);
-      margin-top: 0.35rem;
-    }
-    .exp-role {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.75rem;
-    }
-    .exp-desc {
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      line-height: 1.75;
-    }
-    .exp-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .exp-tags .tag { font-size: 0.72rem; }
+    .exp-meta { padding-top: .2rem; position: relative; }
+    .exp-meta::before { content: ''; position: absolute; right: -1rem; top: .55rem; width: 7px; height: 7px; border-radius: 50%; background: var(--border); border: 1.5px solid var(--ink-light); transition: background .2s, border-color .2s; }
+    .exp-item:hover .exp-meta::before { background: var(--ink); border-color: var(--ink); }
+    .exp-period { font-size: .8rem; color: var(--ink-light); font-weight: 400; letter-spacing: .04em; }
+    .exp-company { font-size: .9rem; font-weight: 500; color: var(--ink); margin-top: .35rem; }
+    .exp-role { font-family: 'DM Serif Display', serif; font-size: 1.3rem; letter-spacing: -.01em; margin-bottom: .75rem; }
+    .exp-desc { font-size: .95rem; font-weight: 300; color: var(--ink-mid); line-height: 1.75; }
+    .exp-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .exp-tags .tag { font-size: .72rem; }
 
-    /* Cases */
-    #cases .pt-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .pt-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s;
-      display: flex;
-      flex-direction: column;
-    }
-    .pt-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-    .pt-card-image {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      display: block;
-    }
-    .pt-card-body {
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-    .pt-number {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      color: var(--ink-light);
-      margin-bottom: 0.75rem;
-    }
-    .pt-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      letter-spacing: -0.01em;
-      margin-bottom: 0.65rem;
-    }
-    .pt-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      color: var(--ink-mid);
-      line-height: 1.75;
-      flex: 1;
-    }
-    .pt-impact {
-      margin-top: 1.25rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--ink-light);
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      display: flex; align-items: center; gap: 0.4rem;
-    }
-    .pt-impact::before {
-      content: '';
-      display: inline-block;
-      width: 20px; height: 1px;
-      background: var(--ink);
-    }
+    /* CASES */
+    #cases .pt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.5rem; }
+    .pt-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+    .pt-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.10); }
+    .pt-card-image-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; }
+    .pt-card-image { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s cubic-bezier(.25,.46,.45,.94); }
+    .pt-card:hover .pt-card-image { transform: scale(1.04); }
+    .pt-card-overlay { position: absolute; inset: 0; background: rgba(17,17,16,.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s; }
+    .pt-card:hover .pt-card-overlay { opacity: 1; }
+    .pt-card-overlay span { font-size: .82rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: #fff; border: 1px solid rgba(255,255,255,.5); padding: .5rem 1.2rem; border-radius: 100px; }
+    .pt-card-body { padding: 1.75rem; display: flex; flex-direction: column; flex: 1; }
+    .pt-number { font-size: .72rem; font-weight: 500; letter-spacing: .1em; color: var(--ink-light); margin-bottom: .75rem; }
+    .pt-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; letter-spacing: -.01em; margin-bottom: .65rem; }
+    .pt-body { font-size: .88rem; font-weight: 300; color: var(--ink-mid); line-height: 1.75; flex: 1; }
+    .pt-impact { margin-top: 1.25rem; font-size: .78rem; font-weight: 500; color: var(--ink-light); padding-top: 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: .4rem; }
+    .pt-impact::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--ink); }
 
     /* CONTATO */
-    #contato {
-      min-height: 50vh;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    .contact-headline {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-    }
+    #contato { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+    .contact-headline { font-family: 'DM Serif Display', serif; font-size: clamp(2rem,4vw,3.5rem); line-height: 1.1; letter-spacing: -.02em; }
     .contact-headline em { font-style: italic; color: var(--ink-mid); }
+    .contact-left { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-photo-row { display: flex; align-items: center; gap: 1.25rem; }
+    .contact-photo {
+      width: 72px; height: 72px; border-radius: 50%;
+      object-fit: cover; object-position: center top;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+    }
     .contact-links { display: flex; flex-direction: column; gap: 1rem; }
-    .contact-link {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.25rem 1.5rem;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: all 0.2s;
-    }
-    .contact-link:hover {
-      background: var(--surface-alt);
-      border-color: #bbb;
-      transform: translateX(4px);
-    }
-    .contact-link-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-light); }
-    .contact-link-value { font-size: 0.95rem; font-weight: 500; margin-top: 0.15rem; }
-    .contact-arrow { font-size: 1.1rem; color: var(--ink-light); }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--ink); transition: all .25s cubic-bezier(.25,.46,.45,.94); }
+    .contact-link:hover { background: var(--surface-alt); border-color: #bbb; transform: translateX(6px); }
+    .contact-link-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-light); }
+    .contact-link-value { font-size: .95rem; font-weight: 500; margin-top: .15rem; }
+    .contact-arrow { font-size: 1.1rem; color: var(--ink-light); transition: transform .2s; }
+    .contact-link:hover .contact-arrow { transform: translateX(3px); }
 
-    /* FOOTER */
-    footer {
-      padding: 2rem 5vw;
-      border-top: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    footer p { font-size: 0.8rem; color: var(--ink-light); }
+    footer { padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
 
-    /* RESPONSIVE */
     @media (max-width: 700px) {
-      #sobre .about-grid,
-      .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      nav { padding: 1rem 5vw; }
-      .nav-links { gap: 1.25rem; }
+      #sobre .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: .5rem; }
+      .exp-meta::before { display: none; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .btn { cursor: pointer; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-logo">AC</a>
-    <ul class="nav-links">
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#experiencias">Experiências</a></li>
-      <li><a href="#cases">Cases</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
-  </nav>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-line-wrap" id="scrollLine"><div class="scroll-line"></div></div>
 
-  <!-- HERO -->
-  <section id="hero">
-    <p class="hero-eyebrow">Product Manager</p>
-    <h1 class="hero-name">Afrânio<br /><em>Cavalcante</em></h1>
-    <div class="hero-line"></div>
-    <p class="hero-desc">
-      Transformo complexidade em produtos claros, escaláveis e orientados a impacto.
-    </p>
-    <div class="hero-actions">
-      <a href="#contato" class="btn btn-primary">Entrar em contato →</a>
-      <a href="#cases" class="btn btn-ghost">Ver projetos</a>
+<nav id="nav">
+  <a href="#hero" class="nav-logo">AC</a>
+  <ul class="nav-links">
+    <li><a href="#sobre" data-section="sobre">Sobre</a></li>
+    <li><a href="#experiencias" data-section="experiencias">Experiências</a></li>
+    <li><a href="#cases" data-section="cases">Cases</a></li>
+    <li><a href="#contato" data-section="contato">Contato</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <p class="hero-eyebrow">Product Manager</p>
+  <h1 class="hero-name">Afrânio<br /><em>Cavalcante</em></h1>
+  <div class="hero-line"></div>
+  <p class="hero-desc">Transformo complexidade em produtos claros, escaláveis e orientados a impacto.</p>
+  <div class="hero-actions">
+    <a href="#contato" class="btn btn-primary">Entrar em contato →</a>
+    <a href="#cases" class="btn btn-ghost">Ver projetos</a>
+  </div>
+</section>
+
+<section id="sobre">
+  <p class="section-label">Sobre</p>
+  <div class="about-grid">
+    <div class="reveal">
+      <h2 class="about-headline">Estratégia, produto<br /><em>e experiência</em></h2>
+      <div class="tags">
+        <span class="tag">SaaS Platforms</span><span class="tag">Product Discovery</span>
+        <span class="tag">System Thinking</span><span class="tag">User Experience</span>
+        <span class="tag">Platform Thinking</span><span class="tag">Data-Informed</span>
+        <span class="tag">Cross-functional Leadership</span><span class="tag">AI-Powered Products</span>
+        <span class="tag">B2B & B2C SaaS</span>
+      </div>
     </div>
-  </section>
+    <div class="about-text reveal reveal-delay-1">
+      <p>Sou Product Manager com experiência na construção e evolução de produtos digitais B2B e B2C, especialmente em plataformas SaaS. Ao longo dos últimos anos, atuei liderando iniciativas de discovery, escalabilidade e experiência do usuário, sempre buscando equilibrar impacto de negócio, viabilidade técnica e clareza na experiência.</p>
+      <p>Minha trajetória inclui o desenvolvimento de soluções para operações complexas, atendimento humano, análise de dados e gestão de pessoas, trabalhando em conjunto com times multidisciplinares de engenharia, design e negócio.</p>
+      <p>Acredito em produtos construídos com contexto, autonomia e pensamento sistêmico — não apenas em processos. Tenho interesse especial por experiências que simplificam complexidade, melhoram tomada de decisão e criam valor sustentável para usuários e empresas.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- SOBRE -->
-  <section id="sobre">
-    <p class="section-label">Sobre</p>
-    <div class="about-grid">
+<section id="experiencias">
+  <p class="section-label">Experiências</p>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-meta"><p class="exp-period">2024 — 2025</p><p class="exp-company">QuarkRH</p></div>
       <div>
-        <h2 class="about-headline">Estratégia, produto<br /><em>e experiência</em></h2>
-        <div class="tags">
-          <span class="tag">SaaS Platforms</span>
-          <span class="tag">Product Discovery</span>
-          <span class="tag">System Thinking</span>
-          <span class="tag">User Experience</span>
-          <span class="tag">User Experience</span>
-          <span class="tag">Platform Thinking</span>
-          <span class="tag">Data-Informed</span>
-          <span class="tag">Cross-functional Leadership</span>
-          <span class="tag">AI-Powered Products</span>
-          <span class="tag">B2B & B2C SaaS</span>
-        </div>
-      </div>
-      <div class="about-text">
-        <p>
-          Sou Product Manager com experiência na construção e evolução de produtos digitais B2B e B2C,
-          especialmente em plataformas SaaS. Ao longo dos últimos anos, atuei liderando iniciativas de
-          discovery, escalabilidade e experiência do usuário, sempre buscando equilibrar impacto de
-          negócio, viabilidade técnica e clareza na experiência.
-        </p>
-        <p>
-          Minha trajetória inclui o desenvolvimento de soluções para operações complexas, atendimento
-          humano, análise de dados e gestão de pessoas, trabalhando em conjunto com times multidisciplinares
-          de engenharia, design e negócio.
-        </p>
-        <p>
-          Acredito em produtos construídos com contexto, autonomia e pensamento sistêmico — não apenas
-          em processos. Tenho interesse especial por experiências que simplificam complexidade, melhoram
-          tomada de decisão e criam valor sustentável para usuários e empresas.
-        </p>
+        <h3 class="exp-role">Product Manager</h3>
+        <p class="exp-desc">Gerenciei as funcionalidades da plataforma de RH liderando escopo, priorização de backlog e alinhamento estratégico com áreas de negócio, aumentando a previsibilidade das entregas. Conduzi pesquisas com usuários e análise de feedbacks para orientar melhorias contínuas, elevando a aderência das soluções às necessidades reais dos clientes. Defini indicadores de performance e acompanhei resultados de features lançadas, fortalecendo a cultura de decisão baseada em dados dentro do time.</p>
+        <div class="exp-tags"><span class="tag">SaaS</span><span class="tag">RH Tech</span><span class="tag">Discovery</span><span class="tag">Data-Informed</span><span class="tag">Backlog Management</span></div>
       </div>
     </div>
-  </section>
-
-  <!-- EXPERIÊNCIAS -->
-  <section id="experiencias">
-    <p class="section-label">Experiências</p>
-    <div class="exp-list">
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <p class="exp-period">2024 — 2025</p>
-          <p class="exp-company">QuarkRH</p>
-        </div>
-        <div>
-          <h3 class="exp-role">Product Manager</h3>
-          <p class="exp-desc">
-            Gerenciei as funcionalidades da plataforma de RH liderando escopo, priorização de backlog
-            e alinhamento estratégico com áreas de negócio, aumentando a previsibilidade das entregas.
-            Conduzi pesquisas com usuários e análise de feedbacks para orientar melhorias contínuas,
-            elevando a aderência das soluções às necessidades reais dos clientes. Defini indicadores
-            de performance e acompanhei resultados de features lançadas, fortalecendo a cultura de
-            decisão baseada em dados dentro do time.
-          </p>
-          <div class="exp-tags">
-            <span class="tag">SaaS</span>
-            <span class="tag">RH Tech</span>
-            <span class="tag">Discovery</span>
-            <span class="tag">Data-Informed</span>
-            <span class="tag">Backlog Management</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item">
-        <div class="exp-meta">
-          <p class="exp-period">2021 — 2024</p>
-          <p class="exp-company">Weni by VTEX</p>
-        </div>
-        <div>
-          <h3 class="exp-role">Product Manager</h3>
-          <p class="exp-desc">
-            Liderei o discovery e desenvolvimento dos módulos Weni Chats (atendimento humano) e
-            Insights (dados), resultando na migração de 100% da base de clientes para os novos produtos.
-            Conduzi a priorização de roadmap com stakeholders internos e externos, usando métricas de
-            uso e feedbacks de clientes — aumentando em 300% a média de usuários simultâneos na plataforma.
-            Implementei processos de discovery contínuo, reduzindo retrabalho e acelerando entregas críticas.
-            Coordenei times multifuncionais de backend, frontend, UX e UI ao longo de todo o ciclo de vida
-            do produto, estruturando métricas de performance para suportar a escalabilidade da plataforma.
-          </p>
-          <div class="exp-tags">
-            <span class="tag">SaaS</span>
-            <span class="tag">AI-Powered Products</span>
-            <span class="tag">Scalability</span>
-            <span class="tag">Roadmap</span>
-            <span class="tag">Cross-functional</span>
-            <span class="tag">Growth</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Cases -->
-  <section id="cases">
-    <p class="section-label">Cases</p>
-    <div class="pt-grid">
-
-      <a href="cases/weni-chats.html" class="pt-card" style="text-decoration:none; color:inherit;">
-        <img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" />
-        <div class="pt-card-body">
-          <p class="pt-number">01</p>
-          <h3 class="pt-title">Weni Chats</h3>
-          <p class="pt-body">
-            Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni,
-            integrando interações automatizadas e humanas em um único fluxo coeso — do discovery
-            à migração de toda a base de clientes.
-          </p>
-          <p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p>
-        </div>
-      </a>
-
-      <a href="cases/weni-insights.html" class="pt-card" style="text-decoration:none; color:inherit;">
-        <img src="images/insights.png" alt="Weni Insights" class="pt-card-image" />
-        <div class="pt-card-body">
-          <p class="pt-number">02</p>
-          <h3 class="pt-title">Weni Insights</h3>
-          <p class="pt-body">
-            Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência
-            artificial para gerar insights acionáveis para equipes e gestores — transformando dados
-            brutos em decisões estratégicas.
-          </p>
-          <p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p>
-        </div>
-      </a>
-
-      <a href="cases/quark-rh.html" class="pt-card" style="text-decoration:none; color:inherit;">
-        <img src="images/quarkrh.png" alt="Quark RH" class="pt-card-image" />
-        <div class="pt-card-body">
-          <p class="pt-number">03</p>
-          <h3 class="pt-title">Quark RH</h3>
-          <p class="pt-body">
-            Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery,
-            priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão
-            de ponto, equipes e dados de RH.
-          </p>
-          <p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- CONTATO -->
-  <section id="contato">
-    <p class="section-label">Contato</p>
-    <div class="contact-grid">
+    <div class="exp-item reveal reveal-delay-1">
+      <div class="exp-meta"><p class="exp-period">2021 — 2024</p><p class="exp-company">Weni by VTEX</p></div>
       <div>
-        <h2 class="contact-headline">Vamos<br /><em>conversar?</em></h2>
-        <p style="margin-top:1.5rem; font-size:1rem; font-weight:300; color:#777; line-height:1.75;">
-          Estou em recolocação e aberto a novas oportunidades como Product Manager.
-          Se quiser trocar uma ideia, me chame — adoro conversar sobre produto.
-        </p>
-      </div>
-      <div class="contact-links">
-        <a href="mailto:cavalcanteafra@icloud.com" class="contact-link">
-          <div>
-            <p class="contact-link-label">E-mail</p>
-            <p class="contact-link-value">cavalcanteafra@icloud.com</p>
-          </div>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://linkedin.com/in/afraniocavalcante" target="_blank" class="contact-link">
-          <div>
-            <p class="contact-link-label">LinkedIn</p>
-            <p class="contact-link-value">linkedin.com/in/afraniocavalcante</p>
-          </div>
-          <span class="contact-arrow">→</span>
-        </a>
-        <a href="https://github.com/afraniocavalcante" target="_blank" class="contact-link">
-          <div>
-            <p class="contact-link-label">GitHub</p>
-            <p class="contact-link-value">github.com/afraniocavalcante</p>
-          </div>
-          <span class="contact-arrow">→</span>
-        </a>
+        <h3 class="exp-role">Product Manager</h3>
+        <p class="exp-desc">Liderei o discovery e desenvolvimento dos módulos Weni Chats (atendimento humano) e Insights (dados), resultando na migração de 100% da base de clientes para os novos produtos. Conduzi a priorização de roadmap com stakeholders internos e externos, usando métricas de uso e feedbacks de clientes — aumentando em 300% a média de usuários simultâneos na plataforma. Implementei processos de discovery contínuo, reduzindo retrabalho e acelerando entregas críticas. Coordenei times multifuncionais de backend, frontend, UX e UI ao longo de todo o ciclo de vida do produto.</p>
+        <div class="exp-tags"><span class="tag">SaaS</span><span class="tag">AI-Powered Products</span><span class="tag">Scalability</span><span class="tag">Roadmap</span><span class="tag">Cross-functional</span><span class="tag">Growth</span></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 Afrânio Cavalcante</p>
-    <p> Hospedado no GitHub Pages</p>
-  </footer>
+<section id="cases">
+  <p class="section-label">Cases</p>
+  <div class="pt-grid">
+    <a href="cases/weni-chats.html" class="pt-card reveal">
+      <div class="pt-card-image-wrap"><img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" /><div class="pt-card-overlay"><span>Ver case →</span></div></div>
+      <div class="pt-card-body"><p class="pt-number">01</p><h3 class="pt-title">Weni Chats</h3><p class="pt-body">Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni, integrando interações automatizadas e humanas em um único fluxo coeso — do discovery à migração de toda a base de clientes.</p><p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p></div>
+    </a>
+    <a href="cases/weni-insights.html" class="pt-card reveal reveal-delay-1">
+      <div class="pt-card-image-wrap"><img src="images/insights.png" alt="Weni Insights" class="pt-card-image" /><div class="pt-card-overlay"><span>Ver case →</span></div></div>
+      <div class="pt-card-body"><p class="pt-number">02</p><h3 class="pt-title">Weni Insights</h3><p class="pt-body">Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência artificial para gerar insights acionáveis para equipes e gestores — transformando dados brutos em decisões estratégicas.</p><p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p></div>
+    </a>
+    <a href="cases/quark-rh.html" class="pt-card reveal reveal-delay-2">
+      <div class="pt-card-image-wrap"><img src="images/quarkrh.png" alt="Quark RH" class="pt-card-image" /><div class="pt-card-overlay"><span>Ver case →</span></div></div>
+      <div class="pt-card-body"><p class="pt-number">03</p><h3 class="pt-title">Quark RH</h3><p class="pt-body">Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.</p><p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p></div>
+    </a>
+  </div>
+</section>
 
+<section id="contato">
+  <p class="section-label">Contato</p>
+  <div class="contact-grid">
+    <div class="reveal">
+      <div class="contact-left">
+        <div class="contact-photo-row">
+          <h2 class="contact-headline">Vamos<br /><em>conversar?</em></h2>
+          <img src="images/afranio.jpg" alt="Afrânio Cavalcante" class="contact-photo" />
+        </div>
+        <p style="font-size:1rem;font-weight:300;color:#777;line-height:1.75;">Estou em recolocação e aberto a novas oportunidades como Product Manager. Se quiser trocar uma ideia, me chame — adoro conversar sobre produto.</p>
+      </div>
+    </div>
+    <div class="contact-links reveal reveal-delay-1">
+      <a href="mailto:cavalcanteafra@icloud.com" class="contact-link"><div><p class="contact-link-label">E-mail</p><p class="contact-link-value">cavalcanteafra@icloud.com</p></div><span class="contact-arrow">→</span></a>
+      <a href="https://linkedin.com/in/afraniocavalcante" target="_blank" class="contact-link"><div><p class="contact-link-label">LinkedIn</p><p class="contact-link-value">linkedin.com/in/afraniocavalcante</p></div><span class="contact-arrow">→</span></a>
+              <a href="https://wa.me/5561983287541" target="_blank" class="contact-link"><div><p class="contact-link-label">WhatsApp</p><p class="contact-link-value">Mandar mensagem</p></div><span class="contact-arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <p>Hospedado no GitHub Pages</p>
+</footer>
+
+<script>
+  // ── CURSOR ──────────────────────────────────────────────
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  document.querySelectorAll('a,button,.tag,.pt-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // ── NAV + SCROLL LINE ───────────────────────────────────
+  const navLinks  = document.querySelectorAll('.nav-links a');
+  const nav       = document.getElementById('nav');
+  const scrollLine = document.getElementById('scrollLine');
+  ['sobre','experiencias','cases','contato'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===id)); });
+    },{threshold:.35}).observe(el);
+  });
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+  new IntersectionObserver(([e])=>{ scrollLine.classList.toggle('hidden',!e.isIntersecting); },{threshold:.1}).observe(document.getElementById('hero'));
+
+  // ── REVEAL ──────────────────────────────────────────────
+  const ro = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  // ── HERO CANVAS PARALLAX ────────────────────────────────
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  function resize(){ const r=canvas.getBoundingClientRect(); W=canvas.width=r.width; H=canvas.height=r.height; }
+  requestAnimationFrame(()=>resize());
+  window.addEventListener('resize', resize);
+
+  const INK='17,17,16';
+  let tx=0,ty=0,px=0,py=0;
+  document.getElementById('hero').addEventListener('mousemove',e=>{ const r=canvas.getBoundingClientRect(); tx=(e.clientX-r.left)/r.width-.5; ty=(e.clientY-r.top)/r.height-.5; });
+
+  function drawMiniLine(ox,oy){ const x0=W*.58,y0=H*.28; const pts=[[x0,y0+H*.05],[x0+W*.06,y0+H*.02],[x0+W*.12,y0+H*.04],[x0+W*.18,y0],[x0+W*.24,y0+H*.02],[x0+W*.30,y0-H*.01]]; ctx.beginPath(); pts.forEach(([x,y],i)=>i===0?ctx.moveTo(x+ox,y+oy):ctx.lineTo(x+ox,y+oy)); ctx.strokeStyle=`rgba(${INK},.08)`; ctx.lineWidth=1.5; ctx.stroke(); ctx.beginPath(); ctx.arc(pts[5][0]+ox,pts[5][1]+oy,3,0,Math.PI*2); ctx.fillStyle=`rgba(${INK},.08)`; ctx.fill(); }
+
+  const LAYERS=[
+    {d:22,fn:drawSparkline},
+    {d:14,fn:drawBars},
+    {d:28,fn:drawDonut},
+    {d:16,fn:drawMiniLine},
+    {d:12,fn:drawScatter},
+    {d:18,fn:drawHBars},
+    {d:15,fn:drawMetrics},
+  ];
+
+  function drawSparkline(ox,oy){ const x0=W*.06,y0=H*.14; const pts=[[x0,y0+H*.05],[x0+W*.05,y0+H*.02],[x0+W*.10,y0+H*.04],[x0+W*.15,y0],[x0+W*.20,y0+H*.02],[x0+W*.26,y0-H*.01],[x0+W*.31,y0+H*.01]]; ctx.beginPath(); pts.forEach(([x,y],i)=>i===0?ctx.moveTo(x+ox,y+oy):ctx.lineTo(x+ox,y+oy)); ctx.strokeStyle=`rgba(${INK},.10)`; ctx.lineWidth=1.5; ctx.stroke(); [[5,3.5,.10],[3,2.5,.07]].forEach(([i,r,a])=>{ ctx.beginPath(); ctx.arc(pts[i][0]+ox,pts[i][1]+oy,r,0,Math.PI*2); ctx.fillStyle=`rgba(${INK},${a})`; ctx.fill(); }); }
+  function drawBars(ox,oy){ const x0=W*.06,base=H*.30; const hs=[H*.07,H*.09,H*.08,H*.11,H*.085]; const bw=W*.014,gap=W*.020; hs.forEach((h,i)=>{ ctx.fillStyle=`rgba(${INK},.055)`; ctx.beginPath(); ctx.roundRect(x0+i*gap+ox,base-h+oy,bw,h,1); ctx.fill(); }); ctx.beginPath(); ctx.moveTo(x0-2+ox,base+oy); ctx.lineTo(x0+hs.length*gap+ox,base+oy); ctx.strokeStyle=`rgba(${INK},.05)`; ctx.lineWidth=1; ctx.stroke(); }
+  function drawDonut(ox,oy){ const cx=W*.80,cy=H*.18,r=Math.min(W,H)*.075,lw=Math.min(W,H)*.018; ctx.beginPath(); ctx.arc(cx+ox,cy+oy,r,0,Math.PI*2); ctx.strokeStyle=`rgba(${INK},.05)`; ctx.lineWidth=lw; ctx.stroke(); ctx.beginPath(); ctx.arc(cx+ox,cy+oy,r,-Math.PI/2,-Math.PI/2+Math.PI*1.6); ctx.strokeStyle=`rgba(${INK},.10)`; ctx.lineWidth=lw; ctx.lineCap='round'; ctx.stroke(); ctx.fillStyle=`rgba(${INK},.05)`; ctx.beginPath(); ctx.roundRect(cx-r*.5+ox,cy-H*.010+oy,r,6,2); ctx.fill(); ctx.fillStyle=`rgba(${INK},.04)`; ctx.beginPath(); ctx.roundRect(cx-r*.35+ox,cy+H*.008+oy,r*.7,4,2); ctx.fill(); }
+  function drawScatter(ox,oy){ const cx=W*.11,cy=H*.52; const dd=[[-W*.020,-H*.040,5],[W*.030,-H*.070,7],[-W*.040,H*.010,4],[W*.070,-H*.030,5.5],[W*.010,H*.040,4.5],[W*.090,-H*.060,4],[-W*.050,H*.070,5.5],[W*.060,H*.030,4.5]]; dd.forEach(([dx,dy,r])=>{ ctx.beginPath(); ctx.arc(cx+dx+ox,cy+dy+oy,r,0,Math.PI*2); ctx.fillStyle=`rgba(${INK},.05)`; ctx.fill(); }); ctx.strokeStyle=`rgba(${INK},.04)`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(cx-W*.065+ox,cy-H*.09+oy); ctx.lineTo(cx-W*.065+ox,cy+H*.09+oy); ctx.stroke(); ctx.beginPath(); ctx.moveTo(cx-W*.065+ox,cy+H*.09+oy); ctx.lineTo(cx+W*.105+ox,cy+H*.09+oy); ctx.stroke(); }
+  function drawHBars(ox,oy){ const x0=W*.06,y0=H*.73; const ws=[W*.18,W*.13,W*.22,W*.10,W*.16]; ws.forEach((w,i)=>{ ctx.fillStyle=`rgba(${INK},${.060-i*.005})`; ctx.beginPath(); ctx.roundRect(x0+ox,y0+i*H*.028+oy,w,9,2); ctx.fill(); }); ctx.strokeStyle=`rgba(${INK},.05)`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x0-2+ox,y0-2+oy); ctx.lineTo(x0-2+ox,y0+ws.length*H*.028+4+oy); ctx.stroke(); }
+  function drawMetrics(ox,oy){ const x0=W*.86,y0=H*.43,rh=H*.072; [0,1,2].forEach(i=>{ ctx.fillStyle=`rgba(${INK},.04)`; ctx.beginPath(); ctx.roundRect(x0+ox,y0+i*rh+oy,W*.08,5,2); ctx.fill(); ctx.fillStyle=`rgba(${INK},.055)`; ctx.beginPath(); ctx.roundRect(x0+ox,y0+i*rh+H*.018+oy,W*.06,18,2); ctx.fill(); }); ctx.strokeStyle=`rgba(${INK},.04)`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(x0-3+ox,y0-3+oy); ctx.lineTo(x0-3+ox,y0+3*rh+oy); ctx.stroke(); }
+
+  function render(){ if(!W||!H){ requestAnimationFrame(render); return; } px+=(tx-px)*.06; py+=(ty-py)*.06; ctx.clearRect(0,0,W,H); LAYERS.forEach(({d,fn})=>fn(px*d,py*d)); requestAnimationFrame(render); }
+  render();
+</script>
 </body>
 </html>
