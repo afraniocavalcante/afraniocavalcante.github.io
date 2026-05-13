@@ -40,35 +40,37 @@
     .reveal-delay-3 { transition-delay: .3s; }
 
     /* HERO */
-    .case-hero { padding: 9rem 5vw 5rem; border-bottom: 1px solid var(--border); max-width: 860px; margin: 0 auto; }
-    .case-breadcrumb { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; }
+    .case-hero { padding: 9rem 5vw 5rem; border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; }
+    .case-breadcrumb { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
     .case-breadcrumb span { color: var(--border); }
-    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 6vw, 4.5rem); line-height: .95; letter-spacing: -.03em; margin-bottom: 1.5rem; }
+    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.5rem; }
     .case-title em { font-style: italic; color: #BBBBB6; }
-    .case-subtitle { font-size: 1.15rem; font-weight: 300; color: var(--ink-mid); max-width: 640px; line-height: 1.75; margin-bottom: 3rem; }
-    .case-meta-row { display: flex; flex-wrap: wrap; gap: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .case-subtitle { font-size: 1.1rem; font-weight: 300; color: var(--ink-mid); max-width: 680px; line-height: 1.7; margin-bottom: 3rem; }
+    .case-meta-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .case-meta-item { display: flex; flex-direction: column; gap: .3rem; }
     .case-meta-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); }
     .case-meta-value { font-size: .95rem; font-weight: 400; color: var(--ink); }
 
-    /* COVER IMAGE */
+    /* COVER IMAGE - full bleed */
     .case-cover { width: 100%; aspect-ratio: 16/7; overflow: hidden; }
     .case-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* STATS BAR */
-    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); max-width: 860px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
     .stat-item { padding: 2.5rem 5vw; border-right: 1px solid var(--border); }
     .stat-item:last-child { border-right: none; }
     .stat-number { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.03em; line-height: 1; margin-bottom: .4rem; }
     .stat-label { font-size: .82rem; font-weight: 300; color: var(--ink-mid); line-height: 1.4; }
 
     /* CONTENT */
-    .case-body { max-width: 740px; margin: 0 auto; padding: 5rem 5vw; }
-    .case-section { margin-bottom: 4rem; }
-    .case-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
-    .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 2.5vw, 2rem); line-height: 1.2; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+    .case-body { max-width: 820px; margin: 0 auto; padding: 6rem 5vw 4rem; }
+    .case-section { margin-bottom: 6rem; position: relative; }
+    .case-section:last-child { margin-bottom: 0; }
+    .case-section-number { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 4.5rem; line-height: 1; color: var(--ink-light); opacity: .35; margin-bottom: .5rem; letter-spacing: -.02em; }
+    .case-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.25rem; display: block; }
+    .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.5rem; }
     .case-section h2 em { font-style: italic; color: var(--ink-mid); }
-    .case-section p { font-size: 1rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1rem; text-align: justify; hyphens: auto; }
+    .case-section p { font-size: 1.02rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; text-align: justify; hyphens: auto; }
     .case-section p:last-child { margin-bottom: 0; }
     .case-section p strong { font-weight: 500; color: var(--ink); }
 
@@ -86,22 +88,22 @@
     .option-item.chosen .option-text { color: var(--ink); font-weight: 400; }
     .option-badge { font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: #fff; padding: .2rem .6rem; border-radius: 100px; margin-left: .5rem; vertical-align: middle; }
 
-    /* DIVIDER */
-    .case-divider { width: 40px; height: 1px; background: var(--border); margin: 4rem auto; }
+    /* DIVIDER - kept for visual rhythm if used */
+    .case-divider { display: none; }
 
     /* TAGS */
     .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
     .tag { font-size: .78rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
 
     /* NAV CASE */
-    .case-nav { max-width: 860px; margin: 0 auto; padding: 3rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .case-nav { max-width: 960px; margin: 0 auto; padding: 3rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .case-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: flex; align-items: center; gap: .4rem; transition: color .2s; }
     .case-nav a:hover { color: var(--ink); }
     .case-nav-next { text-align: right; }
     .case-nav-next-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
     .case-nav-next-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); }
 
-    footer { max-width: 860px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
     footer p { font-size: .8rem; color: var(--ink-light); }
 
     @media (max-width: 700px) {
@@ -110,7 +112,11 @@
       .stats-bar { grid-template-columns: 1fr; }
       .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
       .stat-item:last-child { border-bottom: none; }
-      .case-body { padding: 3rem 5vw; }
+      .case-hero { padding: 7rem 5vw 3rem; }
+      .case-body { padding: 4rem 5vw 2rem; }
+      .case-section { margin-bottom: 4rem; }
+      .case-section-number { font-size: 3rem; }
+      .case-meta-row { grid-template-columns: 1fr; gap: 1.25rem; }
       .nav-cv span { display: none; }
       .nav-cv { padding: .4rem .6rem; }
     }
@@ -133,7 +139,7 @@
 <!-- HERO -->
 <div class="case-hero">
   <p class="case-breadcrumb reveal">Product Thinking <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024</p>
-  <h1 class="case-title reveal">Weni<br /><em>Chats</em></h1>
+  <h1 class="case-title reveal">Weni <em>Chats</em></h1>
   <p class="case-subtitle reveal reveal-delay-1">Módulo de atendimento humano construído do zero — do discovery à migração de 100% da base de clientes, transformando uma dependência externa crítica em um produto próprio, escalável e adotado no dia a dia.</p>
   <div class="case-meta-row reveal reveal-delay-2">
     <div class="case-meta-item">
@@ -156,10 +162,8 @@
 </div>
 
 <!-- COVER -->
-<div style="max-width:860px;margin:0 auto;overflow:hidden;">
-  <div class="case-cover">
-    <img src="https://afranio.pm/images/Weni-chats.webp" alt="Weni Chats" />
-  </div>
+<div class="case-cover">
+  <img src="https://afranio.pm/images/Weni-chats.webp" alt="Weni Chats" />
 </div>
 
 <!-- STATS -->
@@ -183,18 +187,18 @@
 
   <!-- CONTEXTO -->
   <div class="case-section reveal">
-    <p class="case-section-label">01 — Contexto</p>
+    <p class="case-section-number"><em>01</em></p>
+    <p class="case-section-label">Contexto</p>
     <h2>Uma plataforma de IA que precisava de um <em>lado humano</em></h2>
     <p>A Weni é uma plataforma SaaS de automação conversacional: empresas a utilizam para criar agentes de IA e chatbots que atendem clientes via WhatsApp, Telegram, Instagram, SMS e outros canais digitais. O produto funcionava bem para automação — mas havia um problema estrutural no momento em que o bot precisava passar a conversa para um humano.</p>
     <p>O <strong>handoff bot → humano</strong> era gerenciado por um software terceirizado, integrado à plataforma via parceria. Esse software cumpria seu papel, mas trazia consequências cada vez mais graves: era difícil de escalar, gerava custos crescentes e estava fora do controle do time de produto. Qualquer melhoria dependia de um terceiro. Qualquer instabilidade era um risco que não podíamos mitigar.</p>
     <p>À medida que a base de clientes crescia, a insustentabilidade ficava mais evidente. Foi nesse contexto que fui contratado para encontrar uma solução.</p>
   </div>
 
-  <div class="case-divider"></div>
-
   <!-- PROBLEMA -->
   <div class="case-section reveal">
-    <p class="case-section-label">02 — O problema</p>
+    <p class="case-section-number"><em>02</em></p>
+    <p class="case-section-label">O problema</p>
     <h2>Dependência crítica, <em>sem saída clara</em></h2>
     <p>O desafio inicial não era de produto — era estratégico. Antes de definir o que construir, precisávamos entender se deveríamos construir. Três caminhos estavam na mesa:</p>
 
@@ -220,11 +224,10 @@
     </div>
   </div>
 
-  <div class="case-divider"></div>
-
   <!-- DISCOVERY -->
   <div class="case-section reveal">
-    <p class="case-section-label">03 — Discovery e processo</p>
+    <p class="case-section-number"><em>03</em></p>
+    <p class="case-section-label">Discovery e processo</p>
     <h2>Mais de 600 conversas antes de <em>escrever uma linha de código</em></h2>
     <p>Trabalhei com <strong>discovery contínuo</strong> desde o início — o que significa estar permanentemente em contato com clientes, não apenas durante uma fase inicial de pesquisa. O objetivo era duplo: entender as dores reais do trabalho de atendimento e antecipar como as necessidades evoluiriam ao longo do tempo.</p>
     <p>Ao longo do projeto, foram realizadas <strong>mais de 600 entrevistas e sessões de teste</strong> com usuários reais — agentes de atendimento, supervisores e gestores de operações de customer service. Esse volume não foi acidental: o produto precisava funcionar bem em contextos de alta pressão, onde cada segundo conta e a interface precisa ser intuitiva sem treinamento extenso.</p>
@@ -232,11 +235,10 @@
     <p>Paralelamente ao discovery, montei e organizei o time de engenharia e design — backend, frontend e UX/UI — estruturando o processo de desenvolvimento para manter velocidade sem abrir mão da qualidade.</p>
   </div>
 
-  <div class="case-divider"></div>
-
   <!-- SOLUÇÃO -->
   <div class="case-section reveal">
-    <p class="case-section-label">04 — Solução e decisões-chave</p>
+    <p class="case-section-number"><em>04</em></p>
+    <p class="case-section-label">Solução e decisões-chave</p>
     <h2>Uma central de atendimento humano <em>nativa da plataforma</em></h2>
     <p>O Weni Chats foi construído como um módulo nativo da plataforma Weni: uma workspace de atendimento humano onde agentes recebem conversas transferidas pelos bots, gerenciam filas, colaboram em equipe e acessam o histórico completo do cliente — tudo sem sair do ecossistema Weni.</p>
     <p>Algumas decisões centrais que moldaram o produto:</p>
@@ -245,11 +247,10 @@
     <p><strong>Experiência operacional como prioridade.</strong> O produto precisava funcionar bem para quem o usa oito horas por dia. Priorizamos clareza, velocidade e confiabilidade sobre features avançadas — e isso foi fundamental para a adoção.</p>
   </div>
 
-  <div class="case-divider"></div>
-
   <!-- IMPACTO -->
   <div class="case-section reveal">
-    <p class="case-section-label">05 — Impacto</p>
+    <p class="case-section-number"><em>05</em></p>
+    <p class="case-section-label">Impacto</p>
     <h2>De ferramenta de nicho <em>a rotina diária</em></h2>
     <p>Ao final do primeiro ano após o lançamento, <strong>100% da base de clientes havia migrado</strong> para o Weni Chats — incluindo os clientes mais complexos, com operações de atendimento de maior volume e múltiplos atendentes simultâneos.</p>
     <p>O impacto mais revelador não foi a migração em si, mas o que ela revelou sobre o comportamento dos usuários. A plataforma Weni, que antes era usada principalmente por alguns funcionários para configurar e gerenciar os bots, passou a fazer parte da <strong>rotina diária da maioria dos usuários</strong> de cada cliente. As visitas diárias médias por cliente cresceram mais de <strong>300%</strong>.</p>
@@ -259,11 +260,10 @@
     </div>
   </div>
 
-  <div class="case-divider"></div>
-
   <!-- APRENDIZADOS -->
   <div class="case-section reveal">
-    <p class="case-section-label">06 — Aprendizados</p>
+    <p class="case-section-number"><em>06</em></p>
+    <p class="case-section-label">Aprendizados</p>
     <h2>O que esse projeto <em>me ensinou</em></h2>
     <p>A decisão de construir do zero parece óbvia em retrospecto, mas não era no início. Um dos aprendizados mais valiosos foi sobre <strong>como enquadrar decisões estratégicas</strong>: apresentar as três opções explicitamente, com seus trade-offs, foi o que permitiu ao time e à liderança alinharem expectativas antes de começar — e sustentar o compromisso durante os momentos mais difíceis da execução.</p>
     <p>Outro aprendizado importante foi sobre <strong>migração como produto</strong>. A migração não é um projeto de engenharia — é um problema de produto. Os clientes precisam ver valor suficiente para mudar um hábito consolidado. Isso exigiu tanto a qualidade técnica do novo produto quanto uma estratégia de comunicação e suporte que tornasse a transição segura para eles.</p>
