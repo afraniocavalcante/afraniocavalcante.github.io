@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="i18n-page" content="weni-chats" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weni Chats — Afrânio Cavalcante</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -127,6 +128,7 @@
     .lang-btn.active { background: var(--ink); color: #fff; }
     .lang-btn:not(.active):hover { color: var(--ink); }
   </style>
+  <script src="/translations.js"></script>
 </head>
 <body>
 
@@ -307,162 +309,6 @@
   <p data-i18n="footer.hosted">Hospedado no GitHub Pages</p>
 </footer>
 
-<script>
-// ── I18N ────────────────────────────────────────────────
-const translations = { pt: {
-    "nav.back": "← Voltar ao portfólio",
-    "nav.cv": "Baixar CV",
-    "breadcrumb": "Product Thinking <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024",
-    "title": "Weni <em>Chats</em>",
-    "subtitle": "Módulo de atendimento humano construído do zero — do discovery à migração de 100% da base de clientes, transformando uma dependência externa crítica em um produto próprio, escalável e adotado no dia a dia.",
-    "meta.company.label": "Empresa",
-    "meta.company.value": "Weni by VTEX",
-    "meta.period.label": "Período",
-    "meta.period.value": "2021 — 2024 (3 anos)",
-    "meta.role.label": "Papel",
-    "meta.role.value": "Product Manager — do zero ao lançamento",
-    "meta.team.label": "Time",
-    "meta.team.value": "Backend, Frontend, UX/UI",
-    "stat1.num": "100%",
-    "stat1.label": "da base de clientes<br />migrada para o novo produto",
-    "stat2.num": "300%",
-    "stat2.label": "de crescimento em<br />usuários simultâneos",
-    "stat3.num": "600+",
-    "stat3.label": "entrevistas e sessões<br />de teste com usuários",
-    "s1.label": "Contexto",
-    "s1.title": "Uma plataforma de IA que precisava de um <em>lado humano</em>",
-    "s2.label": "O problema",
-    "s2.title": "Dependência crítica, <em>sem saída clara</em>",
-    "s3.label": "Discovery e processo",
-    "s3.title": "Mais de 600 conversas antes de <em>escrever uma linha de código</em>",
-    "s4.label": "Solução e decisões-chave",
-    "s4.title": "Uma central de atendimento humano <em>nativa da plataforma</em>",
-    "s5.label": "Impacto",
-    "s5.title": "De ferramenta de nicho <em>a rotina diária</em>",
-    "s6.label": "Aprendizados",
-    "s6.title": "O que esse projeto <em>me ensinou</em>",
-    "nav.prev": "← Todos os cases",
-    "nav.next.label": "Próximo case",
-    "nav.next.title": "Weni Insights →",
-    "footer.hosted": "Hospedado no GitHub Pages",
-    "s1.p1": "A Weni é uma plataforma SaaS de automação conversacional: empresas a utilizam para criar agentes de IA e chatbots que atendem clientes via WhatsApp, Telegram, Instagram, SMS e outros canais digitais. O produto funcionava bem para automação — mas havia um problema estrutural no momento em que o bot precisava passar a conversa para um humano.",
-    "s1.p2": "O <strong>handoff bot → humano</strong> era gerenciado por um software terceirizado, integrado à plataforma via parceria. Esse software cumpria seu papel, mas trazia consequências cada vez mais graves: era difícil de escalar, gerava custos crescentes e estava fora do controle do time de produto. Qualquer melhoria dependia de um terceiro. Qualquer instabilidade era um risco que não podíamos mitigar.",
-    "s1.p3": "À medida que a base de clientes crescia, a insustentabilidade ficava mais evidente. Foi nesse contexto que fui contratado para encontrar uma solução.",
-    "s2.p1": "O desafio inicial não era de produto — era estratégico. Antes de definir o que construir, precisávamos entender se deveríamos construir. Três caminhos estavam na mesa:",
-    "s2.optA": "Manter o software terceirizado e gerenciar as consequências conhecidas — custos, limitações de escala e dependência de roadmap alheio.",
-    "s2.optB": "Buscar outro produto no mercado e substituir uma dependência por outra, com os riscos de integração e adoção envolvidos.",
-    "s2.optC": "Construir um produto próprio do zero, com controle total sobre evolução, custos e experiência do usuário.",
-    "s2.badge": "escolhido",
-    "s2.p2": "A fase de discovery nos mostrou que a opção C era a única que resolvia o problema de forma estrutural — e que o time tinha capacidade de executá-la. A decisão foi tomada com clareza sobre os riscos: construir do zero leva tempo, e nesse período os clientes ainda dependem da solução legada.",
-    "s2.callout": "O problema real não era apenas técnico. Era operacional: os agentes de atendimento passavam grande parte do dia dentro de um software que não era da Weni, criando uma barreira de experiência e limitando o potencial de evolução do produto como um todo.",
-    "s3.p1": "Trabalhei com <strong>discovery contínuo</strong> desde o início — o que significa estar permanentemente em contato com clientes, não apenas durante uma fase inicial de pesquisa. O objetivo era duplo: entender as dores reais do trabalho de atendimento e antecipar como as necessidades evoluiriam ao longo do tempo.",
-    "s3.p2": "Ao longo do projeto, foram realizadas <strong>mais de 600 entrevistas e sessões de teste</strong> com usuários reais — agentes de atendimento, supervisores e gestores de operações de customer service. Esse volume não foi acidental: o produto precisava funcionar bem em contextos de alta pressão, onde cada segundo conta e a interface precisa ser intuitiva sem treinamento extenso.",
-    "s3.p3": "As descobertas moldaram diretamente as decisões de produto: a arquitetura de filas, o sistema de transferência entre atendentes, a visibilidade do histórico de conversa e a integração nativa com os canais já usados pelos clientes da Weni.",
-    "s3.p4": "Paralelamente ao discovery, montei e organizei o time de engenharia e design — backend, frontend e UX/UI — estruturando o processo de desenvolvimento para manter velocidade sem abrir mão da qualidade.",
-    "s4.p1": "O Weni Chats foi construído como um módulo nativo da plataforma Weni: uma workspace de atendimento humano onde agentes recebem conversas transferidas pelos bots, gerenciam filas, colaboram em equipe e acessam o histórico completo do cliente — tudo sem sair do ecossistema Weni.",
-    "s4.p2": "Algumas decisões centrais que moldaram o produto:",
-    "s4.p3": "<strong>Lançamento via MVP segmentado.</strong> Em vez de tentar migrar todos os clientes de uma vez, lançamos um MVP funcional para metade da base primeiro. Essa decisão foi deliberada: queria aprender com clientes reais antes de comprometer todos. O MVP precisava ser simples, mas não podia ser fraco — tinha que ser bom o suficiente para que os clientes escolhessem ficar.",
-    "s4.p4": "<strong>Estratégia de migração com gestão de risco.</strong> A migração da base completa exigiu planejamento cuidadoso de rollout. Trabalhamos com cohorts de clientes, monitorando estabilidade e adoção antes de avançar para o próximo grupo. Realocamos recursos de infraestrutura em nuvem para garantir performance com o crescimento de usuários simultâneos, e revisamos fluxos e design com base no feedback contínuo.",
-    "s4.p5": "<strong>Experiência operacional como prioridade.</strong> O produto precisava funcionar bem para quem o usa oito horas por dia. Priorizamos clareza, velocidade e confiabilidade sobre features avançadas — e isso foi fundamental para a adoção.",
-    "s5.p1": "Ao final do primeiro ano após o lançamento, <strong>100% da base de clientes havia migrado</strong> para o Weni Chats — incluindo os clientes mais complexos, com operações de atendimento de maior volume e múltiplos atendentes simultâneos.",
-    "s5.p2": "O impacto mais revelador não foi a migração em si, mas o que ela revelou sobre o comportamento dos usuários. A plataforma Weni, que antes era usada principalmente por alguns funcionários para configurar e gerenciar os bots, passou a fazer parte da <strong>rotina diária da maioria dos usuários</strong> de cada cliente. As visitas diárias médias por cliente cresceram mais de <strong>300%</strong>.",
-    "s5.p3": "Esse número diz mais do que parece: significa que o Weni Chats transformou o tipo de produto que a Weni é. De uma ferramenta de back-office usada por especialistas, para uma plataforma operacional usada por toda a equipe de atendimento. Isso tem implicações diretas em retenção, expansão de receita e posicionamento competitivo.",
-    "s5.callout": "A dependência do software terceirizado foi eliminada, reduzindo custos e devolvendo ao time de produto o controle total sobre a evolução do módulo de atendimento.",
-    "s6.p1": "A decisão de construir do zero parece óbvia em retrospecto, mas não era no início. Um dos aprendizados mais valiosos foi sobre <strong>como enquadrar decisões estratégicas</strong>: apresentar as três opções explicitamente, com seus trade-offs, foi o que permitiu ao time e à liderança alinharem expectativas antes de começar — e sustentar o compromisso durante os momentos mais difíceis da execução.",
-    "s6.p2": "Outro aprendizado importante foi sobre <strong>migração como produto</strong>. A migração não é um projeto de engenharia — é um problema de produto. Os clientes precisam ver valor suficiente para mudar um hábito consolidado. Isso exigiu tanto a qualidade técnica do novo produto quanto uma estratégia de comunicação e suporte que tornasse a transição segura para eles.",
-    "s6.p3": "Por fim, a escala do discovery — mais de 600 conversas — confirmou algo que já acredito: <strong>produto bom não vem de intuição, vem de contexto acumulado</strong>. Cada entrevista sozinha parece marginal; o conjunto delas é o que dá segurança para tomar decisões difíceis.",
-    "tag.migration": "Migração",
-    "tag.support": "Atendimento ao Cliente",
-    "tag.scale": "Escalabilidade"
-}, en: {
-    "nav.back": "← Back to portfolio",
-    "nav.cv": "Download CV",
-    "breadcrumb": "Product Thinking <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024",
-    "title": "Weni <em>Chats</em>",
-    "subtitle": "Human support module built from scratch — from discovery to migrating 100% of the client base, turning a critical external dependency into a proprietary, scalable product adopted in daily operations.",
-    "meta.company.label": "Company",
-    "meta.company.value": "Weni by VTEX",
-    "meta.period.label": "Period",
-    "meta.period.value": "2021 — 2024 (3 years)",
-    "meta.role.label": "Role",
-    "meta.role.value": "Product Manager — zero to launch",
-    "meta.team.label": "Team",
-    "meta.team.value": "Backend, Frontend, UX/UI",
-    "stat1.num": "100%",
-    "stat1.label": "of the client base<br />migrated to the new product",
-    "stat2.num": "300%",
-    "stat2.label": "growth in<br />simultaneous users",
-    "stat3.num": "600+",
-    "stat3.label": "interviews and testing<br />sessions with users",
-    "s1.label": "Context",
-    "s1.title": "An AI platform that needed a <em>human side</em>",
-    "s2.label": "The problem",
-    "s2.title": "Critical dependency, <em>no clear way out</em>",
-    "s3.label": "Discovery & process",
-    "s3.title": "Over 600 conversations before <em>writing a single line of code</em>",
-    "s4.label": "Solution & key decisions",
-    "s4.title": "A human support hub <em>native to the platform</em>",
-    "s5.label": "Impact",
-    "s5.title": "From niche tool <em>to daily routine</em>",
-    "s6.label": "Learnings",
-    "s6.title": "What this project <em>taught me</em>",
-    "nav.prev": "← All case studies",
-    "nav.next.label": "Next case",
-    "nav.next.title": "Weni Insights →",
-    "footer.hosted": "Hosted on GitHub Pages",
-    "s1.p1": "Weni is a conversational automation SaaS platform: companies use it to create AI agents and chatbots that serve customers via WhatsApp, Telegram, Instagram, SMS, and other digital channels. The product worked well for automation — but there was a structural problem the moment a bot needed to hand a conversation over to a human.",
-    "s1.p2": "The <strong>bot → human handoff</strong> was managed by a third-party software integrated into the platform through a partnership. That software did its job, but brought increasingly serious consequences: it was hard to scale, generated growing costs, and was outside the product team's control. Any improvement depended on a third party. Any instability was a risk we couldn't mitigate.",
-    "s1.p3": "As the client base grew, the unsustainability became more evident. That was the context in which I was brought in to find a solution.",
-    "s2.p1": "The initial challenge wasn't about product — it was strategic. Before deciding what to build, we needed to understand whether we should build at all. Three paths were on the table:",
-    "s2.optA": "Keep the third-party software and manage the known consequences — costs, scaling limitations, and dependency on someone else's roadmap.",
-    "s2.optB": "Find another product on the market and trade one dependency for another, with the integration and adoption risks involved.",
-    "s2.optC": "Build a proprietary product from scratch, with full control over evolution, costs, and user experience.",
-    "s2.badge": "chosen",
-    "s2.p2": "The discovery phase showed that option C was the only one that solved the problem structurally — and that the team had the capacity to execute it. The decision was made with clear eyes about the risks: building from scratch takes time, and during that period clients would still depend on the legacy solution.",
-    "s2.callout": "The real problem wasn't just technical. It was operational: support agents spent most of their day inside software that wasn't Weni's, creating an experience barrier and limiting the product's potential to evolve as a whole.",
-    "s3.p1": "I worked with <strong>continuous discovery</strong> from the start — which means staying permanently in contact with customers, not just during an initial research phase. The goal was twofold: understand the real pain points of support work and anticipate how needs would evolve over time.",
-    "s3.p2": "Throughout the project, <strong>over 600 interviews and testing sessions</strong> were conducted with real users — support agents, supervisors, and customer service operations managers. That volume wasn't accidental: the product needed to work well under high-pressure conditions, where every second counts and the interface needs to be intuitive without extensive training.",
-    "s3.p3": "The findings directly shaped product decisions: the queue architecture, the agent transfer system, conversation history visibility, and native integration with the channels Weni's clients were already using.",
-    "s3.p4": "Alongside discovery, I assembled and organized the engineering and design team — backend, frontend, and UX/UI — structuring the development process to maintain speed without sacrificing quality.",
-    "s4.p1": "Weni Chats was built as a native module of the Weni platform: a human support workspace where agents receive conversations transferred from bots, manage queues, collaborate as a team, and access the full customer history — all without leaving the Weni ecosystem.",
-    "s4.p2": "Some core decisions that shaped the product:",
-    "s4.p3": "<strong>Segmented MVP launch.</strong> Instead of trying to migrate all clients at once, we launched a functional MVP to half the base first. That decision was deliberate: I wanted to learn from real customers before committing everyone. The MVP needed to be simple, but not weak — it had to be good enough for clients to choose to stay.",
-    "s4.p4": "<strong>Migration strategy with risk management.</strong> Migrating the full client base required careful rollout planning. We worked in client cohorts, monitoring stability and adoption before moving to the next group. We reallocated cloud infrastructure resources to ensure performance as simultaneous users grew, and iterated on flows and design based on continuous feedback.",
-    "s4.p5": "<strong>Operational experience as priority.</strong> The product needed to work well for people using it eight hours a day. We prioritized clarity, speed, and reliability over advanced features — and that was fundamental to adoption.",
-    "s5.p1": "By the end of the first year post-launch, <strong>100% of the client base had migrated</strong> to Weni Chats — including the most complex clients, with higher-volume support operations and multiple simultaneous agents.",
-    "s5.p2": "The most revealing impact wasn't the migration itself, but what it revealed about user behavior. The Weni platform, previously used mainly by a few employees to configure and manage bots, became part of the <strong>daily routine of most users</strong> at each client. Average daily visits per client grew by over <strong>300%</strong>.",
-    "s5.p3": "That number says more than it seems: it means Weni Chats transformed what kind of product Weni is. From a back-office tool used by specialists, to an operational platform used by the entire support team. This has direct implications for retention, revenue expansion, and competitive positioning.",
-    "s5.callout": "The dependency on third-party software was eliminated, reducing costs and returning full control over the support module's evolution to the product team.",
-    "s6.p1": "The decision to build from scratch seems obvious in hindsight, but it wasn't at the start. One of the most valuable lessons was about <strong>how to frame strategic decisions</strong>: presenting the three options explicitly, with their trade-offs, was what allowed the team and leadership to align expectations before starting — and sustain commitment during the hardest moments of execution.",
-    "s6.p2": "Another important lesson was about <strong>migration as a product problem</strong>. Migration isn't an engineering project — it's a product challenge. Clients need to see enough value to change an established habit. That required both the technical quality of the new product and a communication and support strategy that made the transition feel safe for them.",
-    "s6.p3": "Finally, the scale of discovery — over 600 conversations — confirmed something I already believe: <strong>good product doesn't come from intuition, it comes from accumulated context</strong>. Each interview alone seems marginal; the full set is what gives you confidence to make hard decisions.",
-    "tag.migration": "Migration",
-    "tag.support": "Customer Support",
-    "tag.scale": "Scalability"
-} };
-
-function applyLang(lang) {
-  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const text = translations[lang][key];
-    if (text !== undefined) el.innerHTML = text;
-  });
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
-  localStorage.setItem('preferred-lang', lang);
-}
-
-function setLang(lang) { applyLang(lang); }
-
-(function() {
-  const saved = localStorage.getItem('preferred-lang');
-  if (saved) { applyLang(saved); return; }
-  const browser = (navigator.language || navigator.userLanguage || 'pt').toLowerCase();
-  applyLang(browser.startsWith('pt') ? 'pt' : 'en');
-})();
-</script>
 <script>
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursorRing');

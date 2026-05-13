@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <meta name="i18n-page" content="weni-insights" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weni Insights — Afrânio Cavalcante</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -124,6 +125,7 @@
     .lang-btn.active { background: var(--ink); color: #fff; }
     .lang-btn:not(.active):hover { color: var(--ink); }
   </style>
+  <script src="/translations.js"></script>
 </head>
 <body>
 
@@ -296,150 +298,6 @@
   <p data-i18n="footer.hosted">Hospedado no GitHub Pages</p>
 </footer>
 
-<script>
-// ── I18N ────────────────────────────────────────────────
-const translations = { pt: {
-    "nav.back": "← Voltar ao portfólio",
-    "nav.cv": "Baixar CV",
-    "breadcrumb": "Analytics & Data <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024",
-    "title": "Weni <em>Insights</em>",
-    "subtitle": "Hub analítico nativo construído do zero — transformando dados conversacionais dispersos em inteligência operacional e comercial integrada à plataforma, com IA para democratizar o acesso às métricas.",
-    "meta.company.label": "Empresa",
-    "meta.company.value": "Weni by VTEX",
-    "meta.period.label": "Período",
-    "meta.period.value": "2021 — 2024 (3 anos)",
-    "meta.role.label": "Papel",
-    "meta.role.value": "Product Manager — discovery ao lançamento",
-    "meta.focus.label": "Foco",
-    "meta.focus.value": "Analytics, B2B SaaS, Varejo & E-commerce",
-    "stat1.num": "200k+",
-    "stat1.label": "conversas analisadas<br />na primeira semana do MVP",
-    "stat2.num": "3×",
-    "stat2.label": "mais rápido no acesso<br />aos dados (15 min → 5 min)",
-    "stat3.num": "0",
-    "stat3.label": "ferramentas externas<br />necessárias para análise",
-    "s1.label": "Contexto",
-    "s1.title": "Dados existiam. <em>Inteligência, não.</em>",
-    "s2.label": "O problema",
-    "s2.title": "Cinco fricções que <em>custavam tempo e decisão</em>",
-    "s3.label": "Solução e decisões-chave",
-    "s3.title": "Um hub analítico nativo, <em>sem necessidade de ferramentas externas</em>",
-    "s4.label": "Impacto",
-    "s4.title": "De dados dispersos <em>a inteligência integrada</em>",
-    "s5.label": "Aprendizados",
-    "s5.title": "O que esse projeto <em>me ensinou</em>",
-    "nav.prev": "← Weni Chats",
-    "nav.next.label": "Próximo case",
-    "nav.next.title": "Quark RH →",
-    "footer.hosted": "Hospedado no GitHub Pages",
-    "s1.p1": "A Weni já era uma plataforma robusta de automação conversacional quando o Insights nasceu. Clientes criavam agentes de IA, gerenciavam fluxos e atendiam consumidores por WhatsApp, Telegram, Instagram e outros canais. O produto funcionava — mas havia um gap estratégico importante: <strong>os dados gerados por toda essa operação conversacional não estavam acessíveis de forma nativa</strong>.",
-    "s1.p2": "Para consultar métricas dos seus agentes e fluxos, os clientes precisavam chamar a API da Weni, exportar os dados e processá-los em ferramentas externas. Quem tinha equipe técnica construía dashboards no Looker Studio. Quem não tinha, ficava às cegas. Em ambos os casos, a experiência era fragmentada — e o tempo entre geração e consumo dos dados criava um atraso que prejudicava decisões operacionais.",
-    "s1.p3": "O Weni Chats já possuía um dashboard focado em atendimento humano, mas os dados dos bots e agentes inteligentes ficavam fora dessa experiência. Meu desafio foi criar um produto que unificasse tudo isso — e que fosse acessível para qualquer perfil de usuário, técnico ou não.",
-    "s2.p1": "O diagnóstico do discovery foi claro: o problema não era falta de dados, era falta de acesso. Os clientes viviam com uma combinação de fricções que tornavam a análise cara, lenta e exclusiva para perfis técnicos:",
-    "prob1.title": "Dependência técnica",
-    "prob2.title": "Tempo para análise",
-    "prob3.title": "Baixa acessibilidade",
-    "prob4.title": "Experiência fragmentada",
-    "prob1.desc": "Acessar dados exigia conhecimento de API ou configuração de pipelines externos.",
-    "prob2.desc": "Dados atualizavam a cada ~15 minutos via API, criando lag em operações críticas.",
-    "prob3.desc": "Usuários não técnicos simplesmente não conseguiam acessar métricas sem ajuda.",
-    "prob4.desc": "Atendimento humano, bots e conversão ficavam em dashboards separados ou inexistentes.",
-    "s2.callout": "O problema mais silencioso era a fragmentação: clientes não conseguiam ver a jornada completa do consumidor — do bot ao humano, da conversa à conversão. Isso tornava impossível otimizar o que realmente importava para o negócio.",
-    "s3.p1": "O Weni Insights foi construído como uma camada de <strong>embedded analytics</strong> integrada nativamente à plataforma — eliminando a necessidade de exportações, pipelines externos ou ferramentas de BI terceirizadas para grande parte dos clientes.",
-    "s3.p2": "A primeira decisão estratégica foi unificar os dados que antes viviam separados: migramos o dashboard operacional do Weni Chats para dentro do Insights, transformando-o no hub analítico central da plataforma. Atendimento humano, automação conversacional, indicadores operacionais e métricas de conversão passaram a coexistir em uma única experiência.",
-    "s3.p3": "A segunda decisão foi sobre latência. Reduzimos o tempo de atualização dos dados de <strong>~15 minutos para até 5 minutos</strong> — uma mudança que pode parecer incremental, mas que transformou a percepção de valor do produto para operações de alto volume, aproximando a experiência de um monitoramento quase em tempo real.",
-    "s3.p4": "A terceira decisão foi sobre acessibilidade. Construímos uma <strong>camada de interpretação de dados baseada em IA</strong> que ajudava usuários a compreender métricas, padrões e comportamentos sem depender de leitura manual dos dashboards. Isso derrubou a barreira analítica para usuários não técnicos — que antes eram completamente excluídos do fluxo de análise.",
-    "s3.p5": "Com foco especial em clientes de <strong>varejo e e-commerce</strong>, desenvolvemos dashboards personalizados para funil de vendas, recuperação de carrinho abandonado, rastreamento de origem via UTM, conversão em fluxos conversacionais e análise de comportamento em jornadas automatizadas.",
-    "s4.p1": "O MVP foi lançado inicialmente para clientes estratégicos da Weni — e na primeira semana já havia processado e analisado <strong>mais de 200 mil conversas</strong>. Esse número validou tanto a demanda reprimida pelo produto quanto a estabilidade técnica da solução desde o início.",
-    "s4.p2": "O impacto mais duradouro, porém, foi estratégico. Ao centralizar analytics dentro da própria plataforma, o Insights aumentou o <strong>stickiness da Weni</strong>: clientes que antes podiam substituir a plataforma por um concorrente agora tinham seus dashboards, histórico e inteligência de negócio integrados ao ecossistema. Sair passou a ter um custo muito maior.",
-    "s4.p3": "Para os usuários finais, a mudança foi de comportamento: métricas que antes exigiam uma tarde de trabalho de um analista passaram a estar disponíveis em minutos, para qualquer membro do time — com interpretação assistida por IA quando necessário. <strong>Dados conversacionais deixaram de ser um recurso técnico e passaram a ser parte da rotina operacional e comercial dos clientes.</strong>",
-    "s4.callout": "O Insights não foi apenas um produto de analytics — foi um movimento de posicionamento. Ao consolidar dados dentro da Weni, a plataforma deixou de ser uma ferramenta de automação e passou a ser o centro de inteligência das operações conversacionais dos clientes.",
-    "s5.p1": "O maior aprendizado foi sobre <strong>acessibilidade como estratégia de produto</strong>. A camada de IA para interpretação de dados não era um diferencial tecnológico pelo diferencial em si — era uma decisão deliberada de democratização. Quando você remove a barreira técnica de um produto analítico, você multiplica o número de pessoas que podem tomar decisões com base nele. E mais decisões baseadas em dados significa mais valor percebido da plataforma.",
-    "s5.p2": "Outro aprendizado foi sobre <strong>latência como experiência</strong>. A redução de 15 para 5 minutos não parece revolucionária em termos absolutos — mas no contexto de uma operação de atendimento ou uma campanha de recuperação de carrinho, aqueles 10 minutos fazem diferença real. Aprendi a medir o valor de melhorias de performance não em termos técnicos, mas em termos de decisão: o que o usuário consegue fazer agora que não conseguia antes?",
-    "s5.p3": "Por fim, o Insights me ensinou sobre <strong>produto como retenção</strong>. Integrar analytics dentro da plataforma foi uma das decisões com maior impacto no longo prazo — não porque aumentou o uso imediato, mas porque aumentou o custo de saída para os clientes. Criar valor que está profundamente integrado ao fluxo de trabalho do cliente é uma das formas mais sustentáveis de construir retenção."
-}, en: {
-    "nav.back": "← Back to portfolio",
-    "nav.cv": "Download CV",
-    "breadcrumb": "Analytics & Data <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024",
-    "title": "Weni <em>Insights</em>",
-    "subtitle": "Native analytics hub built from scratch — transforming dispersed conversational data into integrated operational and commercial intelligence, with AI to democratize access to metrics.",
-    "meta.company.label": "Company",
-    "meta.company.value": "Weni by VTEX",
-    "meta.period.label": "Period",
-    "meta.period.value": "2021 — 2024 (3 years)",
-    "meta.role.label": "Role",
-    "meta.role.value": "Product Manager — discovery to launch",
-    "meta.focus.label": "Focus",
-    "meta.focus.value": "Analytics, B2B SaaS, Retail & E-commerce",
-    "stat1.num": "200k+",
-    "stat1.label": "conversations analyzed<br />in the first week of MVP",
-    "stat2.num": "3×",
-    "stat2.label": "faster data access<br />(15 min → 5 min)",
-    "stat3.num": "0",
-    "stat3.label": "external tools<br />needed for analysis",
-    "s1.label": "Context",
-    "s1.title": "Data existed. <em>Intelligence didn't.</em>",
-    "s2.label": "The problem",
-    "s2.title": "Five frictions that <em>cost time and decisions</em>",
-    "s3.label": "Solution & key decisions",
-    "s3.title": "A native analytics hub, <em>no external tools required</em>",
-    "s4.label": "Impact",
-    "s4.title": "From scattered data <em>to integrated intelligence</em>",
-    "s5.label": "Learnings",
-    "s5.title": "What this project <em>taught me</em>",
-    "nav.prev": "← Weni Chats",
-    "nav.next.label": "Next case",
-    "nav.next.title": "Quark RH →",
-    "footer.hosted": "Hosted on GitHub Pages",
-    "s1.p1": "Weni was already a robust conversational automation platform when Insights was born. Clients created AI agents, managed flows, and served customers via WhatsApp, Telegram, Instagram, and other channels. The product worked — but there was an important strategic gap: <strong>the data generated by all that conversational activity wasn't natively accessible</strong>.",
-    "s1.p2": "To query metrics from their agents and flows, clients had to call Weni's API, export the data, and process it in external tools. Those with technical teams built dashboards in Looker Studio. Those without were flying blind. In both cases, the experience was fragmented — and the lag between data generation and consumption hurt operational decision-making.",
-    "s1.p3": "Weni Chats already had a dashboard focused on human support, but bot and AI agent data was outside that experience. My challenge was to create a product that unified all of it — and was accessible to any user profile, technical or not.",
-    "s2.p1": "The discovery diagnosis was clear: the problem wasn't a lack of data, it was a lack of access. Clients lived with a combination of frictions that made analysis expensive, slow, and exclusive to technical profiles:",
-    "prob1.title": "Technical dependency",
-    "prob2.title": "Time to insight",
-    "prob3.title": "Low accessibility",
-    "prob4.title": "Fragmented experience",
-    "prob1.desc": "Accessing data required API knowledge or external pipeline configuration.",
-    "prob2.desc": "Data updated every ~15 minutes via API, creating lag in critical operations.",
-    "prob3.desc": "Non-technical users simply couldn't access metrics without help.",
-    "prob4.desc": "Human support, bots, and conversion lived in separate dashboards — or didn't exist at all.",
-    "s2.callout": "The quietest problem was fragmentation: clients couldn't see the complete customer journey — from bot to human, from conversation to conversion. That made it impossible to optimize what actually mattered to the business.",
-    "s3.p1": "Weni Insights was built as a layer of <strong>embedded analytics</strong> natively integrated into the platform — eliminating the need for exports, external pipelines, or third-party BI tools for most clients.",
-    "s3.p2": "The first strategic decision was to unify data that previously lived separately: we migrated Weni Chats' operational dashboard into Insights, transforming it into the platform's central analytics hub. Human support, conversational automation, operational indicators, and conversion metrics now coexist in a single experience.",
-    "s3.p3": "The second decision was about latency. We reduced data refresh time from <strong>~15 minutes to as little as 5 minutes</strong> — a change that might seem incremental, but transformed the product's perceived value for high-volume operations, bringing the experience closer to near-real-time monitoring.",
-    "s3.p4": "The third decision was about accessibility. We built an <strong>AI-based data interpretation layer</strong> that helped users understand metrics, patterns, and behaviors without relying on manual dashboard reading. This lowered the analytical barrier for non-technical users — who had previously been completely excluded from the analysis flow.",
-    "s3.p5": "With a special focus on <strong>retail and e-commerce</strong> clients, we developed custom dashboards for sales funnels, abandoned cart recovery, UTM origin tracking, conversion in conversational flows, and behavioral analysis in automated journeys.",
-    "s4.p1": "The MVP launched initially for Weni's strategic clients — and in the first week it had already processed and analyzed <strong>over 200,000 conversations</strong>. That number validated both the suppressed demand for the product and the technical stability of the solution from day one.",
-    "s4.p2": "The most lasting impact, however, was strategic. By centralizing analytics within the platform itself, Insights increased Weni's <strong>stickiness</strong>: clients who could previously replace the platform with a competitor now had their dashboards, history, and business intelligence integrated into the ecosystem. Leaving became much more costly.",
-    "s4.p3": "For end users, the change was behavioral: metrics that previously required an analyst's afternoon became available in minutes to any team member — with AI-assisted interpretation when needed. <strong>Conversational data stopped being a technical resource and became part of clients' operational and commercial daily routine.</strong>",
-    "s4.callout": "Insights wasn't just an analytics product — it was a positioning move. By consolidating data inside Weni, the platform shifted from being an automation tool to being the intelligence center of clients' conversational operations.",
-    "s5.p1": "The biggest lesson was about <strong>accessibility as product strategy</strong>. The AI layer for data interpretation wasn't a technological differentiator for its own sake — it was a deliberate democratization decision. When you remove the technical barrier from an analytics product, you multiply the number of people who can make decisions based on it. And more data-driven decisions means more perceived platform value.",
-    "s5.p2": "Another lesson was about <strong>latency as experience</strong>. Reducing from 15 to 5 minutes doesn't seem revolutionary in absolute terms — but in the context of a support operation or a cart recovery campaign, those 10 minutes make a real difference. I learned to measure the value of performance improvements not in technical terms, but in decision terms: what can the user do now that they couldn't before?",
-    "s5.p3": "Finally, Insights taught me about <strong>product as retention</strong>. Integrating analytics inside the platform was one of the highest long-term impact decisions — not because it increased immediate usage, but because it increased the cost of leaving for clients. Creating value that's deeply integrated into the customer's workflow is one of the most sustainable ways to build retention."
-} };
-
-function applyLang(lang) {
-  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const text = translations[lang][key];
-    if (text !== undefined) el.innerHTML = text;
-  });
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
-  });
-  localStorage.setItem('preferred-lang', lang);
-}
-
-function setLang(lang) { applyLang(lang); }
-
-(function() {
-  const saved = localStorage.getItem('preferred-lang');
-  if (saved) { applyLang(saved); return; }
-  const browser = (navigator.language || navigator.userLanguage || 'pt').toLowerCase();
-  applyLang(browser.startsWith('pt') ? 'pt' : 'en');
-})();
-</script>
 <script>
   const cursor = document.getElementById('cursor');
   const ring   = document.getElementById('cursorRing');
