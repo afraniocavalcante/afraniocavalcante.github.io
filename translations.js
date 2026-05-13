@@ -34,7 +34,7 @@ window.SITE_TRANSLATIONS = {
       "cases.quark.body": "Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.",
       "contact.label": "Contato",
       "contact.headline": "Vamos<br /><em>conversar?</em>",
-      "contact.location": "São Paulo · Remote",
+      "contact.location": "Product Manager em São Paulo, Brasil.",
       "contact.wa": "Mandar mensagem",
       "footer.hosted": "Hospedado no GitHub Pages"
     },
@@ -63,7 +63,7 @@ window.SITE_TRANSLATIONS = {
       "cases.quark.body": "Worked as PM on a strategic people management platform, leading discovery, roadmap prioritization, and feature development to help companies manage timekeeping, teams, and HR data.",
       "contact.label": "Contact",
       "contact.headline": "Let's<br /><em>talk?</em>",
-      "contact.location": "São Paulo · Remote",
+      "contact.location": "Product Manager based in São Paulo, Brazil.",
       "contact.wa": "Send a message",
       "footer.hosted": "Hosted on GitHub Pages"
     }
@@ -133,13 +133,7 @@ window.SITE_TRANSLATIONS = {
       "s6.p3": "Por fim, a escala do discovery — mais de 600 conversas — confirmou algo que já acredito: <strong>produto bom não vem de intuição, vem de contexto acumulado</strong>. Cada entrevista sozinha parece marginal; o conjunto delas é o que dá segurança para tomar decisões difíceis.",
       "tag.migration": "Migração",
       "tag.support": "Atendimento ao Cliente",
-      "tag.scale": "Escalabilidade",
-      "s1.h2": "Uma plataforma de IA que precisava de um <em>lado humano</em>",
-      "s2.h2": "Dependência crítica, <em>sem saída clara</em>",
-      "s3.h2": "Mais de 600 conversas antes de <em>escrever uma linha de código</em>",
-      "s4.h2": "Uma central de atendimento humano <em>nativa da plataforma</em>",
-      "s5.h2": "De ferramenta de nicho <em>a rotina diária</em>",
-      "s6.h2": "O que esse projeto <em>me ensinou</em>"
+      "tag.scale": "Escalabilidade"
     },
     "en": {
       "nav.back": "← Back to portfolio",
@@ -205,13 +199,7 @@ window.SITE_TRANSLATIONS = {
       "s6.p3": "Finally, the scale of discovery — over 600 conversations — confirmed something I already believe: <strong>good product doesn't come from intuition, it comes from accumulated context</strong>. Each interview alone seems marginal; the full set is what gives you confidence to make hard decisions.",
       "tag.migration": "Migration",
       "tag.support": "Customer Support",
-      "tag.scale": "Scalability",
-      "s1.h2": "An AI platform that needed a <em>human side</em>",
-      "s2.h2": "Critical dependency, <em>no clear way out</em>",
-      "s3.h2": "Over 600 conversations before <em>writing a single line of code</em>",
-      "s4.h2": "A human support hub <em>native to the platform</em>",
-      "s5.h2": "From niche tool <em>to daily routine</em>",
-      "s6.h2": "What this project <em>taught me</em>"
+      "tag.scale": "Scalability"
     }
   },
   "weni-insights": {
@@ -273,12 +261,7 @@ window.SITE_TRANSLATIONS = {
       "s4.callout": "O Insights não foi apenas um produto de analytics — foi um movimento de posicionamento. Ao consolidar dados dentro da Weni, a plataforma deixou de ser uma ferramenta de automação e passou a ser o centro de inteligência das operações conversacionais dos clientes.",
       "s5.p1": "O maior aprendizado foi sobre <strong>acessibilidade como estratégia de produto</strong>. A camada de IA para interpretação de dados não era um diferencial tecnológico pelo diferencial em si — era uma decisão deliberada de democratização. Quando você remove a barreira técnica de um produto analítico, você multiplica o número de pessoas que podem tomar decisões com base nele. E mais decisões baseadas em dados significa mais valor percebido da plataforma.",
       "s5.p2": "Outro aprendizado foi sobre <strong>latência como experiência</strong>. A redução de 15 para 5 minutos não parece revolucionária em termos absolutos — mas no contexto de uma operação de atendimento ou uma campanha de recuperação de carrinho, aqueles 10 minutos fazem diferença real. Aprendi a medir o valor de melhorias de performance não em termos técnicos, mas em termos de decisão: o que o usuário consegue fazer agora que não conseguia antes?",
-      "s5.p3": "Por fim, o Insights me ensinou sobre <strong>produto como retenção</strong>. Integrar analytics dentro da plataforma foi uma das decisões com maior impacto no longo prazo — não porque aumentou o uso imediato, mas porque aumentou o custo de saída para os clientes. Criar valor que está profundamente integrado ao fluxo de trabalho do cliente é uma das formas mais sustentáveis de construir retenção.",
-      "s1.h2": "Dados existiam. <em>Inteligência, não.</em>",
-      "s2.h2": "Cinco fricções que <em>custavam tempo e decisão</em>",
-      "s3.h2": "Um hub analítico nativo, <em>sem necessidade de ferramentas externas</em>",
-      "s4.h2": "De dados dispersos <em>a inteligência integrada</em>",
-      "s5.h2": "O que esse projeto <em>me ensinou</em>"
+      "s5.p3": "Por fim, o Insights me ensinou sobre <strong>produto como retenção</strong>. Integrar analytics dentro da plataforma foi uma das decisões com maior impacto no longo prazo — não porque aumentou o uso imediato, mas porque aumentou o custo de saída para os clientes. Criar valor que está profundamente integrado ao fluxo de trabalho do cliente é uma das formas mais sustentáveis de construir retenção."
     },
     "en": {
       "nav.back": "← Back to portfolio",
@@ -338,12 +321,7 @@ window.SITE_TRANSLATIONS = {
       "s4.callout": "Insights wasn't just an analytics product — it was a positioning move. By consolidating data inside Weni, the platform shifted from being an automation tool to being the intelligence center of clients' conversational operations.",
       "s5.p1": "The biggest lesson was about <strong>accessibility as product strategy</strong>. The AI layer for data interpretation wasn't a technological differentiator for its own sake — it was a deliberate democratization decision. When you remove the technical barrier from an analytics product, you multiply the number of people who can make decisions based on it. And more data-driven decisions means more perceived platform value.",
       "s5.p2": "Another lesson was about <strong>latency as experience</strong>. Reducing from 15 to 5 minutes doesn't seem revolutionary in absolute terms — but in the context of a support operation or a cart recovery campaign, those 10 minutes make a real difference. I learned to measure the value of performance improvements not in technical terms, but in decision terms: what can the user do now that they couldn't before?",
-      "s5.p3": "Finally, Insights taught me about <strong>product as retention</strong>. Integrating analytics inside the platform was one of the highest long-term impact decisions — not because it increased immediate usage, but because it increased the cost of leaving for clients. Creating value that's deeply integrated into the customer's workflow is one of the most sustainable ways to build retention.",
-      "s1.h2": "Data existed. <em>Intelligence didn't.</em>",
-      "s2.h2": "Five frictions that <em>cost time and decisions</em>",
-      "s3.h2": "A native analytics hub, <em>no external tools required</em>",
-      "s4.h2": "From scattered data <em>to integrated intelligence</em>",
-      "s5.h2": "What this project <em>taught me</em>"
+      "s5.p3": "Finally, Insights taught me about <strong>product as retention</strong>. Integrating analytics inside the platform was one of the highest long-term impact decisions — not because it increased immediate usage, but because it increased the cost of leaving for clients. Creating value that's deeply integrated into the customer's workflow is one of the most sustainable ways to build retention."
     }
   },
   "quark-rh": {
@@ -410,12 +388,7 @@ window.SITE_TRANSLATIONS = {
       "s4.p3": "Do ponto de vista organizacional, a principal contribuição foi ajudar a empresa a sair de uma lógica predominantemente reativa para uma <strong>visão mais estruturada de produto escalável</strong>. Isso não acontece em meses — mas os fundamentos foram plantados: processos de discovery, rituais de alinhamento, critérios de priorização e uma estrutura de times preparada para crescer.",
       "s5.p1": "A Quark RH foi a experiência que mais me desafiou como líder. Não pela complexidade técnica do produto, mas pela complexidade organizacional do contexto. Aprendi que <strong>transformar cultura é mais difícil do que lançar features</strong> — e que a resistência mais perigosa não é a explícita, mas a que aparece na forma de urgências que parecem legítimas mas perpetuam o ciclo reativo.",
       "s5.p2": "Aprendi também sobre <strong>liderança de produto em ambiguidade</strong>. Quando não há playbook claro, quando o ambiente muda rápido e quando as pressões são múltiplas e simultâneas, a habilidade mais importante não é saber a resposta certa — é saber enquadrar o problema de forma que o time e os stakeholders consigam tomar decisões com o que têm disponível.",
-      "s5.p3": "Por fim, a gestão dos dois POs me ensinou sobre <strong>delegação como produto</strong>. Dar autonomia real para os Product Owners — com clareza de visão, critérios de priorização e suporte na negociação com stakeholders — foi o que permitiu escalar a capacidade de execução sem centralizar todas as decisões. Liderança de produto não é sobre controlar o roadmap; é sobre criar as condições para que boas decisões de produto aconteçam em toda a organização.",
-      "s1.h2": "Crescimento rápido demais <em>para a estrutura existente</em>",
-      "s2.h2": "Quatro tensões <em>em equilíbrio constante</em>",
-      "s3.h2": "Estrutura, refatoração <em>e expansão de portfólio</em>",
-      "s4.h2": "40% de crescimento <em>com mais estabilidade e retenção</em>",
-      "s5.h2": "Produto em ambiente <em>de alta ambiguidade</em>"
+      "s5.p3": "Por fim, a gestão dos dois POs me ensinou sobre <strong>delegação como produto</strong>. Dar autonomia real para os Product Owners — com clareza de visão, critérios de priorização e suporte na negociação com stakeholders — foi o que permitiu escalar a capacidade de execução sem centralizar todas as decisões. Liderança de produto não é sobre controlar o roadmap; é sobre criar as condições para que boas decisões de produto aconteçam em toda a organização."
     },
     "en": {
       "nav.back": "← Back to portfolio",
@@ -480,12 +453,7 @@ window.SITE_TRANSLATIONS = {
       "s4.p3": "From an organizational standpoint, the main contribution was helping the company move from a predominantly reactive logic to a <strong>more structured, scalable product vision</strong>. That doesn't happen in months — but the foundations were laid: discovery processes, alignment rituals, prioritization criteria, and a team structure prepared to grow.",
       "s5.p1": "Quark RH was the experience that challenged me most as a leader. Not because of the product's technical complexity, but because of the organizational complexity of the context. I learned that <strong>transforming culture is harder than launching features</strong> — and that the most dangerous resistance isn't the explicit kind, but the one that shows up as urgencies that seem legitimate but perpetuate the reactive cycle.",
       "s5.p2": "I also learned about <strong>product leadership in ambiguity</strong>. When there's no clear playbook, when the environment changes fast, and when pressures are multiple and simultaneous, the most important skill isn't knowing the right answer — it's knowing how to frame the problem so the team and stakeholders can make decisions with what they have available.",
-      "s5.p3": "Finally, managing the two POs taught me about <strong>delegation as product</strong>. Giving real autonomy to the Product Owners — with vision clarity, prioritization criteria, and support in stakeholder negotiation — was what allowed us to scale execution capacity without centralizing all decisions. Product leadership isn't about controlling the roadmap; it's about creating the conditions for good product decisions to happen throughout the organization.",
-      "s1.h2": "Growth too fast <em>for the existing structure</em>",
-      "s2.h2": "Four tensions <em>in constant balance</em>",
-      "s3.h2": "Structure, refactoring <em>and portfolio expansion</em>",
-      "s4.h2": "40% growth <em>with more stability and retention</em>",
-      "s5.h2": "Product in a <em>high-ambiguity environment</em>"
+      "s5.p3": "Finally, managing the two POs taught me about <strong>delegation as product</strong>. Giving real autonomy to the Product Owners — with vision clarity, prioritization criteria, and support in stakeholder negotiation — was what allowed us to scale execution capacity without centralizing all decisions. Product leadership isn't about controlling the roadmap; it's about creating the conditions for good product decisions to happen throughout the organization."
     }
   }
 };
