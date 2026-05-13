@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weni Insights — Afrânio Cavalcante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; cursor: none; }
+
+    /* CURSOR */
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+    .cursor.hover { width: 14px; height: 14px; }
+    .cursor-ring.hover { width: 48px; height: 48px; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding: .9rem 5vw; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: .8rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: flex; align-items: center; gap: .4rem; transition: color .2s; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; font-family: 'DM Sans', sans-serif; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; }
+    .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+
+    /* HERO */
+    .case-hero { padding: 9rem 5vw 5rem; border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; }
+    .case-breadcrumb { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .case-breadcrumb span { color: var(--border); }
+    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.5rem; }
+    .case-title em { font-style: italic; color: #BBBBB6; }
+    .case-subtitle { font-size: 1.1rem; font-weight: 300; color: var(--ink-mid); max-width: 680px; line-height: 1.7; margin-bottom: 3rem; }
+    .case-meta-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .case-meta-item { display: flex; flex-direction: column; gap: .3rem; }
+    .case-meta-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); }
+    .case-meta-value { font-size: .95rem; font-weight: 400; color: var(--ink); }
+
+    /* COVER IMAGE - full bleed */
+    .case-cover { width: 100%; aspect-ratio: 16/7; overflow: hidden; }
+    .case-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* STATS BAR */
+    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .stat-item { padding: 2.5rem 5vw; border-right: 1px solid var(--border); }
+    .stat-item:last-child { border-right: none; }
+    .stat-number { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.03em; line-height: 1; margin-bottom: .4rem; }
+    .stat-label { font-size: .82rem; font-weight: 300; color: var(--ink-mid); line-height: 1.4; }
+
+    /* CONTENT */
+    .case-body { max-width: 820px; margin: 0 auto; padding: 6rem 5vw 4rem; }
+    .case-section { margin-bottom: 6rem; position: relative; }
+    .case-section:last-child { margin-bottom: 0; }
+    .case-section-number { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 4.5rem; line-height: 1; color: var(--ink-light); opacity: .35; margin-bottom: .5rem; letter-spacing: -.02em; }
+    .case-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.25rem; display: block; }
+    .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.5rem; }
+    .case-section h2 em { font-style: italic; color: var(--ink-mid); }
+    .case-section p { font-size: 1.02rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; text-align: justify; hyphens: auto; }
+    .case-section p:last-child { margin-bottom: 0; }
+    .case-section p strong { font-weight: 500; color: var(--ink); }
+
+    /* CALLOUT */
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: 1.5rem 2rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: .95rem; font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; text-align: justify; hyphens: auto; }
+
+    /* PROBLEMS GRID */
+    .problems-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin: 1.5rem 0; }
+    .problem-item { padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; }
+    .problem-item p { font-size: .88rem; font-weight: 300; color: var(--ink-mid); line-height: 1.5; margin: 0; text-align: left; hyphens: none; }
+    .problem-item strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: .25rem; font-size: .82rem; letter-spacing: .02em; }
+
+    /* DIVIDER */
+    .case-divider { display: none; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+    .tag { font-size: .78rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+
+    /* NAV CASE */
+    .case-nav { max-width: 960px; margin: 0 auto; padding: 3rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .case-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: flex; align-items: center; gap: .4rem; transition: color .2s; }
+    .case-nav a:hover { color: var(--ink); }
+    .case-nav-next { text-align: right; }
+    .case-nav-next-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
+    .case-nav-next-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); }
+
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
+
+    @media (max-width: 700px) {
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      .case-hero { padding: 7rem 5vw 3rem; }
+      .case-body { padding: 4rem 5vw 2rem; }
+      .case-section { margin-bottom: 4rem; }
+      .case-section-number { font-size: 3rem; }
+      .case-meta-row { grid-template-columns: 1fr; gap: 1.25rem; }
+      .problems-grid { grid-template-columns: 1fr; }
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <a href="https://afranio.pm" class="nav-logo">AC</a>
+  <a href="https://afranio.pm#cases" class="nav-back">← Voltar ao portfólio</a>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Baixar CV</span>
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="case-hero">
+  <p class="case-breadcrumb reveal">Analytics & Data <span>·</span> Weni by VTEX <span>·</span> 2021 — 2024</p>
+  <h1 class="case-title reveal">Weni <em>Insights</em></h1>
+  <p class="case-subtitle reveal reveal-delay-1">Hub analítico nativo construído do zero — transformando dados conversacionais dispersos em inteligência operacional e comercial integrada à plataforma, com IA para democratizar o acesso às métricas.</p>
+  <div class="case-meta-row reveal reveal-delay-2">
+    <div class="case-meta-item">
+      <span class="case-meta-label">Empresa</span>
+      <span class="case-meta-value">Weni by VTEX</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-label">Período</span>
+      <span class="case-meta-value">2021 — 2024 (3 anos)</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-label">Papel</span>
+      <span class="case-meta-value">Product Manager — discovery ao lançamento</span>
+    </div>
+    <div class="case-meta-item">
+      <span class="case-meta-label">Foco</span>
+      <span class="case-meta-value">Analytics, B2B SaaS, Varejo & E-commerce</span>
+    </div>
+  </div>
+</div>
+
+<!-- COVER -->
+<div class="case-cover">
+  <img src="https://afranio.pm/images/Weni-insights.webp" alt="Weni Insights" />
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <p class="stat-number">200k+</p>
+    <p class="stat-label">conversas analisadas<br />na primeira semana do MVP</p>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <p class="stat-number">3×</p>
+    <p class="stat-label">mais rápido no acesso<br />aos dados (15 min → 5 min)</p>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <p class="stat-number">0</p>
+    <p class="stat-label">ferramentas externas<br />necessárias para análise</p>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="case-body">
+
+  <!-- CONTEXTO -->
+  <div class="case-section reveal">
+    <p class="case-section-number"><em>01</em></p>
+    <p class="case-section-label">Contexto</p>
+    <h2>Dados existiam. <em>Inteligência, não.</em></h2>
+    <p>A Weni já era uma plataforma robusta de automação conversacional quando o Insights nasceu. Clientes criavam agentes de IA, gerenciavam fluxos e atendiam consumidores por WhatsApp, Telegram, Instagram e outros canais. O produto funcionava — mas havia um gap estratégico importante: <strong>os dados gerados por toda essa operação conversacional não estavam acessíveis de forma nativa</strong>.</p>
+    <p>Para consultar métricas dos seus agentes e fluxos, os clientes precisavam chamar a API da Weni, exportar os dados e processá-los em ferramentas externas. Quem tinha equipe técnica construía dashboards no Looker Studio. Quem não tinha, ficava às cegas. Em ambos os casos, a experiência era fragmentada — e o tempo entre geração e consumo dos dados criava um atraso que prejudicava decisões operacionais.</p>
+    <p>O Weni Chats já possuía um dashboard focado em atendimento humano, mas os dados dos bots e agentes inteligentes ficavam fora dessa experiência. Meu desafio foi criar um produto que unificasse tudo isso — e que fosse acessível para qualquer perfil de usuário, técnico ou não.</p>
+  </div>
+
+  <!-- PROBLEMA -->
+  <div class="case-section reveal">
+    <p class="case-section-number"><em>02</em></p>
+    <p class="case-section-label">O problema</p>
+    <h2>Cinco fricções que <em>custavam tempo e decisão</em></h2>
+    <p>O diagnóstico do discovery foi claro: o problema não era falta de dados, era falta de acesso. Os clientes viviam com uma combinação de fricções que tornavam a análise cara, lenta e exclusiva para perfis técnicos:</p>
+
+    <div class="problems-grid">
+      <div class="problem-item">
+        <strong>Dependência técnica</strong>
+        <p>Acessar dados exigia conhecimento de API ou configuração de pipelines externos.</p>
+      </div>
+      <div class="problem-item">
+        <strong>Tempo para análise</strong>
+        <p>Dados atualizavam a cada ~15 minutos via API, criando lag em operações críticas.</p>
+      </div>
+      <div class="problem-item">
+        <strong>Baixa acessibilidade</strong>
+        <p>Usuários não técnicos simplesmente não conseguiam acessar métricas sem ajuda.</p>
+      </div>
+      <div class="problem-item">
+        <strong>Experiência fragmentada</strong>
+        <p>Atendimento humano, bots e conversão ficavam em dashboards separados ou inexistentes.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p>O problema mais silencioso era a fragmentação: clientes não conseguiam ver a jornada completa do consumidor — do bot ao humano, da conversa à conversão. Isso tornava impossível otimizar o que realmente importava para o negócio.</p>
+    </div>
+  </div>
+
+  <!-- SOLUÇÃO -->
+  <div class="case-section reveal">
+    <p class="case-section-number"><em>03</em></p>
+    <p class="case-section-label">Solução e decisões-chave</p>
+    <h2>Um hub analítico nativo, <em>sem necessidade de ferramentas externas</em></h2>
+    <p>O Weni Insights foi construído como uma camada de <strong>embedded analytics</strong> integrada nativamente à plataforma — eliminando a necessidade de exportações, pipelines externos ou ferramentas de BI terceirizadas para grande parte dos clientes.</p>
+    <p>A primeira decisão estratégica foi unificar os dados que antes viviam separados: migramos o dashboard operacional do Weni Chats para dentro do Insights, transformando-o no hub analítico central da plataforma. Atendimento humano, automação conversacional, indicadores operacionais e métricas de conversão passaram a coexistir em uma única experiência.</p>
+    <p>A segunda decisão foi sobre latência. Reduzimos o tempo de atualização dos dados de <strong>~15 minutos para até 5 minutos</strong> — uma mudança que pode parecer incremental, mas que transformou a percepção de valor do produto para operações de alto volume, aproximando a experiência de um monitoramento quase em tempo real.</p>
+    <p>A terceira decisão foi sobre acessibilidade. Construímos uma <strong>camada de interpretação de dados baseada em IA</strong> que ajudava usuários a compreender métricas, padrões e comportamentos sem depender de leitura manual dos dashboards. Isso derrubou a barreira analítica para usuários não técnicos — que antes eram completamente excluídos do fluxo de análise.</p>
+    <p>Com foco especial em clientes de <strong>varejo e e-commerce</strong>, desenvolvemos dashboards personalizados para funil de vendas, recuperação de carrinho abandonado, rastreamento de origem via UTM, conversão em fluxos conversacionais e análise de comportamento em jornadas automatizadas.</p>
+  </div>
+
+  <!-- IMPACTO -->
+  <div class="case-section reveal">
+    <p class="case-section-number"><em>04</em></p>
+    <p class="case-section-label">Impacto</p>
+    <h2>De dados dispersos <em>a inteligência integrada</em></h2>
+    <p>O MVP foi lançado inicialmente para clientes estratégicos da Weni — e na primeira semana já havia processado e analisado <strong>mais de 200 mil conversas</strong>. Esse número validou tanto a demanda reprimida pelo produto quanto a estabilidade técnica da solução desde o início.</p>
+    <p>O impacto mais duradouro, porém, foi estratégico. Ao centralizar analytics dentro da própria plataforma, o Insights aumentou o <strong>stickiness da Weni</strong>: clientes que antes podiam substituir a plataforma por um concorrente agora tinham seus dashboards, histórico e inteligência de negócio integrados ao ecossistema. Sair passou a ter um custo muito maior.</p>
+    <p>Para os usuários finais, a mudança foi de comportamento: métricas que antes exigiam uma tarde de trabalho de um analista passaram a estar disponíveis em minutos, para qualquer membro do time — com interpretação assistida por IA quando necessário. <strong>Dados conversacionais deixaram de ser um recurso técnico e passaram a ser parte da rotina operacional e comercial dos clientes.</strong></p>
+
+    <div class="callout">
+      <p>O Insights não foi apenas um produto de analytics — foi um movimento de posicionamento. Ao consolidar dados dentro da Weni, a plataforma deixou de ser uma ferramenta de automação e passou a ser o centro de inteligência das operações conversacionais dos clientes.</p>
+    </div>
+  </div>
+
+  <!-- APRENDIZADOS -->
+  <div class="case-section reveal">
+    <p class="case-section-number"><em>05</em></p>
+    <p class="case-section-label">Aprendizados</p>
+    <h2>O que esse projeto <em>me ensinou</em></h2>
+    <p>O maior aprendizado foi sobre <strong>acessibilidade como estratégia de produto</strong>. A camada de IA para interpretação de dados não era um diferencial tecnológico pelo diferencial em si — era uma decisão deliberada de democratização. Quando você remove a barreira técnica de um produto analítico, você multiplica o número de pessoas que podem tomar decisões com base nele. E mais decisões baseadas em dados significa mais valor percebido da plataforma.</p>
+    <p>Outro aprendizado foi sobre <strong>latência como experiência</strong>. A redução de 15 para 5 minutos não parece revolucionária em termos absolutos — mas no contexto de uma operação de atendimento ou uma campanha de recuperação de carrinho, aqueles 10 minutos fazem diferença real. Aprendi a medir o valor de melhorias de performance não em termos técnicos, mas em termos de decisão: o que o usuário consegue fazer agora que não conseguia antes?</p>
+    <p>Por fim, o Insights me ensinou sobre <strong>produto como retenção</strong>. Integrar analytics dentro da plataforma foi uma das decisões com maior impacto no longo prazo — não porque aumentou o uso imediato, mas porque aumentou o custo de saída para os clientes. Criar valor que está profundamente integrado ao fluxo de trabalho do cliente é uma das formas mais sustentáveis de construir retenção.</p>
+
+    <div class="tags">
+      <span class="tag">Analytics</span>
+      <span class="tag">Embedded BI</span>
+      <span class="tag">SaaS B2B</span>
+      <span class="tag">E-commerce</span>
+      <span class="tag">IA aplicada</span>
+      <span class="tag">Data Product</span>
+      <span class="tag">Retenção</span>
+      <span class="tag">Cross-functional</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- CASE NAV -->
+<div class="case-nav">
+  <a href="https://afranio.pm/cases/weni-chats.html">← Weni Chats</a>
+  <div class="case-nav-next">
+    <p class="case-nav-next-label">Próximo case</p>
+    <a href="https://afranio.pm/cases/quark-rh.html">Quark RH →</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <p>Hospedado no GitHub Pages</p>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+  document.querySelectorAll('a,button,.tag').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+  const ro = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
