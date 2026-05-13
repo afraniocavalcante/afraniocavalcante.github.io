@@ -63,8 +63,10 @@
     #hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 5vw 6rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 5vw;
     }
     .hero-eyebrow {
       font-size: 0.8rem;
@@ -92,10 +94,11 @@
       font-weight: 300;
       color: var(--ink-mid);
       line-height: 1.75;
+      text-align: center;
     }
     .hero-actions {
       margin-top: 2.5rem;
-      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;
+      display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: center;
     }
     .btn {
       display: inline-flex; align-items: center; gap: 0.4rem;
@@ -223,37 +226,54 @@
       gap: 1.5rem;
     }
     .pt-card {
-      background: var(--surface-alt);
+      background: #fff;
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: transform 0.2s, border-color 0.2s;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
     }
-    .pt-card:hover { transform: translateY(-3px); border-color: #ccc; }
+    .pt-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+    .pt-card-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+    .pt-card-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
     .pt-number {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       color: var(--ink-light);
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.75rem;
     }
     .pt-title {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: -0.01em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.65rem;
     }
     .pt-body {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 300;
       color: var(--ink-mid);
       line-height: 1.75;
+      flex: 1;
     }
     .pt-impact {
       margin-top: 1.25rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
-      color: var(--ink);
+      color: var(--ink-light);
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
       display: flex; align-items: center; gap: 0.4rem;
     }
     .pt-impact::before {
@@ -449,37 +469,46 @@
     <p class="section-label">Cases</p>
     <div class="pt-grid">
 
-      <a href="cases/weni-chats.html" class="pt-card" style="text-decoration:none; color:inherit; display:block;">
-        <p class="pt-number">01</p>
-        <h3 class="pt-title">Weni Chats</h3>
-        <p class="pt-body">
-          Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni,
-          integrando interações automatizadas e humanas em um único fluxo coeso — do discovery
-          à migração de toda a base de clientes.
-        </p>
-        <p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p>
+      <a href="cases/weni-chats.html" class="pt-card" style="text-decoration:none; color:inherit;">
+        <img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" />
+        <div class="pt-card-body">
+          <p class="pt-number">01</p>
+          <h3 class="pt-title">Weni Chats</h3>
+          <p class="pt-body">
+            Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni,
+            integrando interações automatizadas e humanas em um único fluxo coeso — do discovery
+            à migração de toda a base de clientes.
+          </p>
+          <p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p>
+        </div>
       </a>
 
-      <a href="cases/weni-insights.html" class="pt-card" style="text-decoration:none; color:inherit; display:block;">
-        <p class="pt-number">02</p>
-        <h3 class="pt-title">Weni Insights</h3>
-        <p class="pt-body">
-          Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência
-          artificial para gerar insights acionáveis para equipes e gestores — transformando dados
-          brutos em decisões estratégicas.
-        </p>
-        <p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p>
+      <a href="cases/weni-insights.html" class="pt-card" style="text-decoration:none; color:inherit;">
+        <img src="images/insights.png" alt="Weni Insights" class="pt-card-image" />
+        <div class="pt-card-body">
+          <p class="pt-number">02</p>
+          <h3 class="pt-title">Weni Insights</h3>
+          <p class="pt-body">
+            Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência
+            artificial para gerar insights acionáveis para equipes e gestores — transformando dados
+            brutos em decisões estratégicas.
+          </p>
+          <p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p>
+        </div>
       </a>
 
-      <a href="cases/quark-rh.html" class="pt-card" style="text-decoration:none; color:inherit; display:block;">
-        <p class="pt-number">03</p>
-        <h3 class="pt-title">Quark RH</h3>
-        <p class="pt-body">
-          Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery,
-          priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão
-          de ponto, equipes e dados de RH.
-        </p>
-        <p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p>
+      <a href="cases/quark-rh.html" class="pt-card" style="text-decoration:none; color:inherit;">
+        <img src="images/quarkrh.png" alt="Quark RH" class="pt-card-image" style="object-fit: contain; background: #E8920A;" />
+        <div class="pt-card-body">
+          <p class="pt-number">03</p>
+          <h3 class="pt-title">Quark RH</h3>
+          <p class="pt-body">
+            Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery,
+            priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão
+            de ponto, equipes e dados de RH.
+          </p>
+          <p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p>
+        </div>
       </a>
 
     </div>
