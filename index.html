@@ -67,33 +67,56 @@
       align-items: center;
       text-align: center;
       padding: 0 5vw;
+      position: relative;
+      overflow: hidden;
     }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cg fill='none' stroke='%23111110' stroke-opacity='0.055' stroke-width='1'%3E%3C!-- TOP LEFT: sparkline --%3E%3Cpolyline points='30,140 65,110 100,125 135,85 170,95 205,60 240,75' stroke-width='1.5' stroke-opacity='0.07'/%3E%3Ccircle cx='205' cy='60' r='3' fill='%23111110' fill-opacity='0.07' stroke='none'/%3E%3Crect x='30' y='155' width='60' height='5' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='30' y='166' width='40' height='4' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- TOP LEFT: small bar chart --%3E%3Crect x='30' y='60' width='10' height='35' rx='1' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='46' y='48' width='10' height='47' rx='1' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='62' y='54' width='10' height='41' rx='1' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='78' y='38' width='10' height='57' rx='1' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='94' y='44' width='10' height='51' rx='1' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- TOP RIGHT: donut arc --%3E%3Ccircle cx='1090' cy='100' r='60' stroke-opacity='0.04' stroke-width='18'/%3E%3Cpath d='M1090 40 A60 60 0 1 1 1039 148' stroke-opacity='0.08' stroke-width='18' stroke-linecap='round'/%3E%3Ccircle cx='1090' cy='100' r='38' stroke-opacity='0.03' stroke-width='1'/%3E%3Crect x='1066' y='94' width='48' height='6' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='1072' y='106' width='36' height='4' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- TOP RIGHT: small labels --%3E%3Crect x='1000' y='40' width='50' height='5' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='1000' y='52' width='36' height='4' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3C!-- BOTTOM LEFT: horizontal bar chart --%3E%3Crect x='30' y='650' width='110' height='7' rx='2' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='30' y='664' width='80' height='7' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='30' y='678' width='140' height='7' rx='2' fill='%23111110' fill-opacity='0.06' stroke='none'/%3E%3Crect x='30' y='692' width='60' height='7' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='30' y='706' width='100' height='7' rx='2' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Crect x='30' y='724' width='90' height='4' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3C!-- BOTTOM LEFT: axis line --%3E%3Cline x1='28' y1='648' x2='28' y2='718' stroke-opacity='0.05'/%3E%3C!-- BOTTOM RIGHT: area chart --%3E%3Cpath d='M900,720 L930,680 L970,695 L1010,650 L1055,660 L1100,620 L1140,630 L1170,600 L1170,740 L900,740 Z' fill='%23111110' fill-opacity='0.025' stroke='none'/%3E%3Cpolyline points='900,720 930,680 970,695 1010,650 1055,660 1100,620 1140,630 1170,600' stroke-width='1.5' stroke-opacity='0.07'/%3E%3Ccircle cx='1010' cy='650' r='3' fill='%23111110' fill-opacity='0.07' stroke='none'/%3E%3Ccircle cx='1100' cy='620' r='3' fill='%23111110' fill-opacity='0.07' stroke='none'/%3E%3C!-- RIGHT MIDDLE: vertical metric stack --%3E%3Crect x='1100' y='340' width='70' height='5' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='1100' y='352' width='50' height='14' rx='2' fill='%23111110' fill-opacity='0.045' stroke='none'/%3E%3Crect x='1100' y='374' width='70' height='5' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3Crect x='1100' y='386' width='50' height='14' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Crect x='1100' y='408' width='70' height='5' rx='2' fill='%23111110' fill-opacity='0.03' stroke='none'/%3E%3Crect x='1100' y='420' width='50' height='14' rx='2' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- LEFT MIDDLE: scatter plot dots --%3E%3Ccircle cx='60' cy='300' r='4' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='90' cy='280' r='6' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='50' cy='340' r='3' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='110' cy='320' r='5' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='75' cy='360' r='4' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='130' cy='290' r='3' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='45' cy='380' r='5' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3Ccircle cx='120' cy='370' r='4' fill='%23111110' fill-opacity='0.05' stroke='none'/%3E%3Ccircle cx='85' cy='410' r='3' fill='%23111110' fill-opacity='0.04' stroke='none'/%3E%3C!-- grid lines subtle --%3E%3Cline x1='0' y1='200' x2='180' y2='200' stroke-opacity='0.03'/%3E%3Cline x1='0' y1='400' x2='180' y2='400' stroke-opacity='0.03'/%3E%3Cline x1='1020' y1='200' x2='1200' y2='200' stroke-opacity='0.03'/%3E%3Cline x1='1020' y1='400' x2='1200' y2='400' stroke-opacity='0.03'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #hero > * { position: relative; z-index: 1; }
     .hero-eyebrow {
       font-size: 0.8rem;
       font-weight: 400;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-light);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
     }
     .hero-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(3.2rem, 8vw, 7rem);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
+      font-size: clamp(4.5rem, 13vw, 11rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
       color: var(--ink);
     }
     .hero-name em {
       font-style: italic;
-      color: var(--ink-mid);
+      color: #BBBBB6;
+    }
+    .hero-line {
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      margin: 2rem auto 0;
+      animation: drawLine 1s ease forwards 0.4s;
+    }
+    @keyframes drawLine {
+      to { width: 120px; }
     }
     .hero-desc {
       margin-top: 2rem;
-      max-width: 520px;
-      font-size: 1.05rem;
+      max-width: 480px;
+      font-size: 1rem;
       font-weight: 300;
       color: var(--ink-mid);
-      line-height: 1.75;
+      line-height: 1.8;
       text-align: center;
     }
     .hero-actions {
@@ -353,8 +376,9 @@
 
   <!-- HERO -->
   <section id="hero">
-    <p class="hero-eyebrow">Product Manager · Brasil</p>
+    <p class="hero-eyebrow">Product Manager</p>
     <h1 class="hero-name">Afrânio<br /><em>Cavalcante</em></h1>
+    <div class="hero-line"></div>
     <p class="hero-desc">
       Transformo complexidade em produtos claros, escaláveis e orientados a impacto.
     </p>
