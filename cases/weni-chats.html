@@ -52,10 +52,6 @@
     .case-meta-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); }
     .case-meta-value { font-size: .95rem; font-weight: 400; color: var(--ink); }
 
-    /* COVER IMAGE - full bleed */
-    .case-cover { width: 100%; aspect-ratio: 16/7; overflow: hidden; }
-    .case-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
     /* STATS BAR */
     .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
     .stat-item { padding: 2.5rem 5vw; border-right: 1px solid var(--border); }
@@ -104,7 +100,7 @@
     .case-nav-next-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
     .case-nav-next-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); }
 
-    footer { max-width: 960px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer { max-width: 960px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
     footer p { font-size: .8rem; color: var(--ink-light); }
 
     @media (max-width: 700px) {
@@ -123,12 +119,22 @@
     }
 
     /* LANG SWITCH */
-    .lang-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 100px; overflow: hidden; }
-    .lang-btn { font-size: .75rem; font-weight: 500; letter-spacing: .04em; padding: .35rem .7rem; background: transparent; border: none; color: var(--ink-light); cursor: pointer; transition: all .2s; font-family: 'DM Sans', sans-serif; }
-    .lang-btn.active { background: var(--ink); color: #fff; }
-    .lang-btn:not(.active):hover { color: var(--ink); }
+    .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; }
+    .footer-lang button.active { color: var(--ink); font-weight: 500; }
+    .footer-lang button:hover { color: var(--ink); }
+    .footer-lang span { color: var(--border); }
+
+    .case-hero .case-breadcrumb,
+    .case-hero .case-title,
+    .case-hero .case-subtitle,
+    .case-hero .case-meta-row,
+    .case-hero .case-stats { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .case-hero .case-subtitle { animation-delay: .1s; }
+    .case-hero .case-meta-row { animation-delay: .2s; }
+    .case-hero .case-stats { animation-delay: .3s; }
+    @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
   </style>
-  <script src="/translations.js"></script>
 </head>
 <body>
 
@@ -142,7 +148,7 @@
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span data-i18n="nav.cv">Baixar CV</span>
   </a>
-  <div class="lang-switch" id="langSwitch">
+  <div class="lang-switch" id="langSwitch" style="display:none">
     <button class="lang-btn active" data-lang="pt" onclick="setLang('pt')">PT</button>
     <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
   </div>
@@ -150,10 +156,10 @@
 
 <!-- HERO -->
 <div class="case-hero">
-  <p class="case-breadcrumb reveal"><span data-i18n="breadcrumb"></span></p>
-  <h1 class="case-title reveal"><span data-i18n="title"></span></h1>
-  <p class="case-subtitle reveal reveal-delay-1"><span data-i18n="subtitle"></span></p>
-  <div class="case-meta-row reveal reveal-delay-2">
+  <p class="case-breadcrumb"><span data-i18n="breadcrumb"></span></p>
+  <h1 class="case-title"><span data-i18n="title"></span></h1>
+  <p class="case-subtitle"><span data-i18n="subtitle"></span></p>
+  <div class="case-meta-row">
     <div class="case-meta-item">
       <span class="case-meta-label"><span data-i18n="meta.company.label">Empresa</span></span>
       <span class="case-meta-value"><span data-i18n="meta.company.value">Weni by VTEX</span></span>
@@ -171,11 +177,6 @@
       <span class="case-meta-value">Backend, Frontend, UX/UI</span>
     </div>
   </div>
-</div>
-
-<!-- COVER -->
-<div class="case-cover">
-  <img src="https://afranio.pm/images/Weni-chats.webp" alt="Weni Chats" />
 </div>
 
 <!-- STATS -->
@@ -201,7 +202,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>01</em></p>
     <p class="case-section-label" data-i18n="s1.label">Contexto</p>
-    <h2>Uma plataforma de IA que precisava de um <em>lado humano</em></h2>
+    <h2 data-i18n="s1.h2">Uma plataforma de IA que precisava de um <em>lado humano</em></h2>
     <p data-i18n="s1.p1">A Weni é uma plataforma SaaS de automação conversacional: empresas a utilizam para criar agentes de IA e chatbots que atendem clientes via WhatsApp, Telegram, Instagram, SMS e outros canais digitais. O produto funcionava bem para automação — mas havia um problema estrutural no momento em que o bot precisava passar a conversa para um humano.</p>
     <p data-i18n="s1.p2">O <strong>handoff bot → humano</strong> era gerenciado por um software terceirizado, integrado à plataforma via parceria. Esse software cumpria seu papel, mas trazia consequências cada vez mais graves: era difícil de escalar, gerava custos crescentes e estava fora do controle do time de produto. Qualquer melhoria dependia de um terceiro. Qualquer instabilidade era um risco que não podíamos mitigar.</p>
     <p data-i18n="s1.p3">À medida que a base de clientes crescia, a insustentabilidade ficava mais evidente. Foi nesse contexto que fui contratado para encontrar uma solução.</p>
@@ -211,7 +212,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>02</em></p>
     <p class="case-section-label" data-i18n="s2.label">O problema</p>
-    <h2>Dependência crítica, <em>sem saída clara</em></h2>
+    <h2 data-i18n="s2.h2">Dependência crítica, <em>sem saída clara</em></h2>
     <p data-i18n="s2.p1">O desafio inicial não era de produto — era estratégico. Antes de definir o que construir, precisávamos entender se deveríamos construir. Três caminhos estavam na mesa:</p>
 
     <div class="options-list">
@@ -240,7 +241,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>03</em></p>
     <p class="case-section-label" data-i18n="s3.label">Discovery e processo</p>
-    <h2>Mais de 600 conversas antes de <em>escrever uma linha de código</em></h2>
+    <h2 data-i18n="s3.h2">Mais de 600 conversas antes de <em>escrever uma linha de código</em></h2>
     <p data-i18n="s3.p1">Trabalhei com <strong>discovery contínuo</strong> desde o início — o que significa estar permanentemente em contato com clientes, não apenas durante uma fase inicial de pesquisa. O objetivo era duplo: entender as dores reais do trabalho de atendimento e antecipar como as necessidades evoluiriam ao longo do tempo.</p>
     <p data-i18n="s3.p2">Ao longo do projeto, foram realizadas <strong>mais de 600 entrevistas e sessões de teste</strong> com usuários reais — agentes de atendimento, supervisores e gestores de operações de customer service. Esse volume não foi acidental: o produto precisava funcionar bem em contextos de alta pressão, onde cada segundo conta e a interface precisa ser intuitiva sem treinamento extenso.</p>
     <p data-i18n="s3.p3">As descobertas moldaram diretamente as decisões de produto: a arquitetura de filas, o sistema de transferência entre atendentes, a visibilidade do histórico de conversa e a integração nativa com os canais já usados pelos clientes da Weni.</p>
@@ -251,7 +252,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>04</em></p>
     <p class="case-section-label" data-i18n="s4.label">Solução e decisões-chave</p>
-    <h2>Uma central de atendimento humano <em>nativa da plataforma</em></h2>
+    <h2 data-i18n="s4.h2">Uma central de atendimento humano <em>nativa da plataforma</em></h2>
     <p data-i18n="s4.p1">O Weni Chats foi construído como um módulo nativo da plataforma Weni: uma workspace de atendimento humano onde agentes recebem conversas transferidas pelos bots, gerenciam filas, colaboram em equipe e acessam o histórico completo do cliente — tudo sem sair do ecossistema Weni.</p>
     <p data-i18n="s4.p2">Algumas decisões centrais que moldaram o produto:</p>
     <p data-i18n="s4.p3"><strong>Lançamento via MVP segmentado.</strong> Em vez de tentar migrar todos os clientes de uma vez, lançamos um MVP funcional para metade da base primeiro. Essa decisão foi deliberada: queria aprender com clientes reais antes de comprometer todos. O MVP precisava ser simples, mas não podia ser fraco — tinha que ser bom o suficiente para que os clientes escolhessem ficar.</p>
@@ -263,7 +264,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>05</em></p>
     <p class="case-section-label" data-i18n="s5.label">Impacto</p>
-    <h2>De ferramenta de nicho <em>a rotina diária</em></h2>
+    <h2 data-i18n="s5.h2">De ferramenta de nicho <em>a rotina diária</em></h2>
     <p data-i18n="s5.p1">Ao final do primeiro ano após o lançamento, <strong>100% da base de clientes havia migrado</strong> para o Weni Chats — incluindo os clientes mais complexos, com operações de atendimento de maior volume e múltiplos atendentes simultâneos.</p>
     <p data-i18n="s5.p2">O impacto mais revelador não foi a migração em si, mas o que ela revelou sobre o comportamento dos usuários. A plataforma Weni, que antes era usada principalmente por alguns funcionários para configurar e gerenciar os bots, passou a fazer parte da <strong>rotina diária da maioria dos usuários</strong> de cada cliente. As visitas diárias médias por cliente cresceram mais de <strong>300%</strong>.</p>
     <p data-i18n="s5.p3">Esse número diz mais do que parece: significa que o Weni Chats transformou o tipo de produto que a Weni é. De uma ferramenta de back-office usada por especialistas, para uma plataforma operacional usada por toda a equipe de atendimento. Isso tem implicações diretas em retenção, expansão de receita e posicionamento competitivo.</p>
@@ -276,7 +277,7 @@
   <div class="case-section reveal">
     <p class="case-section-number"><em>06</em></p>
     <p class="case-section-label" data-i18n="s6.label">Aprendizados</p>
-    <h2>O que esse projeto <em>me ensinou</em></h2>
+    <h2 data-i18n="s6.h2">O que esse projeto <em>me ensinou</em></h2>
     <p data-i18n="s6.p1">A decisão de construir do zero parece óbvia em retrospecto, mas não era no início. Um dos aprendizados mais valiosos foi sobre <strong>como enquadrar decisões estratégicas</strong>: apresentar as três opções explicitamente, com seus trade-offs, foi o que permitiu ao time e à liderança alinharem expectativas antes de começar — e sustentar o compromisso durante os momentos mais difíceis da execução.</p>
     <p data-i18n="s6.p2">Outro aprendizado importante foi sobre <strong>migração como produto</strong>. A migração não é um projeto de engenharia — é um problema de produto. Os clientes precisam ver valor suficiente para mudar um hábito consolidado. Isso exigiu tanto a qualidade técnica do novo produto quanto uma estratégia de comunicação e suporte que tornasse a transição segura para eles.</p>
     <p data-i18n="s6.p3">Por fim, a escala do discovery — mais de 600 conversas — confirmou algo que já acredito: <strong>produto bom não vem de intuição, vem de contexto acumulado</strong>. Cada entrevista sozinha parece marginal; o conjunto delas é o que dá segurança para tomar decisões difíceis.</p>
@@ -306,7 +307,12 @@
 
 <footer>
   <p>© 2026 Afrânio Cavalcante</p>
-  <p data-i18n="footer.hosted">Hospedado no GitHub Pages</p>
+  <div class="footer-lang">
+    <button data-lang="en" onclick="setLang('en')">English</button>
+    <span>·</span>
+    <button data-lang="pt" onclick="setLang('pt')">Português</button>
+  </div>
+  <div style="display:flex;justify-content:flex-end"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
 </footer>
 
 <script>
@@ -327,6 +333,29 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+  // Force-reveal elements already in viewport on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if(rect.top < window.innerHeight) el.classList.add('visible');
+    });
+  });
+
+  // ── FOOTER LANG SYNC ────────────────────────────────────
+  (function(){
+    const ftBtns = document.querySelectorAll('.footer-lang button');
+    function updateFooter(lang){
+      ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    }
+    const origSetLang = window.setLang;
+    if(origSetLang){
+      window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); };
+    }
+    const stored = localStorage.getItem('preferred-lang') || (navigator.language||'').slice(0,2);
+    updateFooter(stored === 'en' ? 'en' : 'pt');
+    ftBtns.forEach(b => b.addEventListener('click', () => updateFooter(b.dataset.lang)));
+  })();
 </script>
+<script src="/translations.js"></script>
 </body>
 </html>
