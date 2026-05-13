@@ -34,7 +34,7 @@ window.SITE_TRANSLATIONS = {
       "cases.quark.body": "Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.",
       "contact.label": "Contato",
       "contact.headline": "Vamos<br /><em>conversar?</em>",
-      "contact.location": "Product Manager em São Paulo, Brasil.",
+      "contact.location": "São Paulo · Remote",
       "contact.wa": "Mandar mensagem",
       "footer.hosted": "Hospedado no GitHub Pages"
     },
@@ -63,7 +63,7 @@ window.SITE_TRANSLATIONS = {
       "cases.quark.body": "Worked as PM on a strategic people management platform, leading discovery, roadmap prioritization, and feature development to help companies manage timekeeping, teams, and HR data.",
       "contact.label": "Contact",
       "contact.headline": "Let's<br /><em>talk?</em>",
-      "contact.location": "Product Manager based in São Paulo, Brazil.",
+      "contact.location": "São Paulo · Remote",
       "contact.wa": "Send a message",
       "footer.hosted": "Hosted on GitHub Pages"
     }
