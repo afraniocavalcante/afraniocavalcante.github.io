@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quark RH — Afrânio Cavalcante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --ink: #111110; --ink-mid: #555552; --ink-light: #999994; --surface: #FAFAF8; --surface-alt: #F2F2EE; --border: rgba(0,0,0,0.09); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(250,250,248,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.85rem; color: var(--ink-mid); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-back:hover { color: var(--ink); }
+    .hero-image { margin-top: 64px; width: 100%; height: 420px; object-fit: cover; display: block; }
+    .hero { padding: 3.5rem 5vw 3rem; border-bottom: 1px solid var(--border); max-width: 860px; }
+    .case-eyebrow { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.25rem; }
+    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.02em; }
+    .case-title em { font-style: italic; color: var(--ink-mid); }
+    .case-subtitle { margin-top: 1.5rem; font-size: 1.05rem; font-weight: 300; color: var(--ink-mid); line-height: 1.75; max-width: 600px; }
+    .metrics { display: flex; flex-wrap: wrap; gap: 3rem; padding: 3rem 5vw; border-bottom: 1px solid var(--border); }
+    .metric { display: flex; flex-direction: column; gap: 0.25rem; }
+    .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.2rem; letter-spacing: -0.02em; }
+    .metric-label { font-size: 0.8rem; color: var(--ink-light); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+    .content { max-width: 720px; padding: 5rem 5vw; }
+    .content section { margin-bottom: 4rem; }
+    .content h2 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 1.25rem; }
+    .content p { font-size: 1rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1rem; }
+    .placeholder { background: var(--surface-alt); border: 1px dashed rgba(0,0,0,0.15); border-radius: 8px; padding: 1.25rem 1.5rem; color: var(--ink-light); font-size: 0.9rem; font-style: italic; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+    .nav-cases { display: flex; justify-content: flex-start; padding: 2rem 5vw; border-top: 1px solid var(--border); }
+    .nav-cases a { font-size: 0.9rem; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .nav-cases a:hover { color: var(--ink); }
+    footer { padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 0.8rem; color: var(--ink-light); }
+    @media (max-width: 700px) { .hero-image { height: 220px; } .metrics { gap: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">AC</a>
+    <a href="../index.html#cases" class="nav-back">← Voltar ao portfólio</a>
+  </nav>
+
+  <img src="../images/quarkrh.png" alt="Quark RH" class="hero-image" />
+
+  <div class="hero">
+    <p class="case-eyebrow">Product Thinking · QuarkRH · 2024 — 2025</p>
+    <h1 class="case-title">Quark<br /><em>RH</em></h1>
+    <p class="case-subtitle">Plataforma de gestão estratégica de pessoas — conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.</p>
+    <div class="tags">
+      <span class="tag">RH Tech</span>
+      <span class="tag">SaaS</span>
+      <span class="tag">Discovery</span>
+      <span class="tag">Roadmap</span>
+      <span class="tag">B2B</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span class="metric-value">+40k</span><span class="metric-label">usuários na plataforma</span></div>
+    <div class="metric"><span class="metric-value">+3,2M</span><span class="metric-label">registros de ponto processados</span></div>
+    <div class="metric"><span class="metric-value">3</span><span class="metric-label">módulos de produto desenvolvidos</span></div>
+  </div>
+
+  <div class="content">
+    <section>
+      <h2>Contexto</h2>
+      <p class="placeholder">Descreva aqui o contexto do produto: qual era o estágio da plataforma QuarkRH quando você entrou, quais eram os principais desafios do negócio e quais oportunidades de produto foram identificadas.</p>
+    </section>
+    <section>
+      <h2>O problema</h2>
+      <p class="placeholder">Descreva os problemas centrais que você foi resolver: dores das empresas na gestão de pessoas, limitações da plataforma existente, feedbacks de clientes ou dados de uso que evidenciavam onde estava a maior dor.</p>
+    </section>
+    <section>
+      <h2>Discovery e processo</h2>
+      <p class="placeholder">Explique como foi conduzido o discovery: entrevistas com clientes e usuários internos, análise de tickets de suporte, benchmarks com concorrentes, e como as prioridades foram definidas a partir dessas descobertas.</p>
+    </section>
+    <section>
+      <h2>Solução e decisões-chave</h2>
+      <p class="placeholder">Descreva os 3 módulos desenvolvidos, as principais decisões de produto em cada um, os trade-offs feitos e como o roadmap foi evoluindo com base em dados de uso e alinhamento com o negócio.</p>
+    </section>
+    <section>
+      <h2>Impacto</h2>
+      <p class="placeholder">Detalhe os resultados: +40 mil usuários, +3,2 milhões de registros de ponto processados, e outros impactos qualitativos ou quantitativos que tenham sido observados ao longo da sua atuação.</p>
+    </section>
+    <section>
+      <h2>Aprendizados</h2>
+      <p class="placeholder">O que você faria diferente? O que esse projeto te ensinou sobre construir produto para o segmento de RH, sobre gestão de stakeholders e sobre evoluir uma plataforma com múltiplos módulos em paralelo?</p>
+    </section>
+  </div>
+
+  <div class="nav-cases">
+    <a href="weni-insights.html">← Weni Insights</a>
+  </div>
+
+  <footer>
+    <p>© 2026 Afrânio Cavalcante</p>
+    <p>Hospedado no GitHub Pages</p>
+  </footer>
+
+</body>
+</html>

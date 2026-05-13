@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weni Insights — Afrânio Cavalcante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --ink: #111110; --ink-mid: #555552; --ink-light: #999994; --surface: #FAFAF8; --surface-alt: #F2F2EE; --border: rgba(0,0,0,0.09); }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(250,250,248,0.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 0.85rem; color: var(--ink-mid); text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+    .nav-back:hover { color: var(--ink); }
+    .hero-image { margin-top: 64px; width: 100%; height: 420px; object-fit: cover; display: block; }
+    .hero { padding: 3.5rem 5vw 3rem; border-bottom: 1px solid var(--border); max-width: 860px; }
+    .case-eyebrow { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.25rem; }
+    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.02em; }
+    .case-title em { font-style: italic; color: var(--ink-mid); }
+    .case-subtitle { margin-top: 1.5rem; font-size: 1.05rem; font-weight: 300; color: var(--ink-mid); line-height: 1.75; max-width: 600px; }
+    .metrics { display: flex; flex-wrap: wrap; gap: 3rem; padding: 3rem 5vw; border-bottom: 1px solid var(--border); }
+    .metric { display: flex; flex-direction: column; gap: 0.25rem; }
+    .metric-value { font-family: 'DM Serif Display', serif; font-size: 2.2rem; letter-spacing: -0.02em; }
+    .metric-label { font-size: 0.8rem; color: var(--ink-light); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+    .content { max-width: 720px; padding: 5rem 5vw; }
+    .content section { margin-bottom: 4rem; }
+    .content h2 { font-family: 'DM Serif Display', serif; font-size: 1.7rem; letter-spacing: -0.01em; margin-bottom: 1.25rem; }
+    .content p { font-size: 1rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1rem; }
+    .placeholder { background: var(--surface-alt); border: 1px dashed rgba(0,0,0,0.15); border-radius: 8px; padding: 1.25rem 1.5rem; color: var(--ink-light); font-size: 0.9rem; font-style: italic; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+    .nav-cases { display: flex; justify-content: space-between; padding: 2rem 5vw; border-top: 1px solid var(--border); }
+    .nav-cases a { font-size: 0.9rem; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .nav-cases a:hover { color: var(--ink); }
+    footer { padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 0.8rem; color: var(--ink-light); }
+    @media (max-width: 700px) { .hero-image { height: 220px; } .metrics { gap: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="../index.html" class="nav-logo">AC</a>
+    <a href="../index.html#cases" class="nav-back">← Voltar ao portfólio</a>
+  </nav>
+
+  <img src="../images/insights.png" alt="Weni Insights" class="hero-image" />
+
+  <div class="hero">
+    <p class="case-eyebrow">Product Thinking · Weni by VTEX · 2021 — 2024</p>
+    <h1 class="case-title">Weni<br /><em>Insights</em></h1>
+    <p class="case-subtitle">Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência artificial para gerar insights acionáveis para equipes e gestores.</p>
+    <div class="tags">
+      <span class="tag">Analytics</span>
+      <span class="tag">Inteligência Artificial</span>
+      <span class="tag">SaaS</span>
+      <span class="tag">Data-Informed</span>
+      <span class="tag">B2B</span>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span class="metric-value">+200k</span><span class="metric-label">conversas analisadas no 1º mês</span></div>
+    <div class="metric"><span class="metric-value">IA</span><span class="metric-label">insights gerados automaticamente</span></div>
+    <div class="metric"><span class="metric-value">Top</span><span class="metric-label">adoção pelos principais clientes</span></div>
+  </div>
+
+  <div class="content">
+    <section>
+      <h2>Contexto</h2>
+      <p class="placeholder">Descreva aqui o contexto: qual era a demanda dos clientes por dados e analytics, qual era o estado da plataforma Weni em termos de visibilidade de dados, e o que motivou a criação do módulo Insights.</p>
+    </section>
+    <section>
+      <h2>O problema</h2>
+      <p class="placeholder">Descreva o problema que os gestores e equipes enfrentavam: falta de visibilidade sobre as conversas, dificuldade de identificar padrões, tomada de decisão sem dados estruturados.</p>
+    </section>
+    <section>
+      <h2>Discovery e processo</h2>
+      <p class="placeholder">Explique como foi conduzido o discovery: entrevistas com gestores de atendimento, análise de comportamento na plataforma, benchmarks com ferramentas de analytics existentes, e como o uso de IA foi validado como caminho.</p>
+    </section>
+    <section>
+      <h2>Solução e decisões-chave</h2>
+      <p class="placeholder">Descreva o que foi construído: quais métricas foram priorizadas, como a IA foi aplicada para geração de insights, quais funcionalidades foram deixadas de fora e por quê.</p>
+    </section>
+    <section>
+      <h2>Impacto</h2>
+      <p class="placeholder">Detalhe os resultados: +200 mil conversas analisadas no primeiro mês, adoção pelos principais clientes, e outros impactos qualitativos ou quantitativos observados.</p>
+    </section>
+    <section>
+      <h2>Aprendizados</h2>
+      <p class="placeholder">O que você faria diferente? O que esse projeto te ensinou sobre construir produtos com IA, sobre analytics e sobre as necessidades reais de gestores de atendimento?</p>
+    </section>
+  </div>
+
+  <div class="nav-cases">
+    <a href="weni-chats.html">← Weni Chats</a>
+    <a href="quark-rh.html">Próximo case: Quark RH →</a>
+  </div>
+
+  <footer>
+    <p>© 2026 Afrânio Cavalcante</p>
+    <p>Hospedado no GitHub Pages</p>
+  </footer>
+
+</body>
+</html>
