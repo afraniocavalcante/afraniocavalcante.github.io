@@ -52,12 +52,17 @@
 
     /* hero text */
     .hero-eyebrow {
-      font-size: .75rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+      font-size: 1rem; font-weight: 400; letter-spacing: .01em;
       color: var(--ink-mid);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       opacity: 0; transform: translateY(12px);
       animation: fadeUp .7s ease forwards .1s;
+      display: inline-flex; align-items: center; gap: .75rem; flex-wrap: wrap; justify-content: center;
     }
+    .hero-eyebrow .dot {
+      width: 3px; height: 3px; border-radius: 50%; background: var(--ink-light); display: inline-block;
+    }
+    .hero-eyebrow .role { font-weight: 400; }
     .hero-name {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(2.8rem,7vw,5.5rem);
@@ -65,7 +70,7 @@
       opacity: 0; transform: translateY(16px);
       animation: fadeUp .8s ease forwards .25s;
     }
-    .hero-name em { font-style: italic; color: #BBBBB6; }
+    .hero-name em { font-style: italic; color: #888884; }
     .hero-line { width: 0; height: 1px; background: var(--ink); margin: 2rem auto 0; animation: drawLine 1s ease forwards .6s; }
     .hero-desc {
       margin-top: 2rem; max-width: 480px;
@@ -199,7 +204,7 @@
 
 <section id="hero">
   <canvas id="hero-canvas"></canvas>
-  <p class="hero-eyebrow">Product Manager</p>
+  <p class="hero-eyebrow"><span class="role">Product Manager</span> <span class="dot"></span> SaaS <span class="dot"></span> AI Products</p>
   <h1 class="hero-name">Afrânio<br /><em>Cavalcante</em></h1>
   <div class="hero-line"></div>
   <p class="hero-desc">Transformo complexidade em produtos claros, escaláveis e orientados a impacto.</p>
