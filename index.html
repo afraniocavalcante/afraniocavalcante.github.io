@@ -445,18 +445,24 @@
       if (link) link.href = CV_FILES[lang] || CV_FILES.pt;
     }
 
-    // ── FOOTER LANG SYNC ────────────────────────────────────
-  (function(){
-    const ftBtns = document.querySelectorAll('.footer-lang button');
-    function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
-    const origSetLang = window.setLang;
-    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
-    const stored = localStorage.getItem('preferred-lang') || (navigator.language||'').slice(0,2);
-    const initLang = stored === 'en' ? 'en' : 'pt';
-    updateFooter(initLang);
-    updateCvLink(initLang);
-    ftBtns.forEach(b => b.addEventListener('click', () => updateFooter(b.dataset.lang)));
-  })();
+    // ── FOOTER LANG SYNC
+    (function(){
+      const ftBtns = document.querySelectorAll('.footer-lang button');
+      function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
+      const origSetLang = window.setLang;
+      if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
+
+      // Determina idioma inicial e aplica via setLang() para garantir consistência total
+      const stored = localStorage.getItem('preferred-lang');
+      const browser = (navigator.language || 'pt').toLowerCase();
+      const initLang = stored || (browser.startsWith('en') ? 'en' : 'pt');
+
+      // Aplica via setLang para sincronizar translations + footer + CV link
+      if (window.setLang) window.setLang(initLang);
+      else { updateFooter(initLang); updateCvLink(initLang); }
+
+      ftBtns.forEach(b => b.addEventListener('click', () => { window.setLang && window.setLang(b.dataset.lang); }));
+    })();
 </script>
 </body>
 </html>
