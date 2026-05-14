@@ -14,24 +14,31 @@
       --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
       --surface: #FAFAF8; --surface-alt: #F2F2EE;
       --border: rgba(0,0,0,0.09);
+      --container-max: 960px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; cursor: none; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
 
-    /* CURSOR */
-    .cursor { position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
-    .cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
-    .cursor.hover { width: 14px; height: 14px; }
-    .cursor-ring.hover { width: 48px; height: 48px; }
+    /* CURSOR — desktop only */
+    .cursor, .cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor { display: block; position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+      .cursor-ring { display: block; position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+      .cursor.hover { width: 14px; height: 14px; }
+      .cursor-ring.hover { width: 48px; height: 48px; }
+    }
 
     /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 5vw; background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
-    nav.scrolled { padding: .9rem 5vw; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem var(--pad-x); background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding-top: .9rem; padding-bottom: .9rem; }
     .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
-    .nav-left { display: flex; align-items: center; gap: 1.5rem; }
-    .nav-back { font-size: .8rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: flex; align-items: center; gap: .4rem; transition: color .2s; }
+    .nav-left { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.5rem); flex-wrap: wrap; }
+    .nav-back { font-size: clamp(.72rem, 1vw, .8rem); font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; white-space: nowrap; min-height: 36px; }
     .nav-back:hover { color: var(--ink); }
-    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; font-family: 'DM Sans', sans-serif; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; min-height: 36px; }
     .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
 
     /* REVEAL */
@@ -42,83 +49,64 @@
     .reveal-delay-3 { transition-delay: .3s; }
 
     /* HERO */
-    .case-hero { padding: 9rem 5vw 5rem; border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; }
-    .case-breadcrumb { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .case-hero { padding: clamp(6rem, 12vw, 9rem) var(--pad-x) clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; }
+    .case-breadcrumb { font-size: clamp(.7rem, .9vw, .75rem); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
     .case-breadcrumb span { color: var(--border); }
-    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.5rem; }
+    .case-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.5rem; word-break: break-word; }
     .case-title em { font-style: italic; color: #BBBBB6; }
-    .case-subtitle { font-size: 1.1rem; font-weight: 300; color: var(--ink-mid); max-width: 680px; line-height: 1.7; margin-bottom: 3rem; }
-    .case-meta-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.75rem 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .case-subtitle { font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--ink-mid); max-width: 680px; line-height: 1.7; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .case-meta-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 1.75rem 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .case-meta-item { display: flex; flex-direction: column; gap: .3rem; }
     .case-meta-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); }
-    .case-meta-value { font-size: .95rem; font-weight: 400; color: var(--ink); }
+    .case-meta-value { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); }
 
     /* STATS BAR */
-    .stats-bar { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--border); max-width: 960px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
-    .stat-item { padding: 2.5rem 5vw; border-right: 1px solid var(--border); }
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .stat-item { padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem); border-right: 1px solid var(--border); border-bottom: 1px solid transparent; }
     .stat-item:last-child { border-right: none; }
-    .stat-number { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.03em; line-height: 1; margin-bottom: .4rem; }
-    .stat-label { font-size: .82rem; font-weight: 300; color: var(--ink-mid); line-height: 1.4; }
+    .stat-number { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -.03em; line-height: 1; margin-bottom: .4rem; }
+    .stat-label { font-size: clamp(.78rem, 1vw, .82rem); font-weight: 300; color: var(--ink-mid); line-height: 1.4; }
 
     /* CONTENT */
-    .case-body { max-width: 820px; margin: 0 auto; padding: 6rem 5vw 4rem; }
-    .case-section { margin-bottom: 6rem; position: relative; }
+    .case-body { max-width: 820px; margin: 0 auto; padding: clamp(3.5rem, 8vw, 6rem) var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+    .case-section { margin-bottom: clamp(3rem, 8vw, 6rem); position: relative; }
     .case-section:last-child { margin-bottom: 0; }
-    .case-section-number { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 4.5rem; line-height: 1; color: var(--ink-light); opacity: .35; margin-bottom: .5rem; letter-spacing: -.02em; }
+    .case-section-number { font-family: 'DM Serif Display', serif; font-style: italic; font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 1; color: var(--ink-light); opacity: .35; margin-bottom: .5rem; letter-spacing: -.02em; }
     .case-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.25rem; display: block; }
-    .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.5rem; }
+    .case-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.4rem, 3vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.5rem; word-break: break-word; }
     .case-section h2 em { font-style: italic; color: var(--ink-mid); }
-    .case-section p { font-size: 1.02rem; font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; text-align: justify; hyphens: auto; }
+    .case-section p { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; text-align: justify; hyphens: auto; }
     .case-section p:last-child { margin-bottom: 0; }
     .case-section p strong { font-weight: 500; color: var(--ink); }
 
     /* CALLOUT */
-    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: 1.5rem 2rem; border-radius: 0 8px 8px 0; margin: 2rem 0; }
-    .callout p { font-size: .95rem; font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; text-align: justify; hyphens: auto; }
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; text-align: justify; hyphens: auto; }
 
-    /* PROBLEMS GRID */
-    .problems-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin: 1.5rem 0; }
-    .problem-item { padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 12px; }
-    .problem-item p { font-size: .88rem; font-weight: 300; color: var(--ink-mid); line-height: 1.5; margin: 0; text-align: left; hyphens: none; }
-    .problem-item strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: .25rem; font-size: .82rem; letter-spacing: .02em; }
-
-    /* DIVIDER */
-    .case-divider { display: none; }
+    /* PROBLEMS GRID — responsivo */
+    .problems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: .75rem; margin: 1.5rem 0; }
+    .problem-item { padding: clamp(1rem, 2vw, 1.25rem) clamp(1.1rem, 2vw, 1.5rem); border: 1px solid var(--border); border-radius: 12px; }
+    .problem-item p { font-size: clamp(.82rem, 1vw, .88rem); font-weight: 300; color: var(--ink-mid); line-height: 1.5; margin: 0; text-align: left; hyphens: none; }
+    .problem-item strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: .25rem; font-size: clamp(.78rem, .95vw, .82rem); letter-spacing: .02em; }
 
     /* TAGS */
     .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
-    .tag { font-size: .78rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+    .tag { font-size: clamp(.7rem, .9vw, .78rem); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
 
     /* NAV CASE */
-    .case-nav { max-width: 960px; margin: 0 auto; padding: 3rem 5vw; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .case-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: flex; align-items: center; gap: .4rem; transition: color .2s; }
+    .case-nav { max-width: var(--container-max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--pad-x); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .case-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; min-height: 36px; }
     .case-nav a:hover { color: var(--ink); }
     .case-nav-next { text-align: right; }
     .case-nav-next-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
-    .case-nav-next-title { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); }
 
-    footer { max-width: 960px; margin: 0 auto; padding: 2rem 5vw; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; }
+    footer { max-width: var(--container-max); margin: 0 auto; padding: 2rem var(--pad-x); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
     footer p { font-size: .8rem; color: var(--ink-light); }
-
-    @media (max-width: 700px) {
-      body { cursor: auto; }
-      .cursor, .cursor-ring { display: none; }
-      .stats-bar { grid-template-columns: 1fr; }
-      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-item:last-child { border-bottom: none; }
-      .case-hero { padding: 7rem 5vw 3rem; }
-      .case-body { padding: 4rem 5vw 2rem; }
-      .case-section { margin-bottom: 4rem; }
-      .case-section-number { font-size: 3rem; }
-      .case-meta-row { grid-template-columns: 1fr; gap: 1.25rem; }
-      .problems-grid { grid-template-columns: 1fr; }
-      .nav-cv span { display: none; }
-      .nav-cv { padding: .4rem .6rem; }
-    }
+    .footer-right { display: flex; justify-content: flex-end; }
 
     /* LANG SWITCH */
     .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
-    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; min-height: 24px; }
     .footer-lang button.active { color: var(--ink); font-weight: 500; }
     .footer-lang button:hover { color: var(--ink); }
     .footer-lang span { color: var(--border); }
@@ -126,12 +114,29 @@
     .case-hero .case-breadcrumb,
     .case-hero .case-title,
     .case-hero .case-subtitle,
-    .case-hero .case-meta-row,
-    .case-hero .case-stats { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .case-hero .case-meta-row { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
     .case-hero .case-subtitle { animation-delay: .1s; }
     .case-hero .case-meta-row { animation-delay: .2s; }
-    .case-hero .case-stats { animation-delay: .3s; }
     @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* ─────────── BREAKPOINTS ─────────── */
+    @media (max-width: 900px) {
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .65rem; min-width: 36px; justify-content: center; }
+    }
+    @media (max-width: 700px) {
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+      .case-nav { justify-content: center; text-align: center; }
+      .case-nav-next { text-align: center; }
+    }
+    @media (max-width: 420px) {
+      .case-section p { text-align: left; }
+      .callout p { text-align: left; }
+    }
+    @media (min-width: 1600px) {
+      :root { --pad-x: clamp(4rem, 8vw, 8rem); }
+    }
   </style>
 </head>
 <body>
@@ -140,137 +145,126 @@
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav id="nav">
-  <div class="nav-left"><a href="https://afranio.pm" class="nav-logo">AC</a>
-  <a href="https://afranio.pm#cases" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a></div>
-  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv">
+  <div class="nav-left">
+    <a href="https://afranio.pm" class="nav-logo">AC</a>
+    <a href="https://afranio.pm#cases" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
+  </div>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV">
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span data-i18n="nav.cv">Baixar CV</span>
   </a>
-  <div class="lang-switch" id="langSwitch" style="display:none">
-    <button class="lang-btn active" data-lang="pt" onclick="setLang('pt')">PT</button>
-    <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
-  </div>
 </nav>
 
-<!-- HERO -->
 <div class="case-hero">
   <p class="case-breadcrumb"><span data-i18n="breadcrumb"></span></p>
   <h1 class="case-title"><span data-i18n="title"></span></h1>
   <p class="case-subtitle"><span data-i18n="subtitle"></span></p>
   <div class="case-meta-row">
     <div class="case-meta-item">
-      <span class="case-meta-label"><span data-i18n="meta.company.label">Empresa</span></span>
-      <span class="case-meta-value"><span data-i18n="meta.company.value">Weni by VTEX</span></span>
+      <span class="case-meta-label" data-i18n="meta.company.label">Empresa</span>
+      <span class="case-meta-value" data-i18n="meta.company.value">Weni by VTEX</span>
     </div>
     <div class="case-meta-item">
-      <span class="case-meta-label"><span data-i18n="meta.period.label">Período</span></span>
-      <span class="case-meta-value">2021 — 2024 (3 anos)</span>
+      <span class="case-meta-label" data-i18n="meta.period.label">Período</span>
+      <span class="case-meta-value" data-i18n="meta.period.value">2021 — 2024 (3 anos)</span>
     </div>
     <div class="case-meta-item">
-      <span class="case-meta-label"><span data-i18n="meta.role.label">Papel</span></span>
-      <span class="case-meta-value">Product Manager — discovery ao lançamento</span>
+      <span class="case-meta-label" data-i18n="meta.role.label">Papel</span>
+      <span class="case-meta-value" data-i18n="meta.role.value">Product Manager — discovery ao lançamento</span>
     </div>
     <div class="case-meta-item">
-      <span class="case-meta-label"><span data-i18n="meta.focus.label">Foco</span></span>
-      <span class="case-meta-value">Analytics, B2B SaaS, Varejo & E-commerce</span>
+      <span class="case-meta-label" data-i18n="meta.focus.label">Foco</span>
+      <span class="case-meta-value" data-i18n="meta.focus.value">Analytics, B2B SaaS, Varejo & E-commerce</span>
     </div>
   </div>
 </div>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stat-item reveal">
-    <p class="stat-number"><span data-i18n="stat1.num">200k+</span></p>
+    <p class="stat-number" data-i18n="stat1.num">200k+</p>
     <p class="stat-label" data-i18n="stat1.label">conversas analisadas<br />na primeira semana do MVP</p>
   </div>
   <div class="stat-item reveal reveal-delay-1">
-    <p class="stat-number">3×</p>
+    <p class="stat-number" data-i18n="stat2.num">3×</p>
     <p class="stat-label" data-i18n="stat2.label">mais rápido no acesso<br />aos dados (15 min → 5 min)</p>
   </div>
   <div class="stat-item reveal reveal-delay-2">
-    <p class="stat-number">0</p>
+    <p class="stat-number" data-i18n="stat3.num">0</p>
     <p class="stat-label" data-i18n="stat3.label">ferramentas externas<br />necessárias para análise</p>
   </div>
 </div>
 
-<!-- BODY -->
 <div class="case-body">
 
-  <!-- CONTEXTO -->
   <div class="case-section reveal">
     <p class="case-section-number"><em>01</em></p>
     <p class="case-section-label" data-i18n="s1.label">Contexto</p>
     <h2 data-i18n="s1.h2">Dados existiam. <em>Inteligência, não.</em></h2>
-    <p data-i18n="s1.p1">A Weni já era uma plataforma robusta de automação conversacional quando o Insights nasceu. Clientes criavam agentes de IA, gerenciavam fluxos e atendiam consumidores por WhatsApp, Telegram, Instagram e outros canais. O produto funcionava — mas havia um gap estratégico importante: <strong>os dados gerados por toda essa operação conversacional não estavam acessíveis de forma nativa</strong>.</p>
-    <p data-i18n="s1.p2">Para consultar métricas dos seus agentes e fluxos, os clientes precisavam chamar a API da Weni, exportar os dados e processá-los em ferramentas externas. Quem tinha equipe técnica construía dashboards no Looker Studio. Quem não tinha, ficava às cegas. Em ambos os casos, a experiência era fragmentada — e o tempo entre geração e consumo dos dados criava um atraso que prejudicava decisões operacionais.</p>
-    <p data-i18n="s1.p3">O Weni Chats já possuía um dashboard focado em atendimento humano, mas os dados dos bots e agentes inteligentes ficavam fora dessa experiência. Meu desafio foi criar um produto que unificasse tudo isso — e que fosse acessível para qualquer perfil de usuário, técnico ou não.</p>
+    <p data-i18n="s1.p1"></p>
+    <p data-i18n="s1.p2"></p>
+    <p data-i18n="s1.p3"></p>
   </div>
 
-  <!-- PROBLEMA -->
   <div class="case-section reveal">
     <p class="case-section-number"><em>02</em></p>
     <p class="case-section-label" data-i18n="s2.label">O problema</p>
     <h2 data-i18n="s2.h2">Cinco fricções que <em>custavam tempo e decisão</em></h2>
-    <p data-i18n="s2.p1">O diagnóstico do discovery foi claro: o problema não era falta de dados, era falta de acesso. Os clientes viviam com uma combinação de fricções que tornavam a análise cara, lenta e exclusiva para perfis técnicos:</p>
+    <p data-i18n="s2.p1"></p>
 
     <div class="problems-grid">
       <div class="problem-item">
         <strong data-i18n="prob1.title">Dependência técnica</strong>
-        <p data-i18n="prob1.desc">Acessar dados exigia conhecimento de API ou configuração de pipelines externos.</p>
+        <p data-i18n="prob1.desc"></p>
       </div>
       <div class="problem-item">
         <strong data-i18n="prob2.title">Tempo para análise</strong>
-        <p data-i18n="prob2.desc">Dados atualizavam a cada ~15 minutos via API, criando lag em operações críticas.</p>
+        <p data-i18n="prob2.desc"></p>
       </div>
       <div class="problem-item">
         <strong data-i18n="prob3.title">Baixa acessibilidade</strong>
-        <p data-i18n="prob3.desc">Usuários não técnicos simplesmente não conseguiam acessar métricas sem ajuda.</p>
+        <p data-i18n="prob3.desc"></p>
       </div>
       <div class="problem-item">
         <strong data-i18n="prob4.title">Experiência fragmentada</strong>
-        <p data-i18n="prob4.desc">Atendimento humano, bots e conversão ficavam em dashboards separados ou inexistentes.</p>
+        <p data-i18n="prob4.desc"></p>
       </div>
     </div>
 
     <div class="callout">
-      <p data-i18n="s2.callout">O problema mais silencioso era a fragmentação: clientes não conseguiam ver a jornada completa do consumidor — do bot ao humano, da conversa à conversão. Isso tornava impossível otimizar o que realmente importava para o negócio.</p>
+      <p data-i18n="s2.callout"></p>
     </div>
   </div>
 
-  <!-- SOLUÇÃO -->
   <div class="case-section reveal">
     <p class="case-section-number"><em>03</em></p>
     <p class="case-section-label" data-i18n="s3.label">Solução e decisões-chave</p>
     <h2 data-i18n="s3.h2">Um hub analítico nativo, <em>sem necessidade de ferramentas externas</em></h2>
-    <p data-i18n="s3.p1">O Weni Insights foi construído como uma camada de <strong>embedded analytics</strong> integrada nativamente à plataforma — eliminando a necessidade de exportações, pipelines externos ou ferramentas de BI terceirizadas para grande parte dos clientes.</p>
-    <p data-i18n="s3.p2">A primeira decisão estratégica foi unificar os dados que antes viviam separados: migramos o dashboard operacional do Weni Chats para dentro do Insights, transformando-o no hub analítico central da plataforma. Atendimento humano, automação conversacional, indicadores operacionais e métricas de conversão passaram a coexistir em uma única experiência.</p>
-    <p data-i18n="s3.p3">A segunda decisão foi sobre latência. Reduzimos o tempo de atualização dos dados de <strong>~15 minutos para até 5 minutos</strong> — uma mudança que pode parecer incremental, mas que transformou a percepção de valor do produto para operações de alto volume, aproximando a experiência de um monitoramento quase em tempo real.</p>
-    <p data-i18n="s3.p4">A terceira decisão foi sobre acessibilidade. Construímos uma <strong>camada de interpretação de dados baseada em IA</strong> que ajudava usuários a compreender métricas, padrões e comportamentos sem depender de leitura manual dos dashboards. Isso derrubou a barreira analítica para usuários não técnicos — que antes eram completamente excluídos do fluxo de análise.</p>
-    <p data-i18n="s3.p5">Com foco especial em clientes de <strong>varejo e e-commerce</strong>, desenvolvemos dashboards personalizados para funil de vendas, recuperação de carrinho abandonado, rastreamento de origem via UTM, conversão em fluxos conversacionais e análise de comportamento em jornadas automatizadas.</p>
+    <p data-i18n="s3.p1"></p>
+    <p data-i18n="s3.p2"></p>
+    <p data-i18n="s3.p3"></p>
+    <p data-i18n="s3.p4"></p>
+    <p data-i18n="s3.p5"></p>
   </div>
 
-  <!-- IMPACTO -->
   <div class="case-section reveal">
     <p class="case-section-number"><em>04</em></p>
     <p class="case-section-label" data-i18n="s4.label">Impacto</p>
     <h2 data-i18n="s4.h2">De dados dispersos <em>a inteligência integrada</em></h2>
-    <p data-i18n="s4.p1">O MVP foi lançado inicialmente para clientes estratégicos da Weni — e na primeira semana já havia processado e analisado <strong>mais de 200 mil conversas</strong>. Esse número validou tanto a demanda reprimida pelo produto quanto a estabilidade técnica da solução desde o início.</p>
-    <p data-i18n="s4.p2">O impacto mais duradouro, porém, foi estratégico. Ao centralizar analytics dentro da própria plataforma, o Insights aumentou o <strong>stickiness da Weni</strong>: clientes que antes podiam substituir a plataforma por um concorrente agora tinham seus dashboards, histórico e inteligência de negócio integrados ao ecossistema. Sair passou a ter um custo muito maior.</p>
-    <p data-i18n="s4.p3">Para os usuários finais, a mudança foi de comportamento: métricas que antes exigiam uma tarde de trabalho de um analista passaram a estar disponíveis em minutos, para qualquer membro do time — com interpretação assistida por IA quando necessário. <strong>Dados conversacionais deixaram de ser um recurso técnico e passaram a ser parte da rotina operacional e comercial dos clientes.</strong></p>
-
+    <p data-i18n="s4.p1"></p>
+    <p data-i18n="s4.p2"></p>
+    <p data-i18n="s4.p3"></p>
     <div class="callout">
-      <p data-i18n="s4.callout">O Insights não foi apenas um produto de analytics — foi um movimento de posicionamento. Ao consolidar dados dentro da Weni, a plataforma deixou de ser uma ferramenta de automação e passou a ser o centro de inteligência das operações conversacionais dos clientes.</p>
+      <p data-i18n="s4.callout"></p>
     </div>
   </div>
 
-  <!-- APRENDIZADOS -->
   <div class="case-section reveal">
     <p class="case-section-number"><em>05</em></p>
     <p class="case-section-label" data-i18n="s5.label">Aprendizados</p>
     <h2 data-i18n="s5.h2">O que esse projeto <em>me ensinou</em></h2>
-    <p data-i18n="s5.p1">O maior aprendizado foi sobre <strong>acessibilidade como estratégia de produto</strong>. A camada de IA para interpretação de dados não era um diferencial tecnológico pelo diferencial em si — era uma decisão deliberada de democratização. Quando você remove a barreira técnica de um produto analítico, você multiplica o número de pessoas que podem tomar decisões com base nele. E mais decisões baseadas em dados significa mais valor percebido da plataforma.</p>
-    <p data-i18n="s5.p2">Outro aprendizado foi sobre <strong>latência como experiência</strong>. A redução de 15 para 5 minutos não parece revolucionária em termos absolutos — mas no contexto de uma operação de atendimento ou uma campanha de recuperação de carrinho, aqueles 10 minutos fazem diferença real. Aprendi a medir o valor de melhorias de performance não em termos técnicos, mas em termos de decisão: o que o usuário consegue fazer agora que não conseguia antes?</p>
-    <p data-i18n="s5.p3">Por fim, o Insights me ensinou sobre <strong>produto como retenção</strong>. Integrar analytics dentro da plataforma foi uma das decisões com maior impacto no longo prazo — não porque aumentou o uso imediato, mas porque aumentou o custo de saída para os clientes. Criar valor que está profundamente integrado ao fluxo de trabalho do cliente é uma das formas mais sustentáveis de construir retenção.</p>
+    <p data-i18n="s5.p1"></p>
+    <p data-i18n="s5.p2"></p>
+    <p data-i18n="s5.p3"></p>
 
     <div class="tags">
       <span class="tag">Analytics</span>
@@ -286,11 +280,10 @@
 
 </div>
 
-<!-- CASE NAV -->
 <div class="case-nav">
   <a href="https://afranio.pm/cases/weni-chats.html"><span data-i18n="nav.prev">← Weni Chats</span></a>
   <div class="case-nav-next">
-    <p class="case-nav-next-label"><span data-i18n="nav.next.label">Próximo case</span></p>
+    <p class="case-nav-next-label" data-i18n="nav.next.label">Próximo case</p>
     <a href="https://afranio.pm/cases/quark-rh.html"><span data-i18n="nav.next.title">Quark RH →</span></a>
   </div>
 </div>
@@ -302,19 +295,22 @@
     <span>·</span>
     <button data-lang="pt" onclick="setLang('pt')">Português</button>
   </div>
-  <div style="display:flex;justify-content:flex-end"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
+  <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
 </footer>
 
+<script src="/translations.js"></script>
 <script>
-  const cursor = document.getElementById('cursor');
-  const ring   = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
-  (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
-  document.querySelectorAll('a,button,.tag').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
-    el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
-  });
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button,.tag').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
 
   const nav = document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
@@ -323,7 +319,6 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target); } });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
-  // Force-reveal elements already in viewport on load
   window.addEventListener('load', () => {
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -331,21 +326,15 @@
     });
   });
 
-  // ── FOOTER LANG SYNC ────────────────────────────────────
   (function(){
     const ftBtns = document.querySelectorAll('.footer-lang button');
-    function updateFooter(lang){
-      ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-    }
+    function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
     const origSetLang = window.setLang;
-    if(origSetLang){
-      window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); };
-    }
+    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); }; }
     const stored = localStorage.getItem('preferred-lang') || (navigator.language||'').slice(0,2);
     updateFooter(stored === 'en' ? 'en' : 'pt');
     ftBtns.forEach(b => b.addEventListener('click', () => updateFooter(b.dataset.lang)));
   })();
 </script>
-<script src="/translations.js"></script>
 </body>
 </html>
