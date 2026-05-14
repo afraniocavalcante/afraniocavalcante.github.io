@@ -149,7 +149,7 @@
     <a href="https://afranio.pm" class="nav-logo">AC</a>
     <a href="https://afranio.pm#cases" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
   </div>
-  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV">
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <span data-i18n="nav.cv">Baixar CV</span>
   </a>
@@ -326,13 +326,17 @@
     });
   });
 
-  (function(){
+    const CV_FILES = { pt: 'https://afranio.pm/cv-afranio-cavalcante.pdf', en: 'https://afranio.pm/cv-afranio-cavalcante-en.pdf' };
+    function updateCvLink(lang){ const l=document.getElementById('cvLink'); if(l) l.href=CV_FILES[lang]||CV_FILES.pt; }
+
+    (function(){
     const ftBtns = document.querySelectorAll('.footer-lang button');
     function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
     const origSetLang = window.setLang;
-    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); }; }
+    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
     const stored = localStorage.getItem('preferred-lang') || (navigator.language||'').slice(0,2);
-    updateFooter(stored === 'en' ? 'en' : 'pt');
+    const initLang = stored === 'en' ? 'en' : 'pt';
+    updateFooter(initLang); updateCvLink(initLang);
     ftBtns.forEach(b => b.addEventListener('click', () => updateFooter(b.dataset.lang)));
   })();
 </script>
