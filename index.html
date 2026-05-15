@@ -248,6 +248,7 @@
       :root { --pad-x: clamp(4rem, 8vw, 8rem); }
     }
   </style>
+  <script src="/translations.js"></script>
 </head>
 <body>
 
@@ -522,8 +523,9 @@
     const cvLink = document.getElementById('cvLink');
     if (cvLink) cvLink.href = CV_FILES[currentLang] || CV_FILES.pt;
     ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+    // Re-apply so CV link and footer stay in sync after wrapper is set
+    window.setLang(currentLang);
   })();
 </script>
-<script src="/translations.js"></script>
 </body>
 </html>
