@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="i18n-page" content="uncertainty-and-delivery" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Incerteza não resolvida vira retrabalho — Afrânio Cavalcante</title>
+  <meta name="description" content="Por que diminuir as incertezas antes do desenvolvimento é a forma mais eficiente de acelerar um time de produto." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+      --container-max: 960px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
+    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* CURSOR — desktop only */
+    .cursor, .cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor { display: block; position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+      .cursor-ring { display: block; position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+      .cursor.hover { width: 14px; height: 14px; }
+      .cursor-ring.hover { width: 48px; height: 48px; }
+    }
+    @media (hover: none) or (pointer: coarse) {
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem var(--pad-x); background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding-top: .9rem; padding-bottom: .9rem; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-left { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.5rem); flex-wrap: wrap; }
+    .nav-back { font-size: clamp(.72rem, 1vw, .8rem); font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; white-space: nowrap; min-height: 36px; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; min-height: 36px; }
+    .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+
+    /* ARTICLE HERO */
+    .art-hero { padding: clamp(6rem, 12vw, 9rem) var(--pad-x) clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; }
+    .art-breadcrumb { font-size: clamp(.7rem, .9vw, .75rem); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .art-breadcrumb span { color: var(--border); }
+    .art-hero-tag { display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; padding: .3rem .85rem; margin-bottom: 1.5rem; }
+    .art-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.25rem; word-break: break-word; }
+    .art-title em { font-style: italic; color: #BBBBB6; }
+    .art-subtitle { font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--ink-mid); max-width: 660px; line-height: 1.7; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .art-meta-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+    .art-meta-author { display: flex; align-items: center; gap: .85rem; }
+    .art-meta-author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 1.5px solid var(--border); flex-shrink: 0; }
+    .art-meta-author-name { font-size: .88rem; font-weight: 500; color: var(--ink); }
+    .art-meta-author-role { font-size: .78rem; font-weight: 300; color: var(--ink-light); }
+    .art-meta-divider { width: 1px; height: 28px; background: var(--border); }
+    .art-meta-date { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+    .art-meta-read { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+
+    /* ARTICLE BODY */
+    .art-body { max-width: 720px; margin: 0 auto; padding: clamp(3.5rem, 8vw, 6rem) var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+    .art-section { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+    .art-section:last-child { margin-bottom: 0; }
+    .art-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.1rem; display: block; }
+    .art-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+    .art-section h2 em { font-style: italic; color: var(--ink-mid); }
+    .art-section p { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; }
+    .art-section p:last-child { margin-bottom: 0; }
+    .art-section p strong { font-weight: 500; color: var(--ink); }
+
+    /* CALLOUT */
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; }
+
+    /* TENSION TABLE */
+    .tension-grid { display: flex; flex-direction: column; gap: .75rem; margin: 1.75rem 0; }
+    .tension-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; padding: clamp(.9rem,2vw,1.1rem) clamp(1rem,2vw,1.4rem); border: 1px solid var(--border); border-radius: 12px; background: #fff; }
+    .tension-left { font-size: clamp(.82rem,1vw,.9rem); font-weight: 400; color: var(--ink); }
+    .tension-vs { font-size: .7rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-light); flex-shrink: 0; }
+    .tension-right { font-size: clamp(.82rem,1vw,.9rem); font-weight: 300; color: var(--ink-mid); text-align: right; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-size: clamp(.7rem, .9vw, .78rem); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+
+    /* FOOTER NAV */
+    .art-footer-nav { max-width: var(--container-max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--pad-x); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .art-footer-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; min-height: 36px; }
+    .art-footer-nav a:hover { color: var(--ink); }
+    .art-footer-back-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
+
+    footer { max-width: var(--container-max); margin: 0 auto; padding: 2rem var(--pad-x); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
+    .footer-right { display: flex; justify-content: flex-end; }
+    .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; min-height: 24px; }
+    .footer-lang button.active { color: var(--ink); font-weight: 500; }
+    .footer-lang button:hover { color: var(--ink); }
+    .footer-lang span { color: var(--border); }
+
+    /* HERO ANIMATION */
+    .art-hero .art-hero-tag,
+    .art-hero .art-title,
+    .art-hero .art-subtitle,
+    .art-hero .art-meta-row { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .art-hero .art-title { animation-delay: .05s; }
+    .art-hero .art-subtitle { animation-delay: .12s; }
+    .art-hero .art-meta-row { animation-delay: .2s; }
+    @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .65rem; min-width: 36px; justify-content: center; }
+      .art-meta-divider { display: none; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+      .footer-lang { justify-content: center; }
+      .art-footer-nav { justify-content: center; text-align: center; }
+      .tension-row { grid-template-columns: 1fr; text-align: left; }
+      .tension-right { text-align: left; }
+      .tension-vs { justify-self: start; }
+    }
+
+    /* Mobile pequeno */
+    @media (max-width: 420px) {
+      .art-section p { text-align: left; }
+      .callout p { text-align: left; }
+    }
+
+    /* Ultrawide */
+    @media (min-width: 1600px) {
+      :root { --pad-x: clamp(4rem, 8vw, 8rem); }
+    }
+  </style>
+  <script src="/translations.js"></script>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a href="https://afranio.pm" class="nav-logo">AC</a>
+    <a href="https://afranio.pm#product-thinking" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
+  </div>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span data-i18n="nav.cv">Baixar CV</span>
+  </a>
+</nav>
+
+<div class="art-hero">
+  <p class="art-breadcrumb"><span data-i18n="breadcrumb"></span></p>
+  <span class="art-hero-tag" data-i18n="hero.tag">Estratégia de Produto</span>
+  <h1 class="art-title" data-i18n="hero.title">Incerteza não resolvida <em>vira retrabalho</em></h1>
+  <p class="art-subtitle" data-i18n="hero.subtitle">Por que diminuir as incertezas antes do desenvolvimento é a forma mais eficiente — e menos óbvia — de acelerar um time de produto.</p>
+  <div class="art-meta-row">
+    <div class="art-meta-author">
+      <img src="/images/afranio.jpg" alt="Afrânio Cavalcante" loading="lazy" />
+      <div>
+        <p class="art-meta-author-name">Afrânio Cavalcante</p>
+        <p class="art-meta-author-role">Product Manager</p>
+      </div>
+    </div>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-date" data-i18n="hero.date">Maio de 2026</p>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-read" data-i18n="hero.read">6 min de leitura</p>
+  </div>
+</div>
+
+<div class="art-body">
+
+  <div class="art-section reveal">
+    <p data-i18n="s1.p1">Todo time de produto quer entregar mais rápido. É uma pressão legítima — negócios crescem, concorrentes se movem, clientes esperam. A resposta instintiva é contratar mais engenheiros, adotar mais cerimônias ágeis, reduzir o tamanho das sprints.</p>
+    <p data-i18n="s1.p2">Mas na maioria dos casos que observei, o gargalo não é o time de desenvolvimento. É o que chega para eles.</p>
+    <p data-i18n="s1.p3">Quando um requisito chega vago para o desenvolvimento, o time preenche as lacunas com suposições. Essas suposições viram decisões técnicas. Essas decisões viram código. Esse código vai para produção. E então você descobre que construiu a solução certa para o problema errado — ou a solução errada para o problema certo.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s2.label">O mecanismo</span>
+    <h2 data-i18n="s2.h2">Incerteza tem <em>custo composto</em></h2>
+    <p data-i18n="s2.p1">Incerteza não resolvida no discovery não some quando o desenvolvimento começa. Ela se desloca — e se amplifica. Uma dúvida não respondida na fase de definição pode gerar três decisões técnicas incorretas, que juntas produzem uma arquitetura difícil de reverter.</p>
+    <p data-i18n="s2.p2">O custo de resolver uma incerteza cresce conforme avançamos no ciclo de desenvolvimento. Responder uma pergunta na fase de discovery custa uma conversa com um usuário ou uma hora de análise de dados. Responder a mesma pergunta depois de três sprints de desenvolvimento pode custar semanas de retrabalho, débito técnico acumulado e, pior, confiança perdida com o time.</p>
+
+    <div class="callout">
+      <p data-i18n="s2.callout">Incerteza não gerenciada não desaparece — ela se transfere para o time de engenharia, que resolve com código o que deveria ter sido resolvido com pesquisa.</p>
+    </div>
+
+    <p data-i18n="s2.p3">Esse é o custo invisível que a maioria dos times não mede. Velocidade de entrega é monitorada. Bugs são contados. Mas o retrabalho gerado por requisitos mal definidos raramente aparece em nenhum dashboard.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s3.label">O equívoco comum</span>
+    <h2 data-i18n="s3.h2">Discovery não é <em>fase — é postura</em></h2>
+    <p data-i18n="s3.p1">Existe um mal-entendido recorrente sobre o que é product discovery. Muitos times tratam o discovery como uma etapa que acontece uma vez, no início de um projeto, e termina quando o backlog está pronto. Essa visão cria uma armadilha: o time faz discovery até um certo ponto, depois "entra em execução" — e qualquer nova incerteza que surge durante o desenvolvimento é tratada como um problema a ser resolvido internamente, sem voltar ao usuário.</p>
+    <p data-i18n="s3.p2">Discovery contínuo não significa fazer pesquisa infinita antes de codar. Significa manter um mecanismo ativo de redução de incerteza ao longo de todo o ciclo de vida do produto. É a diferença entre um time que para para perguntar quando surgem dúvidas e um time que pressupõe que sabe.</p>
+
+    <div class="tension-grid">
+      <div class="tension-row">
+        <span class="tension-left" data-i18n="t1a">Discovery como fase única</span>
+        <span class="tension-vs">vs</span>
+        <span class="tension-right" data-i18n="t1b">Discovery como prática contínua</span>
+      </div>
+      <div class="tension-row">
+        <span class="tension-left" data-i18n="t2a">Perguntas respondidas no papel</span>
+        <span class="tension-vs">vs</span>
+        <span class="tension-right" data-i18n="t2b">Perguntas validadas com evidência</span>
+      </div>
+      <div class="tension-row">
+        <span class="tension-left" data-i18n="t3a">Incerteza assumida como certeza</span>
+        <span class="tension-vs">vs</span>
+        <span class="tension-right" data-i18n="t3b">Incerteza explicitada e priorizada</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s4.label">Na prática</span>
+    <h2 data-i18n="s4.h2">Como mapear e priorizar <em>o que não sabemos</em></h2>
+    <p data-i18n="s4.p1">A primeira mudança prática é tornar a incerteza visível. Isso parece óbvio, mas a maioria dos times trabalha com uma lista do que vai fazer — não com uma lista do que ainda não sabe. Antes de transformar uma ideia em backlog, vale perguntar explicitamente: <strong>quais são as premissas que estamos assumindo aqui? O que precisaria ser verdade para essa solução funcionar?</strong></p>
+    <p data-i18n="s4.p2">A segunda mudança é priorizar a resolução de incertezas de acordo com o risco que elas representam. Nem toda dúvida merece o mesmo investimento de tempo. Uma incerteza que afeta a arquitetura central do produto é mais urgente de resolver do que uma que afeta apenas o fluxo de um edge case. A pergunta útil é: <strong>se essa premissa estiver errada, o quanto isso vai custar para corrigir?</strong></p>
+    <p data-i18n="s4.p3">A terceira mudança é criar mecanismos rápidos de aprendizado. Não é necessário fazer uma pesquisa formal para toda incerteza. Às vezes, uma conversa de 30 minutos com dois usuários é suficiente para eliminar uma premissa arriscada antes de ela virar três semanas de desenvolvimento. O objetivo não é certeza absoluta — é reduzir o risco de construir a coisa errada.</p>
+
+    <div class="callout">
+      <p data-i18n="s4.callout">O objetivo do discovery não é descobrir tudo — é descobrir o suficiente para que o time tome as melhores decisões possíveis com o que tem disponível agora.</p>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s5.label">O resultado</span>
+    <h2 data-i18n="s5.h2">Times mais rápidos <em>resolvem incerteza antes</em></h2>
+    <p data-i18n="s5.p1">Na prática, os times que entregam com mais consistência não são necessariamente os que codam mais rápido. São os que chegam no desenvolvimento com menos perguntas abertas — e, quando surgem dúvidas durante a execução, têm a disciplina de pausar para buscar a resposta certa em vez de assumir.</p>
+    <p data-i18n="s5.p2">Isso muda a conversa sobre velocidade. Em vez de perguntar "como podemos codar mais rápido?", a pergunta mais produtiva é: <strong>"o que ainda não sabemos que pode fazer tudo isso ser refeito?"</strong></p>
+    <p data-i18n="s5.p3">Reduzir incerteza antes do desenvolvimento não é burocracia — é a forma mais eficiente de proteger o tempo de um time de engenharia. E proteger o tempo de um time de engenharia é, na prática, a forma mais direta de acelerar um produto.</p>
+
+    <div class="tags">
+      <span class="tag" data-i18n="tag1">Product Discovery</span>
+      <span class="tag" data-i18n="tag2">Estratégia</span>
+      <span class="tag" data-i18n="tag3">Delivery</span>
+      <span class="tag" data-i18n="tag4">Product Management</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="art-footer-nav">
+  <a href="https://afranio.pm#product-thinking" data-i18n="nav.back.full">← Voltar ao portfólio</a>
+</div>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <div class="footer-lang">
+    <button data-lang="en" onclick="setLang('en')">English</button>
+    <span>·</span>
+    <button data-lang="pt" onclick="setLang('pt')">Português</button>
+  </div>
+  <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
+</footer>
+
+<script>
+  // CURSOR
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+
+  // REVEAL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+  // CV LINK
+  (function(){
+    const CV_FILES = { pt: '/cv-afranio-cavalcante.pdf', en: '/cv-afranio-cavalcante-en.pdf' };
+    function updateCvLink(lang) {
+      const link = document.getElementById('cvLink');
+      if (link) link.href = CV_FILES[lang] || CV_FILES.pt;
+    }
+    const ftBtns = document.querySelectorAll('.footer-lang button');
+    function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
+    const origSetLang = window.setLang;
+    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
+    const stored = localStorage.getItem('preferred-lang');
+    const browser = (navigator.language || 'pt').toLowerCase();
+    const initLang = stored || (browser.startsWith('en') ? 'en' : 'pt');
+    if (window.setLang) window.setLang(initLang);
+    else { updateFooter(initLang); updateCvLink(initLang); }
+    ftBtns.forEach(b => b.addEventListener('click', () => { window.setLang && window.setLang(b.dataset.lang); }));
+  })();
+</script>
+</body>
+</html>
