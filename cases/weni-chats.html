@@ -317,9 +317,9 @@
 <footer>
   <p>© 2026 Afrânio Cavalcante</p>
   <div class="footer-lang">
-    <button data-lang="en" onclick="setLang('en')">English</button>
+    <button data-lang="en">English</button>
     <span>·</span>
-    <button data-lang="pt" onclick="setLang('pt')">Português</button>
+    <button data-lang="pt">Português</button>
   </div>
   <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
 </footer>
@@ -363,7 +363,7 @@
     const stored = localStorage.getItem('preferred-lang') || (navigator.language||'').slice(0,2);
     const initLang = stored === 'en' ? 'en' : 'pt';
     updateFooter(initLang); updateCvLink(initLang);
-    ftBtns.forEach(b => b.addEventListener('click', () => updateFooter(b.dataset.lang)));
+    ftBtns.forEach(b => b.addEventListener('click', () => window.setLang(b.dataset.lang)));
   })();
 </script>
 </body>
