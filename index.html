@@ -248,7 +248,6 @@
       :root { --pad-x: clamp(4rem, 8vw, 8rem); }
     }
   </style>
-  <script src="/translations.js"></script>
 </head>
 <body>
 
@@ -390,9 +389,9 @@
 <footer>
   <p>© 2026 Afrânio Cavalcante</p>
   <div class="footer-lang">
-    <button data-lang="en" onclick="setLang('en')">English</button>
+    <button data-lang="en">English</button>
     <span>·</span>
-    <button data-lang="pt" onclick="setLang('pt')">Português</button>
+    <button data-lang="pt">Português</button>
   </div>
   <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
 </footer>
@@ -507,22 +506,24 @@
 
   // ── CV LINK + FOOTER LANG SYNC ─────────────────────────
   const CV_FILES = { pt: 'cv-afranio-cavalcante.pdf', en: 'cv-afranio-cavalcante-en.pdf' };
-  function updateCvLink(lang) {
-    const link = document.getElementById('cvLink');
-    if (link) link.href = CV_FILES[lang] || CV_FILES.pt;
-  }
   (function(){
     const ftBtns = document.querySelectorAll('.footer-lang button');
-    function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
     const origSetLang = window.setLang;
-    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
-    const stored = localStorage.getItem('preferred-lang');
-    const browser = (navigator.language || 'pt').toLowerCase();
-    const initLang = stored || (browser.startsWith('en') ? 'en' : 'pt');
-    if (window.setLang) window.setLang(initLang);
-    else { updateFooter(initLang); updateCvLink(initLang); }
-    ftBtns.forEach(b => b.addEventListener('click', () => { window.setLang && window.setLang(b.dataset.lang); }));
+    window.setLang = function(lang) {
+      if (origSetLang) origSetLang(lang);
+      const cvLink = document.getElementById('cvLink');
+      if (cvLink) cvLink.href = CV_FILES[lang] || CV_FILES.pt;
+      ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    };
+    ftBtns.forEach(b => b.addEventListener('click', () => window.setLang(b.dataset.lang)));
+    // Sync CV link and footer buttons with lang already set by translations.js
+    const currentLang = localStorage.getItem('preferred-lang') ||
+      ((navigator.language || 'pt').toLowerCase().startsWith('pt') ? 'pt' : 'en');
+    const cvLink = document.getElementById('cvLink');
+    if (cvLink) cvLink.href = CV_FILES[currentLang] || CV_FILES.pt;
+    ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
   })();
 </script>
+<script src="/translations.js"></script>
 </body>
 </html>
