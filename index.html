@@ -134,8 +134,16 @@
     .exp-tags { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem; }
     .exp-tags .tag { font-size: clamp(.65rem, .85vw, .72rem); }
 
-    /* CASES */
-    #cases .pt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: clamp(1rem, 2vw, 1.5rem); }
+    /* PRODUCT THINKING */
+    #product-thinking .pt-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .pt-tab { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: clamp(.78rem, 1vw, .88rem); font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-light); padding: .75rem 0; margin-right: clamp(1.5rem, 3vw, 2.5rem); cursor: pointer; position: relative; transition: color .2s; min-height: 44px; }
+    .pt-tab::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0; height: 2px; background: var(--ink); transition: width .25s; }
+    .pt-tab.active { color: var(--ink); }
+    .pt-tab.active::after { width: 100%; }
+    .pt-tab:hover { color: var(--ink); }
+    .pt-panel { display: none; }
+    .pt-panel.active { display: block; }
+    .pt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: clamp(1rem, 2vw, 1.5rem); }
     .pt-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: transform .3s cubic-bezier(.25,.46,.45,.94), box-shadow .3s; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
     .pt-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.10); }
     .pt-card-image-wrap { width: 100%; aspect-ratio: 16/9; overflow: hidden; position: relative; }
@@ -150,6 +158,23 @@
     .pt-body { font-size: clamp(.82rem, 1vw, .88rem); font-weight: 300; color: var(--ink-mid); line-height: 1.75; flex: 1; }
     .pt-impact { margin-top: 1.25rem; font-size: clamp(.72rem, .9vw, .78rem); font-weight: 500; color: var(--ink-light); padding-top: 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: .4rem; }
     .pt-impact::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--ink); flex-shrink: 0; }
+
+    /* ARTICLES grid */
+    .art-grid { display: flex; flex-direction: column; gap: 0; }
+    .art-item { display: grid; grid-template-columns: minmax(120px,160px) 1fr auto; gap: clamp(1rem,3vw,2rem); align-items: start; padding: clamp(1.5rem,3vw,2rem) 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: background .2s; }
+    .art-item:first-child { border-top: 1px solid var(--border); }
+    .art-item:hover .art-title { text-decoration: underline; text-underline-offset: 3px; }
+    .art-date { font-size: .78rem; color: var(--ink-light); font-weight: 400; padding-top: .25rem; }
+    .art-tag { display: inline-block; font-size: .68rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; padding: .2rem .65rem; margin-top: .5rem; }
+    .art-title { font-family: 'DM Serif Display', serif; font-size: clamp(1rem,1.6vw,1.2rem); letter-spacing: -.01em; margin-bottom: .5rem; }
+    .art-desc { font-size: clamp(.82rem,1vw,.88rem); font-weight: 300; color: var(--ink-mid); line-height: 1.7; }
+    .art-arrow { font-size: 1.1rem; color: var(--ink-light); transition: transform .2s; padding-top: .25rem; flex-shrink: 0; }
+    .art-item:hover .art-arrow { transform: translateX(4px); color: var(--ink); }
+
+    @media (max-width: 700px) {
+      .art-item { grid-template-columns: 1fr auto; }
+      .art-date-col { display: none; }
+    }
 
     /* CONTATO */
     #contato { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; }
@@ -236,7 +261,7 @@
   <ul class="nav-links">
     <li><a href="#sobre" data-section="sobre" data-i18n="nav.about">Sobre</a></li>
     <li><a href="#experiencias" data-section="experiencias" data-i18n="nav.exp">Experiências</a></li>
-    <li><a href="#cases" data-section="cases" data-i18n="nav.cases">Cases</a></li>
+    <li><a href="#product-thinking" data-section="product-thinking" data-i18n="nav.cases">Product Thinking</a></li>
     <li><a href="#contato" data-section="contato" data-i18n="nav.contact">Contato</a></li>
   </ul>
   <a href="cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
@@ -253,7 +278,7 @@
   <p class="hero-desc" data-i18n="hero.desc">Transformo complexidade em produtos claros, escaláveis e orientados a impacto.</p>
   <div class="hero-actions">
     <a href="#contato" class="btn btn-primary" data-i18n="hero.cta1">Entrar em contato →</a>
-    <a href="#cases" class="btn btn-ghost" data-i18n="hero.cta2">Ver projetos</a>
+    <a href="#product-thinking" class="btn btn-ghost" data-i18n="hero.cta2">Ver projetos</a>
   </div>
 </section>
 
@@ -300,21 +325,45 @@
   </div>
 </section>
 
-<section id="cases">
-  <p class="section-label" data-i18n="cases.label">Cases</p>
-  <div class="pt-grid">
-    <a href="cases/weni-chats.html" class="pt-card reveal">
-      <div class="pt-card-image-wrap"><img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
-      <div class="pt-card-body"><p class="pt-number">01</p><h3 class="pt-title">Weni Chats</h3><p class="pt-body" data-i18n="cases.chats.body">Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni, integrando interações automatizadas e humanas em um único fluxo coeso — do discovery à migração de toda a base de clientes.</p><p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p></div>
-    </a>
-    <a href="cases/weni-insights.html" class="pt-card reveal reveal-delay-1">
-      <div class="pt-card-image-wrap"><img src="images/insights.png" alt="Weni Insights" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
-      <div class="pt-card-body"><p class="pt-number">02</p><h3 class="pt-title">Weni Insights</h3><p class="pt-body" data-i18n="cases.insights.body">Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência artificial para gerar insights acionáveis para equipes e gestores — transformando dados brutos em decisões estratégicas.</p><p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p></div>
-    </a>
-    <a href="cases/quark-rh.html" class="pt-card reveal reveal-delay-2">
-      <div class="pt-card-image-wrap"><img src="images/quarkrh.png" alt="Quark RH" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
-      <div class="pt-card-body"><p class="pt-number">03</p><h3 class="pt-title">Quark RH</h3><p class="pt-body" data-i18n="cases.quark.body">Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.</p><p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p></div>
-    </a>
+<section id="product-thinking">
+  <p class="section-label" data-i18n="pt.label">Product Thinking</p>
+
+  <div class="pt-tabs">
+    <button class="pt-tab active" data-panel="work" data-i18n="pt.tab.work">Selected Work</button>
+    <button class="pt-tab" data-panel="articles" data-i18n="pt.tab.articles">Articles</button>
+  </div>
+
+  <div class="pt-panel active" id="panel-work">
+    <div class="pt-grid">
+      <a href="cases/weni-chats.html" class="pt-card reveal">
+        <div class="pt-card-image-wrap"><img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
+        <div class="pt-card-body"><p class="pt-number">01</p><h3 class="pt-title">Weni Chats</h3><p class="pt-body" data-i18n="cases.chats.body">Liderança do desenvolvimento do módulo de atendimento humano da plataforma Weni, integrando interações automatizadas e humanas em um único fluxo coeso — do discovery à migração de toda a base de clientes.</p><p class="pt-impact">100% da base migrada · 300% mais usuários simultâneos</p></div>
+      </a>
+      <a href="cases/weni-insights.html" class="pt-card reveal reveal-delay-1">
+        <div class="pt-card-image-wrap"><img src="images/insights.png" alt="Weni Insights" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
+        <div class="pt-card-body"><p class="pt-number">02</p><h3 class="pt-title">Weni Insights</h3><p class="pt-body" data-i18n="cases.insights.body">Módulo de analytics que analisa conversas de atendimento humano e utiliza inteligência artificial para gerar insights acionáveis para equipes e gestores — transformando dados brutos em decisões estratégicas.</p><p class="pt-impact">+200 mil conversas analisadas no primeiro mês · Adoção pelos principais clientes</p></div>
+      </a>
+      <a href="cases/quark-rh.html" class="pt-card reveal reveal-delay-2">
+        <div class="pt-card-image-wrap"><img src="images/quarkrh.png" alt="Quark RH" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
+        <div class="pt-card-body"><p class="pt-number">03</p><h3 class="pt-title">Quark RH</h3><p class="pt-body" data-i18n="cases.quark.body">Atuação como PM na plataforma de gestão estratégica de pessoas, conduzindo discovery, priorização de roadmap e evolução de funcionalidades para apoiar empresas na gestão de ponto, equipes e dados de RH.</p><p class="pt-impact">+40 mil usuários · +3,2 mi de registros de ponto · 3 módulos desenvolvidos</p></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="pt-panel" id="panel-articles">
+    <div class="art-grid">
+      <a href="articles/uncertainty-and-delivery.html" class="art-item reveal">
+        <div class="art-date-col">
+          <p class="art-date">Mai 2026</p>
+          <span class="art-tag" data-i18n="art.tag.strategy">Estratégia</span>
+        </div>
+        <div>
+          <h3 class="art-title" data-i18n="art.uncertainty.title">Incerteza não resolvida vira retrabalho</h3>
+          <p class="art-desc" data-i18n="art.uncertainty.desc">Por que diminuir as incertezas antes do desenvolvimento começa é a forma mais eficiente de acelerar um time de produto.</p>
+        </div>
+        <span class="art-arrow">→</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -366,7 +415,7 @@
   const navLinks  = document.querySelectorAll('.nav-links a');
   const nav       = document.getElementById('nav');
   const scrollLine = document.getElementById('scrollLine');
-  ['sobre','experiencias','cases','contato'].forEach(id=>{
+  ['sobre','experiencias','product-thinking','contato'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) new IntersectionObserver(entries=>{
       entries.forEach(e=>{ if(e.isIntersecting) navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===id)); });
@@ -436,7 +485,19 @@
   function render(){ if(!W||!H){ requestAnimationFrame(render); return; } px+=(tx-px)*.06; py+=(ty-py)*.06; ctx.clearRect(0,0,W,H); getLayers().forEach(({d,fn})=>fn(px*d,py*d)); requestAnimationFrame(render); }
   render();
 
-      const CV_FILES = {
+
+  // ── PRODUCT THINKING TABS ───────────────────────────────
+  document.querySelectorAll('.pt-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const panel = tab.dataset.panel;
+      document.querySelectorAll('.pt-tab').forEach(t => t.classList.toggle('active', t === tab));
+      document.querySelectorAll('.pt-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + panel));
+      // re-trigger reveal for newly visible items
+      document.querySelectorAll('#panel-' + panel + ' .reveal:not(.visible)').forEach(el => ro.observe(el));
+    });
+  });
+
+
       pt: 'cv-afranio-cavalcante.pdf',
       en: 'cv-afranio-cavalcante-en.pdf'
     };
