@@ -467,7 +467,7 @@ window.SITE_TRANSLATIONS = {
       "s5.p2": "I also learned about <strong>product leadership in ambiguity</strong>. When there's no clear playbook, when the environment changes fast, and when pressures are multiple and simultaneous, the most important skill isn't knowing the right answer — it's knowing how to frame the problem so the team and stakeholders can make decisions with what they have available.",
       "s5.p3": "Finally, managing the two POs taught me about <strong>delegation as product</strong>. Giving real autonomy to the Product Owners — with vision clarity, prioritization criteria, and support in stakeholder negotiation — was what allowed us to scale execution capacity without centralizing all decisions. Product leadership isn't about controlling the roadmap; it's about creating the conditions for good product decisions to happen throughout the organization."
     }
-  }
+  },
   "uncertainty-and-delivery": {
     "pt": {
       "nav.back": "← Voltar ao portfólio",
@@ -567,32 +567,40 @@ window.SITE_TRANSLATIONS = {
 (function () {
   function init() {
     var pageMeta = document.querySelector('meta[name="i18n-page"]');
-  var pageKey  = pageMeta ? pageMeta.getAttribute('content') : null;
-  var t        = pageKey && window.SITE_TRANSLATIONS[pageKey];
+    var pageKey  = pageMeta ? pageMeta.getAttribute('content') : null;
+    var t        = pageKey && window.SITE_TRANSLATIONS[pageKey];
 
-  if (!t) {
-    console.warn('[i18n] No translations for page:', pageKey);
-    return;
-  }
+    if (!t) {
+      console.warn('[i18n] No translations for page:', pageKey);
+      return;
+    }
 
-  function applyLang(lang) {
-    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-    var dict = t[lang] || t['pt'];
-    document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key] !== undefined) el.innerHTML = dict[key];
-    });
+    var CV_FILES = { pt: 'cv-afranio-cavalcante.pdf', en: 'cv-afranio-cavalcante-en.pdf' };
+
+    function applyLang(lang) {
+      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+      var dict = t[lang] || t['pt'];
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var key = el.getAttribute('data-i18n');
+        if (dict[key] !== undefined) el.innerHTML = dict[key];
+      });
+      document.querySelectorAll('.lang-btn').forEach(function (btn) {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      var cvLink = document.getElementById('cvLink');
+      if (cvLink && CV_FILES[lang]) cvLink.href = CV_FILES[lang];
+      localStorage.setItem('preferred-lang', lang);
+    }
+
+    window.setLang = function (lang) { applyLang(lang); };
+
     document.querySelectorAll('.lang-btn').forEach(function (btn) {
-      btn.classList.toggle('active', btn.dataset.lang === lang);
+      btn.addEventListener('click', function () { applyLang(btn.dataset.lang); });
     });
-    localStorage.setItem('preferred-lang', lang);
-  }
 
-  window.setLang = function (lang) { applyLang(lang); };
-
-  var saved   = localStorage.getItem('preferred-lang');
-  var browser = (navigator.language || 'pt').toLowerCase();
-  applyLang(saved || (browser.startsWith('pt') ? 'pt' : 'en'));
+    var saved   = localStorage.getItem('preferred-lang');
+    var browser = (navigator.language || 'pt').toLowerCase();
+    applyLang(saved || (browser.startsWith('pt') ? 'pt' : 'en'));
   }
 
   if (document.readyState === 'loading') {

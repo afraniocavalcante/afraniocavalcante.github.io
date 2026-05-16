@@ -506,26 +506,7 @@
 
 
   // ── CV LINK + FOOTER LANG SYNC ─────────────────────────
-  const CV_FILES = { pt: 'cv-afranio-cavalcante.pdf', en: 'cv-afranio-cavalcante-en.pdf' };
-  (function(){
-    const ftBtns = document.querySelectorAll('.footer-lang button');
-    const origSetLang = window.setLang;
-    window.setLang = function(lang) {
-      if (origSetLang) origSetLang(lang);
-      const cvLink = document.getElementById('cvLink');
-      if (cvLink) cvLink.href = CV_FILES[lang] || CV_FILES.pt;
-      ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
-    };
-    ftBtns.forEach(b => b.addEventListener('click', () => window.setLang(b.dataset.lang)));
-    // Sync CV link and footer buttons with lang already set by translations.js
-    const currentLang = localStorage.getItem('preferred-lang') ||
-      ((navigator.language || 'pt').toLowerCase().startsWith('pt') ? 'pt' : 'en');
-    const cvLink = document.getElementById('cvLink');
-    if (cvLink) cvLink.href = CV_FILES[currentLang] || CV_FILES.pt;
-    ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
-    // Re-apply so CV link and footer stay in sync after wrapper is set
-    window.setLang(currentLang);
-  })();
+  // Handled by translations.js after DOMContentLoaded
 </script>
 </body>
 </html>
