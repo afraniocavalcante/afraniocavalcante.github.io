@@ -565,7 +565,8 @@ window.SITE_TRANSLATIONS = {
 };
 
 (function () {
-  var pageMeta = document.querySelector('meta[name="i18n-page"]');
+  function init() {
+    var pageMeta = document.querySelector('meta[name="i18n-page"]');
   var pageKey  = pageMeta ? pageMeta.getAttribute('content') : null;
   var t        = pageKey && window.SITE_TRANSLATIONS[pageKey];
 
@@ -592,5 +593,11 @@ window.SITE_TRANSLATIONS = {
   var saved   = localStorage.getItem('preferred-lang');
   var browser = (navigator.language || 'pt').toLowerCase();
   applyLang(saved || (browser.startsWith('pt') ? 'pt' : 'en'));
+  }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
