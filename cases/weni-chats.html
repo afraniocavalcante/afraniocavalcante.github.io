@@ -351,22 +351,6 @@
       if(rect.top < window.innerHeight) el.classList.add('visible');
     });
   });
-
-    const CV_FILES = { pt: 'https://afranio.pm/cv-afranio-cavalcante.pdf', en: 'https://afranio.pm/cv-afranio-cavalcante-en.pdf' };
-    function updateCvLink(lang){ const l=document.getElementById('cvLink'); if(l) l.href=CV_FILES[lang]||CV_FILES.pt; }
-
-    (function(){
-    const ftBtns = document.querySelectorAll('.footer-lang button');
-    function updateFooter(lang){ ftBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang)); }
-    const origSetLang = window.setLang;
-    if(origSetLang){ window.setLang = function(lang){ origSetLang(lang); updateFooter(lang); updateCvLink(lang); }; }
-    const stored = localStorage.getItem('preferred-lang');
-    const browser = (navigator.language || 'pt').toLowerCase();
-    const initLang = stored || (browser.startsWith('pt') ? 'pt' : 'en');
-    if (window.setLang) window.setLang(initLang);
-    else { updateFooter(initLang); updateCvLink(initLang); }
-    ftBtns.forEach(b => b.addEventListener('click', () => window.setLang(b.dataset.lang)));
-  })();
 </script>
 </body>
 </html>
