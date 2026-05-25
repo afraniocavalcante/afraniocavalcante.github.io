@@ -211,6 +211,47 @@
     .footer-lang button:hover { color: var(--ink); }
     .footer-lang span { color: var(--border); }
 
+    /* NAV DROPDOWN */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-menu {
+      opacity: 0; pointer-events: none;
+      position: absolute;
+      top: calc(100% + .75rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      background: rgba(250,250,248,.97);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .35rem;
+      list-style: none;
+      min-width: 150px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.08);
+      z-index: 200;
+      transition: opacity .2s, transform .2s;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .nav-dropdown-menu li a {
+      display: block;
+      padding: .5rem .9rem;
+      font-size: clamp(.72rem, 1vw, .82rem);
+      font-weight: 400;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      text-decoration: none;
+      border-radius: 7px;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .nav-dropdown-menu li a:hover { background: var(--surface-alt); color: var(--ink); }
+    .nav-dropdown-menu::before { content: ''; position: absolute; bottom: 100%; left: 0; right: 0; height: .75rem; }
+    .nav-dropdown-menu li a::after { display: none !important; }
+
     /* ─────────── BREAKPOINTS ─────────── */
 
     /* Tablet (900px) */
@@ -261,7 +302,13 @@
   <ul class="nav-links">
     <li><a href="#sobre" data-section="sobre" data-i18n="nav.about">Sobre</a></li>
     <li><a href="#experiencias" data-section="experiencias" data-i18n="nav.exp">Experiências</a></li>
-    <li><a href="#product-thinking" data-section="product-thinking" data-i18n="nav.cases">Product Thinking</a></li>
+    <li class="nav-dropdown">
+      <a href="#product-thinking" data-section="product-thinking" data-i18n="nav.cases">Product Thinking</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="#product-thinking" data-panel="work" data-i18n="pt.tab.work">Selected Work</a></li>
+        <li><a href="#product-thinking" data-panel="articles" data-i18n="pt.tab.articles">Articles</a></li>
+      </ul>
+    </li>
     <li><a href="#contato" data-section="contato" data-i18n="nav.contact">Contato</a></li>
   </ul>
   <a href="cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
@@ -515,6 +562,22 @@
     });
   });
 
+
+  // ── NAV DROPDOWN ITEMS ─────────────────────────────────
+  document.querySelectorAll('.nav-dropdown-menu a[data-panel]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const panelId = link.dataset.panel;
+      document.querySelectorAll('.pt-tab').forEach(t => t.classList.toggle('active', t.dataset.panel === panelId));
+      document.querySelectorAll('.pt-panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + panelId));
+      requestAnimationFrame(() => {
+        document.querySelectorAll('#panel-' + panelId + ' .reveal:not(.visible)').forEach(el => ro.observe(el));
+      });
+      document.getElementById('product-thinking').scrollIntoView({ behavior: 'smooth' });
+    });
+    link.addEventListener('mouseenter', () => { cursor && cursor.classList.add('hover'); ring && ring.classList.add('hover'); });
+    link.addEventListener('mouseleave', () => { cursor && cursor.classList.remove('hover'); ring && ring.classList.remove('hover'); });
+  });
 
   // ── CV LINK + FOOTER LANG SYNC ─────────────────────────
   // Handled by translations.js after DOMContentLoaded
