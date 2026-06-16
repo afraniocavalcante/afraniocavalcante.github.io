@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="i18n-page" content="discovery-mindset" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quando todo mundo entende o problema — Afrânio Cavalcante</title>
+  <meta name="description" content="Como criar as condições para que o time inteiro entenda o problema profundamente o suficiente para tomar decisões melhores." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+      --container-max: 960px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
+    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* CURSOR — desktop only */
+    .cursor, .cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor { display: block; position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+      .cursor-ring { display: block; position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+      .cursor.hover { width: 14px; height: 14px; }
+      .cursor-ring.hover { width: 48px; height: 48px; }
+    }
+    @media (hover: none) or (pointer: coarse) {
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem var(--pad-x); background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding-top: .9rem; padding-bottom: .9rem; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-left { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.5rem); flex-wrap: wrap; }
+    .nav-back { font-size: clamp(.72rem, 1vw, .8rem); font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; white-space: nowrap; min-height: 36px; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; min-height: 36px; }
+    .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+
+    /* ARTICLE HERO */
+    .art-hero { padding: clamp(6rem, 12vw, 9rem) var(--pad-x) clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; }
+    .art-breadcrumb { font-size: clamp(.7rem, .9vw, .75rem); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .art-breadcrumb span { color: var(--border); }
+    .art-hero-tag { display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; padding: .3rem .85rem; margin-bottom: 1.5rem; }
+    .art-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.25rem; word-break: break-word; }
+    .art-title em { font-style: italic; color: #BBBBB6; }
+    .art-subtitle { font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--ink-mid); max-width: 660px; line-height: 1.7; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .art-meta-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+    .art-meta-author { display: flex; align-items: center; gap: .85rem; }
+    .art-meta-author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 1.5px solid var(--border); flex-shrink: 0; }
+    .art-meta-author-name { font-size: .88rem; font-weight: 500; color: var(--ink); }
+    .art-meta-author-role { font-size: .78rem; font-weight: 300; color: var(--ink-light); }
+    .art-meta-divider { width: 1px; height: 28px; background: var(--border); }
+    .art-meta-date { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+    .art-meta-read { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+
+    /* ARTICLE BODY */
+    .art-body { max-width: 720px; margin: 0 auto; padding: clamp(3.5rem, 8vw, 6rem) var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+    .art-section { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+    .art-section:last-child { margin-bottom: 0; }
+    .art-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.1rem; display: block; }
+    .art-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+    .art-section h2 em { font-style: italic; color: var(--ink-mid); }
+    .art-section p { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; }
+    .art-section p:last-child { margin-bottom: 0; }
+    .art-section p strong { font-weight: 500; color: var(--ink); }
+
+    /* CALLOUT */
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-size: clamp(.7rem, .9vw, .78rem); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+
+    /* FOOTER NAV */
+    .art-footer-nav { max-width: var(--container-max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--pad-x); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .art-footer-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; min-height: 36px; }
+    .art-footer-nav a:hover { color: var(--ink); }
+    .art-footer-back-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
+
+    footer { max-width: var(--container-max); margin: 0 auto; padding: 2rem var(--pad-x); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
+    .footer-right { display: flex; justify-content: flex-end; }
+    .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; min-height: 24px; }
+    .footer-lang button.active { color: var(--ink); font-weight: 500; }
+    .footer-lang button:hover { color: var(--ink); }
+    .footer-lang span { color: var(--border); }
+
+    /* HERO ANIMATION */
+    .art-hero .art-hero-tag,
+    .art-hero .art-title,
+    .art-hero .art-subtitle,
+    .art-hero .art-meta-row { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .art-hero .art-title { animation-delay: .05s; }
+    .art-hero .art-subtitle { animation-delay: .12s; }
+    .art-hero .art-meta-row { animation-delay: .2s; }
+    @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .65rem; min-width: 36px; justify-content: center; }
+      .art-meta-divider { display: none; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+      .footer-lang { justify-content: center; }
+      .art-footer-nav { justify-content: center; text-align: center; }
+    }
+
+    /* Mobile pequeno */
+    @media (max-width: 420px) {
+      .art-section p { text-align: left; }
+      .callout p { text-align: left; }
+    }
+
+    /* Ultrawide */
+    @media (min-width: 1600px) {
+      :root { --pad-x: clamp(4rem, 8vw, 8rem); }
+    }
+  </style>
+  <script src="/translations.js"></script>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a href="https://afranio.pm" class="nav-logo">AC</a>
+    <a href="https://afranio.pm#product-thinking" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
+  </div>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span data-i18n="nav.cv">Baixar CV</span>
+  </a>
+</nav>
+
+<div class="art-hero">
+  <p class="art-breadcrumb"><span data-i18n="breadcrumb"></span></p>
+  <span class="art-hero-tag" data-i18n="hero.tag">Product Discovery</span>
+  <h1 class="art-title" data-i18n="hero.title">Quando todo mundo <em>entende o problema</em></h1>
+  <p class="art-subtitle" data-i18n="hero.subtitle">Como criar as condições para que o time inteiro entenda o problema profundamente o suficiente para tomar decisões melhores.</p>
+  <div class="art-meta-row">
+    <div class="art-meta-author">
+      <img src="/images/afranio.jpg" alt="Afrânio Cavalcante" loading="lazy" />
+      <div>
+        <p class="art-meta-author-name">Afrânio Cavalcante</p>
+        <p class="art-meta-author-role">Product Manager</p>
+      </div>
+    </div>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-date" data-i18n="hero.date">Junho de 2026</p>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-read" data-i18n="hero.read">7 min de leitura</p>
+  </div>
+</div>
+
+<div class="art-body">
+
+  <div class="art-section reveal">
+    <p data-i18n="s1.p1">Dá para fazer tudo o que costuma ser considerado um bom discovery e ainda assim tomar decisões ruins. Fazer entrevistas toda semana, manter a OST atualizada, ter uma boa cadência de trabalho. Nada disso garante que o time está entendendo o problema certo. Já vi times muito disciplinados em discovery chegarem a soluções pouco relevantes. Com o tempo, comecei a perceber que isso acontece quando o processo vira o foco principal. A equipe continua executando todas as etapas, mas para de questionar algumas premissas básicas.</p>
+    <p data-i18n="s1.p2">Nos times que mais me marcaram, a diferença não estava na quantidade de rituais ou artefatos, e sim no quanto as pessoas entendiam o contexto por trás das decisões. O engenheiro conseguia olhar para uma ideia e perceber algo estranho antes dela ser construída, o designer levantava dúvidas sobre uma solução antes mesmo de começar a prototipar. E essas atitudes nasciam do alto contexto que eles estavam inseridos, contexto esse, que obviamente não nascia sozinho.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s2.label">O trio nas entrevistas</span>
+    <h2 data-i18n="s2.h2">Cada pessoa saía <em>com observações diferentes</em></h2>
+    <p data-i18n="s2.p1">Uma das coisas que mais me ajudou foi incluir o trio de produtos (PM, designer, engenharia) em algumas entrevistas com usuários sempre que a conversa tinha potencial para influenciar decisões importantes.</p>
+    <p data-i18n="s2.p2">O que acontecia era que cada pessoa saía da mesma entrevista com observações diferentes. O engenheiro prestava atenção em detalhes operacionais que eu talvez ignorasse, o designer captava comportamentos e expectativas que passariam despercebidos para mim. E quando a conversa acabava, a discussão era muito mais rica do que qualquer repasse que eu pudesse fazer depois.</p>
+    <p data-i18n="s2.p3">Lembro de um caso envolvendo um filtro de datas em um dashboard.</p>
+    <p data-i18n="s2.p4">A ideia parecia simples: dar liberdade para que o usuário escolhesse qualquer período que quisesse analisar.</p>
+    <p data-i18n="s2.p5">Durante uma entrevista, o engenheiro que estava participando comentou uma coisa que mudou nossa leitura do problema. O usuário não falava em datas específicas. Ele falava em períodos. Últimos 7 dias. Últimos 30 dias. Últimos 90 dias. Era assim que ele organizava o trabalho.</p>
+    <p data-i18n="s2.p6">A partir dali, a solução mudou.</p>
+    <p data-i18n="s2.p7">A experiência ficou mais simples para o usuário e, por consequência, evitamos um problema técnico que ainda nem tinha aparecido, mas que já estava na cabeça do engenheiro. Nossa arquitetura provavelmente sofreria se começássemos a permitir consultas muito extensas.</p>
+    <p data-i18n="s2.p8">Nenhuma dessas coisas tinha surgido nos refinamentos anteriores.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s3.label">Como perguntar</span>
+    <h2 data-i18n="s3.h2">Comportamentos, <em>não previsões</em></h2>
+    <p data-i18n="s3.p1">Outro aprendizado veio das próprias entrevistas.</p>
+    <p data-i18n="s3.p2">No começo da minha carreira, eu fazia muitas perguntas sobre opinião. O que você acha disso? Você usaria essa funcionalidade? O que te incomoda no produto?</p>
+    <p data-i18n="s3.p3">As respostas quase sempre pareciam úteis na hora, mas raramente ajudavam a tomar decisões melhores depois.</p>
+    <p data-i18n="s3.p4">Com o tempo, comecei a pedir exemplos concretos. Em vez de perguntar o que incomodava alguém, eu perguntava quando tinha sido a última vez que aquela pessoa enfrentou um problema usando o produto. Em vez de perguntar o que ela faria no futuro, tentava entender o que ela já tinha feito.</p>
+    <p data-i18n="s3.p5">A diferença nas respostas era enorme.</p>
+    <div class="callout">
+      <p data-i18n="s3.callout">As pessoas costumam ser muito melhores em relatar comportamentos do que em prever comportamentos.</p>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s4.label">A árvore de oportunidades</span>
+    <h2 data-i18n="s4.h2">A OST como <em>espaço compartilhado</em></h2>
+    <p data-i18n="s4.p1">A Opportunity Solution Tree acabou entrando como uma forma de organizar essas conversas e manter o time alinhado ao longo do tempo.</p>
+    <p data-i18n="s4.p2">Normalmente eu começava com um outcome vindo das discussões com liderança e, a partir daí, a árvore ia sendo construída junto com o trio. Qualquer pessoa podia trazer uma oportunidade para discussão, e os encontros serviam para explorar essas oportunidades antes de falar sobre solução.</p>
+    <p data-i18n="s4.p3">A OST ficava visível para todo o time.</p>
+    <p data-i18n="s4.p4">Nunca funcionou bem para mim quando era tratada como um documento do PM. Ela sempre fez mais sentido quando servia como um espaço compartilhado para organizar o que estávamos aprendendo.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s5.label">O que ficou</span>
+    <h2 data-i18n="s5.h2">Memórias de conversas, <em>não de processos</em></h2>
+    <p data-i18n="s5.p1">Hoje, quando penso nos melhores times com que trabalhei, as memórias mais vívidas não são de processos, e sim das conversas, das pessoas que entendiam o problema profundamente o suficiente para discordar, complementar e perceber algo que os outros ainda não tinham visto.</p>
+    <p data-i18n="s5.p2">Talvez seja isso que mais importa: criar condições para que esse entendimento seja compartilhado pelo time. Porque quando todo mundo entende o problema, as decisões costumam ficar melhores quase como consequência.</p>
+
+    <div class="tags">
+      <span class="tag" data-i18n="tag1">Product Discovery</span>
+      <span class="tag" data-i18n="tag2">Entrevistas com Usuários</span>
+      <span class="tag" data-i18n="tag3">OST</span>
+      <span class="tag" data-i18n="tag4">Product Management</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="art-footer-nav">
+  <a href="https://afranio.pm#product-thinking" data-i18n="nav.back.full">← Voltar ao portfólio</a>
+</div>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <div class="footer-lang">
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">English</button>
+    <span>·</span>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">Português</button>
+  </div>
+  <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
+</footer>
+
+<script>
+  // CURSOR
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+
+  // REVEAL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
