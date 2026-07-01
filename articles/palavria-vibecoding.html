@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="i18n-page" content="palavria-vibecoding" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>O Palavria me ensinou que IA não substitui Product Managers — Afrânio Cavalcante</title>
+  <meta name="description" content="Como construir uma plataforma de jogos sozinho usando IA — e o que essa experiência revelou sobre o que realmente importa no trabalho de um Product Manager." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+      --container-max: 960px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
+    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* CURSOR — desktop only */
+    .cursor, .cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor { display: block; position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+      .cursor-ring { display: block; position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+      .cursor.hover { width: 14px; height: 14px; }
+      .cursor-ring.hover { width: 48px; height: 48px; }
+    }
+    @media (hover: none) or (pointer: coarse) {
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem var(--pad-x); background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding-top: .9rem; padding-bottom: .9rem; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-left { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.5rem); flex-wrap: wrap; }
+    .nav-back { font-size: clamp(.72rem, 1vw, .8rem); font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; white-space: nowrap; min-height: 36px; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; min-height: 36px; }
+    .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+
+    /* ARTICLE HERO */
+    .art-hero { padding: clamp(6rem, 12vw, 9rem) var(--pad-x) clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; }
+    .art-breadcrumb { font-size: clamp(.7rem, .9vw, .75rem); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .art-breadcrumb span { color: var(--border); }
+    .art-hero-tag { display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; padding: .3rem .85rem; margin-bottom: 1.5rem; }
+    .art-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.25rem; word-break: break-word; }
+    .art-title em { font-style: italic; color: #BBBBB6; }
+    .art-subtitle { font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--ink-mid); max-width: 660px; line-height: 1.7; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .art-meta-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+    .art-meta-author { display: flex; align-items: center; gap: .85rem; }
+    .art-meta-author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 1.5px solid var(--border); flex-shrink: 0; }
+    .art-meta-author-name { font-size: .88rem; font-weight: 500; color: var(--ink); }
+    .art-meta-author-role { font-size: .78rem; font-weight: 300; color: var(--ink-light); }
+    .art-meta-divider { width: 1px; height: 28px; background: var(--border); }
+    .art-meta-date { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+    .art-meta-read { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+
+    /* ARTICLE BODY */
+    .art-body { max-width: 720px; margin: 0 auto; padding: clamp(3.5rem, 8vw, 6rem) var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+    .art-section { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+    .art-section:last-child { margin-bottom: 0; }
+    .art-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.1rem; display: block; }
+    .art-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+    .art-section h2 em { font-style: italic; color: var(--ink-mid); }
+    .art-section p { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; }
+    .art-section p:last-child { margin-bottom: 0; }
+    .art-section p strong { font-weight: 500; color: var(--ink); }
+    .art-section p a { color: var(--ink); text-underline-offset: 3px; }
+    .art-section p a:hover { color: var(--ink-mid); }
+
+    /* CALLOUT */
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-size: clamp(.7rem, .9vw, .78rem); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+
+    /* FOOTER NAV */
+    .art-footer-nav { max-width: var(--container-max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--pad-x); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .art-footer-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; min-height: 36px; }
+    .art-footer-nav a:hover { color: var(--ink); }
+    .art-footer-back-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
+
+    footer { max-width: var(--container-max); margin: 0 auto; padding: 2rem var(--pad-x); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
+    .footer-right { display: flex; justify-content: flex-end; }
+    .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; min-height: 24px; }
+    .footer-lang button.active { color: var(--ink); font-weight: 500; }
+    .footer-lang button:hover { color: var(--ink); }
+    .footer-lang span { color: var(--border); }
+
+    /* HERO ANIMATION */
+    .art-hero .art-hero-tag,
+    .art-hero .art-title,
+    .art-hero .art-subtitle,
+    .art-hero .art-meta-row { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .art-hero .art-title { animation-delay: .05s; }
+    .art-hero .art-subtitle { animation-delay: .12s; }
+    .art-hero .art-meta-row { animation-delay: .2s; }
+    @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .65rem; min-width: 36px; justify-content: center; }
+      .art-meta-divider { display: none; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+      .footer-lang { justify-content: center; }
+      .art-footer-nav { justify-content: center; text-align: center; }
+    }
+
+    /* Mobile pequeno */
+    @media (max-width: 420px) {
+      .art-section p { text-align: left; }
+      .callout p { text-align: left; }
+    }
+
+    /* Ultrawide */
+    @media (min-width: 1600px) {
+      :root { --pad-x: clamp(4rem, 8vw, 8rem); }
+    }
+  </style>
+  <script src="/translations.js"></script>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a href="https://afranio.pm" class="nav-logo">AC</a>
+    <a href="https://afranio.pm#product-thinking" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
+  </div>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span data-i18n="nav.cv">Baixar CV</span>
+  </a>
+</nav>
+
+<div class="art-hero">
+  <p class="art-breadcrumb"><span data-i18n="breadcrumb">Product Thinking <span>·</span> Articles <span>·</span> 2026</span></p>
+  <span class="art-hero-tag" data-i18n="hero.tag">IA &amp; Produto</span>
+  <h1 class="art-title" data-i18n="hero.title">O Palavria me ensinou que IA não substitui Product Managers. <em>Ela elimina desculpas.</em></h1>
+  <p class="art-subtitle" data-i18n="hero.subtitle">Como construir uma plataforma de jogos sozinho usando IA — e o que essa experiência revelou sobre o que realmente importa no trabalho de um Product Manager.</p>
+  <div class="art-meta-row">
+    <div class="art-meta-author">
+      <img src="/images/afranio.jpg" alt="Afrânio Cavalcante" loading="lazy" />
+      <div>
+        <p class="art-meta-author-name">Afrânio Cavalcante</p>
+        <p class="art-meta-author-role">Product Manager</p>
+      </div>
+    </div>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-date" data-i18n="hero.date">Junho de 2026</p>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-read" data-i18n="hero.read">8 min de leitura</p>
+  </div>
+</div>
+
+<div class="art-body">
+
+  <div class="art-section reveal">
+    <p data-i18n="s1.p1">Existe uma frase que ouvi muitas vezes ao longo da carreira: <em>"eu testaria essa ideia se tivesse um desenvolvedor disponível."</em></p>
+    <p data-i18n="s1.p2">Ela fazia sentido.</p>
+    <p data-i18n="s1.p3">Durante muito tempo, a velocidade de aprendizado de um Product Manager dependia da velocidade de um time de engenharia. Antes de validar uma hipótese, era preciso convencer pessoas, disputar prioridade, escrever especificações, esperar um ciclo de desenvolvimento e, só então, descobrir se a ideia fazia algum sentido.</p>
+    <p data-i18n="s1.p4">Construir o Palavria em vibecoding mudou completamente essa percepção.</p>
+    <p data-i18n="s1.p5">O Palavria é uma plataforma de jogos de palavras que desenvolvi praticamente sozinho utilizando IA. Não sou engenheiro de software. Sou Product Manager. O que a IA me deu não foi a capacidade de virar desenvolvedor do dia para a noite, mas algo talvez mais valioso: autonomia para transformar hipóteses em produtos funcionando.</p>
+    <p data-i18n="s1.p6">Achei que o grande aprendizado seria sobre desenvolvimento.</p>
+    <p data-i18n="s1.p7">Descobri que desenvolvimento deixou de ser a parte mais fácil.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s2.label">O produto</span>
+    <h2 data-i18n="s2.h2">Construir já não <em>é o gargalo</em></h2>
+    <p data-i18n="s2.p1">Em poucos dias existia um caça-palavras funcionando.</p>
+    <p data-i18n="s2.p2">Pouco tempo depois havia um modo de campanha passando por todas as capitais brasileiras, um desafio diário, rankings, sistema de moedas, sequência de dias jogados, autenticação, sincronização entre dispositivos e multiplayer.</p>
+    <p data-i18n="s2.p3">A IA acelerou absurdamente a implementação.</p>
+    <p data-i18n="s2.p4">Mas nenhuma dessas funcionalidades resolveu as perguntas que realmente importavam.</p>
+    <p data-i18n="s2.p5">O usuário deveria precisar criar uma conta antes de jogar? Como um caça-palavras pode se diferenciar entre centenas de outros? Quando vale a pena adicionar uma mecânica nova e quando ela apenas aumenta a complexidade? Como impedir que uma funcionalidade criada rapidamente se transforme em uma dívida técnica permanente?</p>
+    <p data-i18n="s2.p6">Essas perguntas continuaram sendo de produto.</p>
+    <p data-i18n="s2.p7">A IA não respondeu nenhuma delas.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s3.label">Decisão de produto</span>
+    <h2 data-i18n="s3.h2">A melhor decisão do produto <em>teve poucas linhas de código</em></h2>
+    <p data-i18n="s3.p1">Uma das escolhas mais importantes foi deixar qualquer pessoa jogar sem criar uma conta.</p>
+    <p data-i18n="s3.p2">Seria muito fácil exigir cadastro logo na primeira tela. Afinal, todo produto quer usuários cadastrados.</p>
+    <p data-i18n="s3.p3">Mas a pergunta correta não era "quando consigo capturar esse usuário?". Era "quando ele percebeu valor suficiente para aceitar essa fricção?".</p>
+    <p data-i18n="s3.p4">A resposta acabou sendo depois da primeira vitória.</p>
+    <p data-i18n="s3.p5">O convite para criar uma conta aparece apenas quando o jogador já experimentou o produto e terminou uma partida. Na prática, o cadastro deixa de ser uma barreira de entrada e passa a ser uma ferramenta de retenção.</p>
+    <p data-i18n="s3.p6">A implementação ocupou poucas linhas de código.</p>
+    <div class="callout">
+      <p data-i18n="s3.callout">A decisão levou muito mais tempo do que a implementação. Esse padrão se repetiu durante todo o projeto.</p>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s4.label">Trade-offs</span>
+    <h2 data-i18n="s4.h2">A IA escreve código. <em>Ela não faz trade-offs.</em></h2>
+    <p data-i18n="s4.p1">Outro exemplo apareceu quando comecei a revisar a segurança do backend, construído em Supabase.</p>
+    <p data-i18n="s4.p2">Durante a fase inicial, algumas decisões que deveriam estar no servidor acabaram ficando no cliente simplesmente porque era mais rápido iterar dessa forma.</p>
+    <p data-i18n="s4.p3">O saldo de moedas era uma delas. Tecnicamente funcionava. Na prática, bastava abrir o DevTools para alterar o valor.</p>
+    <p data-i18n="s4.p4">A solução não foi escrever mais código.</p>
+    <p data-i18n="s4.p5">Foi redefinir quem possuía autoridade sobre aquele dado.</p>
+    <p data-i18n="s4.p6">Em vez de o cliente informar "meu saldo agora é 500 moedas", ele passou apenas a informar "ganhei 20 moedas". A validação migrou para uma função no próprio banco — uma RPC com regras de segurança (RLS) — que calcula o saldo verdadeiro e rejeita qualquer valor fora do esperado.</p>
+    <p data-i18n="s4.p7">A IA ajudou a implementar essa mudança.</p>
+    <p data-i18n="s4.p8">Mas ela não decidiu que aquele era o modelo correto.</p>
+    <div class="callout">
+      <p data-i18n="s4.callout">Essa decisão exigiu entender risco, fraude, experiência do usuário e custo de manutenção. Ou seja, exigiu produto.</p>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s5.label">Arquitetura</span>
+    <h2 data-i18n="s5.h2">O código ficou pronto <em>antes da arquitetura</em></h2>
+    <p data-i18n="s5.p1">Outro aprendizado curioso foi perceber que a velocidade da IA cria um problema novo.</p>
+    <p data-i18n="s5.p2">Antes, a implementação era lenta. Agora, ela acontece tão rapidamente que a arquitetura precisa correr atrás.</p>
+    <p data-i18n="s5.p3">O Palavria começou extremamente simples.</p>
+    <p data-i18n="s5.p4">Conforme novas funcionalidades surgiram, precisei criar um pipeline de build (que ofusca o JavaScript com Terser antes de publicar), configurar políticas de segurança, revisar permissões no banco, documentar dívidas técnicas e repensar a sincronização de dados entre dispositivos.</p>
+    <p data-i18n="s5.p5">Nada disso existia porque eu queria uma arquitetura sofisticada.</p>
+    <p data-i18n="s5.p6">Existia porque um produto que começa a ser usado inevitavelmente encontra problemas que não aparecem no primeiro protótipo.</p>
+    <div class="callout">
+      <p data-i18n="s5.callout">A IA acelerou o caminho até esses problemas. Ela não os eliminou.</p>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s6.label">Aprendizado</span>
+    <h2 data-i18n="s6.h2">Aprender <em>sem pedir permissão</em></h2>
+    <p data-i18n="s6.p1">Talvez essa tenha sido a maior mudança.</p>
+    <p data-i18n="s6.p2">Antes, validar uma ideia dependia de convencer outras pessoas de que ela merecia ser construída.</p>
+    <p data-i18n="s6.p3">Hoje consigo construir primeiro e aprender depois.</p>
+    <p data-i18n="s6.p4">Se quero testar um novo onboarding, eu testo. Se quero experimentar uma mecânica diferente de retenção, eu implemento. Se quero descobrir se uma funcionalidade realmente gera valor, ela pode estar em produção muito antes do que seria possível em um fluxo tradicional.</p>
+    <p data-i18n="s6.p5">Isso mudou completamente a forma como penso discovery.</p>
+    <p data-i18n="s6.p6">Não porque entrevistas, pesquisas e análise de dados deixaram de importar.</p>
+    <p data-i18n="s6.p7">Mas porque agora consigo colocar hipóteses diante de usuários reais com uma velocidade que simplesmente não era possível alguns anos atrás.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s7.label">Laboratório</span>
+    <h2 data-i18n="s7.h2">O Palavria <em>nunca foi só um caça-palavras</em></h2>
+    <p data-i18n="s7.p1">Olhando para trás, percebo que o produto acabou se tornando muito mais do que um jogo.</p>
+    <p data-i18n="s7.p2">Foi um laboratório.</p>
+    <p data-i18n="s7.p3">Nele experimentei onboarding, retenção, economia virtual, sincronização entre dispositivos, autenticação, rankings, multiplayer, segurança, deploy, arquitetura e iteração contínua.</p>
+    <p data-i18n="s7.p4">A IA escreveu boa parte do código.</p>
+    <p data-i18n="s7.p5">Mas cada decisão sobre o que construir, quando construir, por que construir e quais compromissos aceitar continuou sendo humana.</p>
+    <p data-i18n="s7.p6">E talvez essa seja a principal habilidade que ferramentas de IA amplificam.</p>
+    <p data-i18n="s7.p7">Não a capacidade de escrever software.</p>
+    <p data-i18n="s7.p8">A capacidade de aprender mais rápido.</p>
+    <p data-i18n="s7.p9">Para mim, esse é o maior impacto da IA sobre Product Management.</p>
+    <div class="callout">
+      <p data-i18n="s7.callout">A IA não substituiu o trabalho de produto. Ela eliminou a maior desculpa que existia para não testar uma hipótese.</p>
+    </div>
+    <p data-i18n="s7.p10">O Palavria está no ar em <a href="https://palavria.online" target="_blank" rel="noopener">palavria.online</a> — e continua sendo meu laboratório.</p>
+
+    <div class="tags">
+      <span class="tag" data-i18n="tag1">Vibecoding</span>
+      <span class="tag" data-i18n="tag2">IA &amp; Produto</span>
+      <span class="tag" data-i18n="tag3">Aprendizado</span>
+      <span class="tag" data-i18n="tag4">Product Management</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="art-footer-nav">
+  <a href="https://afranio.pm#product-thinking" data-i18n="nav.back.full">← Voltar ao portfólio</a>
+</div>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <div class="footer-lang">
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">English</button>
+    <span>·</span>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">Português</button>
+  </div>
+  <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
+</footer>
+
+<script>
+  // CURSOR
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+
+  // REVEAL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
