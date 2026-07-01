@@ -774,7 +774,7 @@ window.SITE_TRANSLATIONS = {
       "breadcrumb": "Product Thinking <span>·</span> Articles <span>·</span> 2026",
       "hero.tag": "IA & Produto",
       "hero.title": "Como o vibecoding mudou <em>a forma como faço Product Management</em>",
-      "hero.subtitle": "Como construir uma plataforma de jogos sozinho em vibecoding — e o que esse processo revelou sobre decisão de produto, arquitetura e aprendizado rápido.",
+      "hero.subtitle": "Como construí uma plataforma de jogos sozinho em vibecoding — e o que esse processo revelou sobre decisão de produto, arquitetura e aprendizado rápido.",
       "hero.date": "Junho de 2026",
       "hero.read": "7 min de leitura",
       "s1.p1": "Existe uma frase que ouvi muitas vezes ao longo da carreira: <em>\"eu testaria essa ideia se tivesse um desenvolvedor disponível\"</em>. Durante muito tempo ela fez sentido para mim. A velocidade de aprendizado de um PM dependia da velocidade de um time de engenharia. Antes de validar uma hipótese, era preciso convencer pessoas, disputar prioridade, escrever especificação e esperar um ciclo inteiro de desenvolvimento para só então descobrir se a ideia valia alguma coisa.",
