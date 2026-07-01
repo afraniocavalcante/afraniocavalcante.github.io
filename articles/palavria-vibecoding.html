@@ -83,6 +83,9 @@
     .art-section p a:hover { color: var(--ink-mid); }
 
     /* CALLOUT */
+    .art-figure { margin: 2.25rem auto; text-align: center; }
+    .art-figure img { width: 100%; max-width: 420px; height: auto; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .art-figure figcaption { font-size: clamp(.75rem, .95vw, .82rem); font-weight: 400; color: var(--ink-light); margin-top: .85rem; line-height: 1.5; }
     .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
     .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; }
 
@@ -192,6 +195,10 @@
     <span class="art-section-label" data-i18n="s2.label">O produto</span>
     <h2 data-i18n="s2.h2">Construir já não <em>é o gargalo</em></h2>
     <p data-i18n="s2.p1">Em poucos dias existia um caça-palavras funcionando. Pouco tempo depois havia um modo de campanha passando por todas as capitais brasileiras, um desafio diário, rankings, sistema de moedas, sequência de dias jogados, autenticação, sincronização entre dispositivos e multiplayer. A implementação andou numa velocidade que eu nunca tinha visto de perto.</p>
+    <figure class="art-figure">
+      <img src="/images/palavria-hub.png" alt="Tela de modos de jogo do Palavria: Sprint, Contra o Tempo, Infinito, Viagens e multiplayer" loading="lazy" />
+      <figcaption data-i18n="s2.figcap">Os modos de jogo do Palavria: quatro mecânicas solo e o multiplayer em tempo real.</figcaption>
+    </figure>
     <p data-i18n="s2.p2">Só que nenhuma dessas funcionalidades respondeu as perguntas que realmente importavam. O usuário deveria criar uma conta antes de jogar? Como um caça-palavras se diferencia no meio de centenas de outros? Quando vale a pena adicionar uma mecânica nova e quando ela só aumenta a complexidade? Como impedir que algo criado rápido vire dívida técnica permanente?</p>
     <p data-i18n="s2.p3">Essas perguntas continuaram sendo de produto, e a IA não respondeu nenhuma delas.</p>
   </div>
@@ -201,6 +208,10 @@
     <h2 data-i18n="s3.h2">A melhor decisão do produto <em>teve poucas linhas de código</em></h2>
     <p data-i18n="s3.p1">Uma das escolhas mais importantes foi deixar qualquer pessoa jogar sem criar conta. Seria fácil exigir cadastro logo na primeira tela, afinal todo produto quer usuários cadastrados. Mas a pergunta que eu precisava responder não era quando eu conseguiria capturar o usuário. Era quando ele teria percebido valor suficiente para aceitar essa fricção.</p>
     <p data-i18n="s3.p2">A resposta acabou sendo depois da primeira vitória. O convite para criar conta aparece só quando o jogador já experimentou o produto e terminou uma partida. Na prática, o cadastro deixou de ser uma barreira de entrada e virou uma ferramenta de retenção.</p>
+    <figure class="art-figure">
+      <img src="/images/palavria-onboarding.png" alt="Tela de desafio concluído do Palavria com convite para criar conta após a vitória" loading="lazy" />
+      <figcaption data-i18n="s3.figcap">A decisão na tela: o convite para criar conta só aparece depois da vitória.</figcaption>
+    </figure>
     <div class="callout">
       <p data-i18n="s3.callout">A implementação ocupou poucas linhas. A decisão levou muito mais tempo do que ela, e esse padrão se repetiu durante o projeto inteiro.</p>
     </div>
