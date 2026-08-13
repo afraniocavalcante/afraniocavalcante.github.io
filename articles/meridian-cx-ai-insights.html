@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="i18n-page" content="meridian-cx-ai-insights" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dados viram respostas, respostas viram decisões — Afrânio Cavalcante</title>
+  <meta name="description" content="Case de estratégia de produto: como priorizar e desenhar o MVP de um módulo de insights com IA para uma plataforma de benchmarking de CX." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #111110; --ink-mid: #555552; --ink-light: #999994;
+      --surface: #FAFAF8; --surface-alt: #F2F2EE;
+      --border: rgba(0,0,0,0.09);
+      --container-max: 960px;
+      --pad-x: clamp(1.25rem, 5vw, 4rem);
+    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    /* CURSOR — desktop only */
+    .cursor, .cursor-ring { display: none; }
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      .cursor { display: block; position: fixed; width: 8px; height: 8px; background: var(--ink); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .2s, height .2s; }
+      .cursor-ring { display: block; position: fixed; width: 32px; height: 32px; border: 1px solid rgba(17,17,16,.25); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width .35s cubic-bezier(.25,.46,.45,.94), height .35s cubic-bezier(.25,.46,.45,.94); }
+      .cursor.hover { width: 14px; height: 14px; }
+      .cursor-ring.hover { width: 48px; height: 48px; }
+    }
+    @media (hover: none) or (pointer: coarse) {
+      body { cursor: auto; }
+      a, button { cursor: pointer; }
+    }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem var(--pad-x); background: rgba(250,250,248,.88); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: padding .3s; }
+    nav.scrolled { padding-top: .9rem; padding-bottom: .9rem; }
+    .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--ink); text-decoration: none; }
+    .nav-left { display: flex; align-items: center; gap: clamp(.75rem, 2vw, 1.5rem); flex-wrap: wrap; }
+    .nav-back { font-size: clamp(.72rem, 1vw, .8rem); font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; white-space: nowrap; min-height: 36px; }
+    .nav-back:hover { color: var(--ink); }
+    .nav-cv { display: inline-flex; align-items: center; gap: .35rem; padding: .4rem 1rem; border-radius: 100px; font-size: .78rem; font-weight: 500; letter-spacing: .03em; color: var(--ink-mid); border: 1px solid var(--border); text-decoration: none; transition: all .2s; white-space: nowrap; min-height: 36px; }
+    .nav-cv:hover { border-color: #999; color: var(--ink); transform: translateY(-1px); }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+
+    /* ARTICLE HERO */
+    .art-hero { padding: clamp(6rem, 12vw, 9rem) var(--pad-x) clamp(3rem, 6vw, 5rem); border-bottom: 1px solid var(--border); max-width: var(--container-max); margin: 0 auto; }
+    .art-breadcrumb { font-size: clamp(.7rem, .9vw, .75rem); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .art-breadcrumb span { color: var(--border); }
+    .art-hero-tag { display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; padding: .3rem .85rem; margin-bottom: 1.5rem; }
+    .art-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.25rem; word-break: break-word; }
+    .art-title em { font-style: italic; color: #BBBBB6; }
+    .art-subtitle { font-size: clamp(.95rem, 1.4vw, 1.1rem); font-weight: 300; color: var(--ink-mid); max-width: 660px; line-height: 1.7; margin-bottom: clamp(2rem, 4vw, 3rem); }
+    .art-meta-row { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; padding-top: 1.75rem; border-top: 1px solid var(--border); }
+    .art-meta-author { display: flex; align-items: center; gap: .85rem; }
+    .art-meta-author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; object-position: center top; border: 1.5px solid var(--border); flex-shrink: 0; }
+    .art-meta-author-name { font-size: .88rem; font-weight: 500; color: var(--ink); }
+    .art-meta-author-role { font-size: .78rem; font-weight: 300; color: var(--ink-light); }
+    .art-meta-divider { width: 1px; height: 28px; background: var(--border); }
+    .art-meta-date { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+    .art-meta-read { font-size: .82rem; color: var(--ink-light); font-weight: 300; }
+
+    /* ARTICLE BODY */
+    .art-body { max-width: 720px; margin: 0 auto; padding: clamp(3.5rem, 8vw, 6rem) var(--pad-x) clamp(2.5rem, 5vw, 4rem); }
+    .art-section { margin-bottom: clamp(2.5rem, 6vw, 4.5rem); }
+    .art-section:last-child { margin-bottom: 0; }
+    .art-section-label { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1.1rem; display: block; }
+    .art-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.15; letter-spacing: -.02em; margin-bottom: 1.25rem; }
+    .art-section h2 em { font-style: italic; color: var(--ink-mid); }
+    .art-section p { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: 1.25rem; }
+    .art-section p:last-child { margin-bottom: 0; }
+    .art-section p strong { font-weight: 500; color: var(--ink); }
+    .art-section p a { color: var(--ink); text-underline-offset: 3px; }
+    .art-section p a:hover { color: var(--ink-mid); }
+    .art-section ul { margin: 0 0 1.25rem; padding-left: 1.15rem; }
+    .art-section ul:last-child { margin-bottom: 0; }
+    .art-section li { font-size: clamp(.95rem, 1.2vw, 1.02rem); font-weight: 300; color: var(--ink-mid); line-height: 1.85; margin-bottom: .5rem; }
+    .art-section li::marker { color: var(--ink-light); }
+    .art-section li strong { font-weight: 500; color: var(--ink); }
+
+    /* CALLOUT */
+    .callout { background: var(--surface-alt); border-left: 2px solid var(--ink); padding: clamp(1.25rem, 3vw, 1.5rem) clamp(1.25rem, 3vw, 2rem); border-radius: 0 8px 8px 0; margin: 2rem 0; }
+    .callout p { font-size: clamp(.88rem, 1.1vw, .95rem); font-weight: 400; color: var(--ink); line-height: 1.7; margin: 0; }
+    .callout-note { background: transparent; border-left: 2px solid var(--border); }
+    .callout-note p { font-size: clamp(.82rem, 1vw, .88rem); font-weight: 300; color: var(--ink-light); font-style: italic; }
+
+    /* TABLES */
+    .art-table-wrap { overflow-x: auto; margin: 2rem 0; border: 1px solid var(--border); border-radius: 12px; -webkit-overflow-scrolling: touch; }
+    table.art-table { width: 100%; border-collapse: collapse; font-size: .86rem; min-width: 480px; }
+    .art-table th { background: var(--surface-alt); text-align: left; font-weight: 500; padding: .75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink); font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+    .art-table td { padding: .75rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink-mid); font-weight: 300; vertical-align: top; }
+    .art-table tr:last-child td { border-bottom: none; }
+    .art-table td strong { font-weight: 500; color: var(--ink); }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 2rem; }
+    .tag { font-size: clamp(.7rem, .9vw, .78rem); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; padding: .35rem .85rem; border-radius: 100px; background: var(--surface-alt); color: var(--ink-mid); border: 1px solid var(--border); }
+
+    /* FOOTER NAV */
+    .art-footer-nav { max-width: var(--container-max); margin: 0 auto; padding: clamp(2rem, 5vw, 3rem) var(--pad-x); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .art-footer-nav a { font-size: .85rem; font-weight: 400; color: var(--ink-light); text-decoration: none; letter-spacing: .03em; display: inline-flex; align-items: center; gap: .4rem; transition: color .2s; min-height: 36px; }
+    .art-footer-nav a:hover { color: var(--ink); }
+    .art-footer-back-label { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: .25rem; }
+
+    footer { max-width: var(--container-max); margin: 0 auto; padding: 2rem var(--pad-x); border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
+    footer p { font-size: .8rem; color: var(--ink-light); }
+    .footer-right { display: flex; justify-content: flex-end; }
+    .footer-lang { display: inline-flex; gap: .5rem; align-items: center; font-size: .8rem; color: var(--ink-light); }
+    .footer-lang button { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: .8rem; color: var(--ink-light); cursor: pointer; padding: 0; transition: color .2s; min-height: 24px; }
+    .footer-lang button.active { color: var(--ink); font-weight: 500; }
+    .footer-lang button:hover { color: var(--ink); }
+    .footer-lang span { color: var(--border); }
+
+    /* HERO ANIMATION */
+    .art-hero .art-hero-tag,
+    .art-hero .art-title,
+    .art-hero .art-subtitle,
+    .art-hero .art-meta-row { opacity: 0; transform: translateY(20px); animation: heroFadeIn .7s ease forwards; }
+    .art-hero .art-title { animation-delay: .05s; }
+    .art-hero .art-subtitle { animation-delay: .12s; }
+    .art-hero .art-meta-row { animation-delay: .2s; }
+    @keyframes heroFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* Tablet */
+    @media (max-width: 900px) {
+      .nav-cv span { display: none; }
+      .nav-cv { padding: .4rem .65rem; min-width: 36px; justify-content: center; }
+      .art-meta-divider { display: none; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+      .footer-lang { justify-content: center; }
+      .art-footer-nav { justify-content: center; text-align: center; }
+    }
+
+    /* Mobile pequeno */
+    @media (max-width: 420px) {
+      .art-section p { text-align: left; }
+      .callout p { text-align: left; }
+    }
+
+    /* Ultrawide */
+    @media (min-width: 1600px) {
+      :root { --pad-x: clamp(4rem, 8vw, 8rem); }
+    }
+  </style>
+  <script src="/translations.js"></script>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-left">
+    <a href="https://afranio.pm" class="nav-logo">AC</a>
+    <a href="https://afranio.pm#product-thinking" class="nav-back"><span data-i18n="nav.back">← Voltar ao portfólio</span></a>
+  </div>
+  <a href="https://afranio.pm/cv-afranio-cavalcante.pdf" download class="nav-cv" aria-label="Baixar CV" id="cvLink">
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 1v7M6.5 8l-2.5-2.5M6.5 8l2.5-2.5M1.5 10.5h10" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span data-i18n="nav.cv">Baixar CV</span>
+  </a>
+</nav>
+
+<div class="art-hero">
+  <p class="art-breadcrumb"><span data-i18n="breadcrumb">Product Thinking <span>·</span> Articles <span>·</span> 2026</span></p>
+  <span class="art-hero-tag" data-i18n="hero.tag">Estratégia &amp; IA</span>
+  <h1 class="art-title" data-i18n="hero.title">Dados viram respostas. <em>Respostas viram decisões.</em></h1>
+  <p class="art-subtitle" data-i18n="hero.subtitle">Um case de estratégia de produto e plano de MVP: como priorizei e desenhei um módulo de insights com IA para uma plataforma de benchmarking de CX — do discovery à decisão de build vs. partner.</p>
+  <div class="art-meta-row">
+    <div class="art-meta-author">
+      <img src="/images/afranio.jpg" alt="Afrânio Cavalcante" loading="lazy" />
+      <div>
+        <p class="art-meta-author-name">Afrânio Cavalcante</p>
+        <p class="art-meta-author-role">Product Manager</p>
+      </div>
+    </div>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-date" data-i18n="hero.date">Agosto de 2026</p>
+    <div class="art-meta-divider"></div>
+    <p class="art-meta-read" data-i18n="hero.read">9 min de leitura</p>
+  </div>
+</div>
+
+<div class="art-body">
+
+  <div class="art-section reveal">
+    <div class="callout callout-note">
+      <p data-i18n="note.p1">Este case é construído em cima de um problema estratégico real, da categoria de benchmarking competitivo de CX. Nome da empresa, nome do produto e alguns detalhes foram alterados por confidencialidade — o processo de discovery, a lógica de priorização e o raciocínio estratégico não foram.</p>
+    </div>
+    <p data-i18n="s1.p1">A Meridian CX é uma plataforma B2B que ajuda empresas a comparar sua experiência do cliente (CX) com a de concorrentes do mesmo setor. Ela cruza um painel de pesquisa proprietário com os dados de pesquisa e jornada de cada cliente — então o cliente não vê só se o NPS dele subiu, vê como esse movimento se compara ao de concorrentes específicos, em pontos específicos da jornada.</p>
+    <p data-i18n="s1.p2">Métricas internas respondem "estamos melhorando?", mas não "estamos fechando a distância, ou ficando para trás mesmo melhorando?". Sem benchmarking externo, uma empresa pode comemorar um NPS em alta enquanto um concorrente sobe mais rápido no mesmo ponto da jornada. A Meridian fecha esse ponto cego com dashboards, relatórios e um time de Customer Success que ajuda os clientes a interpretar os dados.</p>
+    <p data-i18n="s1.p3">E é exatamente essa última parte — um time de CS precisando traduzir dado em significado — que é o maior custo operacional da plataforma, e o ponto de partida deste case.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s2.label">Discovery</span>
+    <h2 data-i18n="s2.h2">Quatro personas, <em>quatro perguntas diferentes</em></h2>
+    <p data-i18n="s2.p1">O discovery — árvore de oportunidades e soluções a partir de entrevistas estruturadas, analytics de produto e dados de Customer Success — revelou quatro personas próximas do uso direto da plataforma, formando uma escada de causalidade em que cada nível organizacional persegue um tipo diferente de "por quê".</p>
+    <div class="art-table-wrap">
+      <table class="art-table">
+        <thead><tr><th data-i18n="s2.table.h1">Persona</th><th data-i18n="s2.table.h2">Job to be done</th></tr></thead>
+        <tbody>
+          <tr><td><strong data-i18n="s2.table.r1.p">Head de CX</strong></td><td data-i18n="s2.table.r1.j">Entender os gargalos da operação frente ao mercado e delegar a resolução do gap.</td></tr>
+          <tr><td><strong data-i18n="s2.table.r2.p">Gerente de CX</strong></td><td data-i18n="s2.table.r2.j">Entender onde o time está falhando e como os concorrentes superam isso.</td></tr>
+          <tr><td><strong data-i18n="s2.table.r3.p">Analista de CX</strong></td><td data-i18n="s2.table.r3.j">Acompanhar mercado e operação própria frente às metas do time.</td></tr>
+          <tr><td><strong data-i18n="s2.table.r4.p">Head de Vendas (ocasional)</strong></td><td data-i18n="s2.table.r4.j">Transformar gaps de concorrência em um discurso de venda mais afiado.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-i18n="s2.p2">A dor em comum é a mesma, só muda de forma: o cliente recebe o dado, mas transformá-lo em insight acionável exige esforço manual — quase sempre do time de CS. O Head não consegue correlacionar uma mudança de métrica com um evento de negócio; o Gerente não consegue cruzar métricas com o que o time realmente fez; o Analista não enxerga sua própria contribuição nem consegue recortar os dados de formas novas.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s3.label">Priorização</span>
+    <h2 data-i18n="s3.h2">Cinco soluções candidatas, <em>uma dependência escondida</em></h2>
+    <p data-i18n="s3.p1">O discovery gerou cinco soluções candidatas: registro de eventos de negócio (para o Head entender causalidade), ações vs. métricas para gestão de time (deliberadamente reduzido em escopo — sem virar um Asana ou Jira disfarçado), métricas customizadas self-service para analistas, insights de discurso de venda para o time comercial, e um módulo de insights com IA.</p>
+    <p data-i18n="s3.p2">A quinta solução é diferente das outras quatro: ela não está presa a uma persona ou dor específica — é uma capacidade sobre a qual as outras soluções passam a fazer mais sentido. Registro de eventos e métricas customizadas não são independentes do módulo de IA, são casos de uso que ficam muito mais valiosos quando existe uma camada que os interpreta.</p>
+    <div class="art-table-wrap">
+      <table class="art-table">
+        <thead><tr><th data-i18n="s3.table.h1">Solução</th><th data-i18n="s3.table.h2">Dor endereçada</th><th data-i18n="s3.table.h3">Decisão</th></tr></thead>
+        <tbody>
+          <tr><td><strong data-i18n="s3.table.r1.s">Módulo de Insights com IA</strong></td><td data-i18n="s3.table.r1.p">Transversal</td><td data-i18n="s3.table.r1.d">Agora (motor central)</td></tr>
+          <tr><td><strong data-i18n="s3.table.r2.s">Registro de eventos de negócio</strong></td><td data-i18n="s3.table.r2.p">Head (causalidade macro)</td><td data-i18n="s3.table.r2.d">Agora</td></tr>
+          <tr><td><strong data-i18n="s3.table.r3.s">Métricas customizadas</strong></td><td data-i18n="s3.table.r3.p">Analista (contribuição)</td><td data-i18n="s3.table.r3.d">Agora / depois</td></tr>
+          <tr><td><strong data-i18n="s3.table.r4.s">Ações vs. métricas</strong></td><td data-i18n="s3.table.r4.p">Gerente (ações do time)</td><td data-i18n="s3.table.r4.d">Depois</td></tr>
+          <tr><td><strong data-i18n="s3.table.r5.s">Insights de discurso de venda</strong></td><td data-i18n="s3.table.r5.p">Vendas (secundária)</td><td data-i18n="s3.table.r5.d">Cortado</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-i18n="s3.p3">A solução 4 foi cortada deste roadmap por atender uma persona secundária, tirar foco do loop central de CX, e porque os dados de concorrência necessários não estariam disponíveis na granularidade exigida.</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s4.label">Recomendação estratégica</span>
+    <h2 data-i18n="s4.h2">A IA não é o produto. <em>É a interface.</em></h2>
+    <p data-i18n="s4.p1">Dashboards customizados e métricas self-service foram considerados como soluções isoladas, mas os dois ainda exigem que o cliente já saiba o que procurar. A camada de IA resolve um problema diferente: reduzir a distância cognitiva entre "o que aconteceu?" e "por que isso pode ter acontecido, o que eu deveria investigar a seguir?".</p>
+    <div class="callout">
+      <p data-i18n="s4.callout">Dashboards respondem perguntas que o cliente já sabe fazer. Este módulo foi desenhado para levantar as perguntas que ele ainda não pensou em fazer.</p>
+    </div>
+    <p data-i18n="s4.p2">O MVP combina um log leve de eventos de negócio com uma camada de IA que lê os dados de pesquisa já existentes da Meridian e gera insights em linguagem natural com próximos passos sugeridos. Dashboards customizados e widgets de cálculo cruzado ficam para depois — deliberadamente fora do MVP, porque são esforço de engenharia pesado em UI que não testa se o cliente confia na interpretação da IA, que é a hipótese que o MVP existe para validar.</p>
+    <p data-i18n="s4.p3">O grupo piloto é selecionado por sinal explícito de demanda — clientes que já levantaram essa necessidade com o time de CS — combinado com diversidade vertical, para testar generalização desde o primeiro dia. Três riscos guiam a validação: se o cliente vai confiar na interpretação da IA sem exigir confirmação humana (desejabilidade), se a IA consegue gerar interpretações precisas sem alucinar correlações (viabilidade técnica), e se o cliente paga um upsell por essa capacidade ou espera que venha embutida (viabilidade de negócio).</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s5.label">Execução</span>
+    <h2 data-i18n="s5.h2">Métricas com <em>gate</em>, não calendário fixo</h2>
+    <p data-i18n="s5.p1">Acima das métricas de produto tem uma que funciona como norte: <strong data-i18n="s5.strong1">Time to Insight</strong>, o tempo que o cliente leva entre olhar um dado e agir sobre ele com confiança. Repeat usage, insight rate (o positivo ou negativo que o cliente dá a cada insight) e action rate sustentam esse número.</p>
+    <p data-i18n="s5.p2">A action rate exige duas peças pequenas de instrumentação: cada insight gerado pela IA recebe um ID único ligado ao dado ou evento de origem, e o produto expõe uma ação explícita que o usuário pode tomar sobre ele — por exemplo, "marcar como investigado" ou "criar evento de negócio a partir disso". O momento em que o insight aparece e o momento em que a ação (se houver) acontece são registrados com timestamp, e a taxa é acompanhada como tendência ao longo do piloto, não como uma foto única.</p>
+    <div class="callout">
+      <p data-i18n="s5.callout">Uma tendência de alta sinaliza confiança crescente na IA. Uma tendência estável ou em queda, especialmente com repeat usage saudável, é um alerta prévio de que o cliente está lendo os insights sem agir sobre eles.</p>
+    </div>
+    <p data-i18n="s5.p3">A decisão de build vs. partner é tratada em duas fases. No MVP, a arquitetura usa uma API de LLM de terceiros combinando busca estruturada — para métricas, onde alucinação é menos aceitável — com RAG especificamente para dados qualitativos (verbatims e texto aberto), sem custo inicial de infraestrutura. Na fase de escala, a decisão migra para um modelo open-source ajustado em infraestrutura provisionada, reduzindo custo por requisição em alto volume e mantendo o dado dentro de um perímetro controlado — relevante para verticais sensíveis como banking e saúde.</p>
+    <p data-i18n="s5.p4">O roadmap segue quatro fases com gate de decisão explícito em cada uma: <strong data-i18n="s5.strong2">validar</strong> (semanas 1–8, a IA gera insights em que o cliente confia?), <strong data-i18n="s5.strong3">piloto</strong> (semanas 9–12, 5–10 clientes em 2–3 verticais acham os insights úteis?), <strong data-i18n="s5.strong4">provar valor</strong> (meses 4–5, existe sinal de disposição a pagar?) e <strong data-i18n="s5.strong5">escalar</strong> (mês 6+, só depois do gate anterior aprovado).</p>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s6.label">Confiança e risco</span>
+    <h2 data-i18n="s6.h2">"A IA sugere, <em>o humano decide"</em></h2>
+    <p data-i18n="s6.p1">Todo insight mostra sua origem — qual dado, qual período, qual pergunta de pesquisa. O feedback de positivo/negativo alimenta um loop de melhoria contínua, e no início, uma amostra de insights passa por revisão humana antes de qualquer saída se tornar totalmente autônoma.</p>
+    <div class="art-table-wrap">
+      <table class="art-table">
+        <thead><tr><th data-i18n="s6.table.h1">Risco</th><th data-i18n="s6.table.h2">Mitigação</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="s6.table.r1.risk">Alucinação / correlação falsa</td><td data-i18n="s6.table.r1.mit">RAG ancorado em dados reais do cliente para dados qualitativos, busca estruturada para métricas, QA humano por amostragem</td></tr>
+          <tr><td data-i18n="s6.table.r2.risk">Resistência a confiar na IA</td><td data-i18n="s6.table.r2.mit">Modelo "IA sugere, humano decide". Todo insight mostra sua origem</td></tr>
+          <tr><td data-i18n="s6.table.r3.risk">Viés entre vertical/geografia</td><td data-i18n="s6.table.r3.mit">Taxonomia curada e auditorias segmentadas, não só agregadas</td></tr>
+          <tr><td data-i18n="s6.table.r4.risk">Custo de infraestrutura acima da receita</td><td data-i18n="s6.table.r4.mit">Estratégia faseada de build vs. partner: API sob demanda no MVP, infraestrutura dedicada só quando o volume justificar</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="art-section reveal">
+    <span class="art-section-label" data-i18n="s7.label">Resultado esperado</span>
+    <h2 data-i18n="s7.h2">Metas de hipótese, <em>não resultados anunciados</em></h2>
+    <p data-i18n="s7.p1">Esta proposta ainda não foi ao ar — os números abaixo são metas orientadas por hipótese que o piloto foi desenhado para testar contra os gates definidos, não resultados já alcançados. Eles existem para deixar concreto o que "bom o suficiente para escalar" significa, nas mesmas métricas definidas antes.</p>
+    <div class="art-table-wrap">
+      <table class="art-table">
+        <thead><tr><th data-i18n="s7.table.h1">Métrica</th><th data-i18n="s7.table.h2">Hoje</th><th data-i18n="s7.table.h3">Meta ao fim do piloto</th></tr></thead>
+        <tbody>
+          <tr><td><strong data-i18n="s7.table.r1.m">Time to Insight</strong></td><td data-i18n="s7.table.r1.b">Dias, esperando análise do time de CS</td><td data-i18n="s7.table.r1.t">Minutos, para as perguntas que a IA responde direto</td></tr>
+          <tr><td><strong data-i18n="s7.table.r2.m">Action rate</strong></td><td data-i18n="s7.table.r2.b">Não rastreada hoje</td><td data-i18n="s7.table.r2.t">20–30% dos insights geram uma ação registrada</td></tr>
+          <tr><td><strong data-i18n="s7.table.r3.m">Repeat usage</strong></td><td data-i18n="s7.table.r3.b">Dashboards checados no ritmo do relatório (ex. mensal)</td><td data-i18n="s7.table.r3.t">Engajamento semanal, independente do ciclo de relatório</td></tr>
+          <tr><td><strong data-i18n="s7.table.r4.m">Volume de chamados de CS</strong></td><td data-i18n="s7.table.r4.b">Contagem-base de tickets "por que isso mudou"</td><td data-i18n="s7.table.r4.t">Queda relevante na conta piloto</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-i18n="s7.p2">Se as metas não forem batidas, as próprias métricas apontam onde: insight rate alta com action rate baixa isola um problema de confiança a resolver antes de escrever mais código; insight rate baixa isola um problema de qualidade a resolver antes de levar o conceito a mais clientes. Essa leitura dupla é mais útil do que um veredito único de go/no-go — e é por isso que o roadmap é construído em torno de métricas com gate, não de uma data fixa de lançamento.</p>
+    <div class="callout">
+      <p data-i18n="s7.callout">No fim, isso não é sobre IA. É sobre fechar a distância entre o que o dado já sabe e o que o cliente realmente faz — a mesma distância que a proposta de valor nomeia desde o início.</p>
+    </div>
+
+    <div class="tags">
+      <span class="tag" data-i18n="tag1">Estratégia de Produto</span>
+      <span class="tag" data-i18n="tag2">IA &amp; Produto</span>
+      <span class="tag" data-i18n="tag3">Discovery</span>
+      <span class="tag" data-i18n="tag4">Priorização</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="art-footer-nav">
+  <a href="https://afranio.pm#product-thinking" data-i18n="nav.back.full">← Voltar ao portfólio</a>
+</div>
+
+<footer>
+  <p>© 2026 Afrânio Cavalcante</p>
+  <div class="footer-lang">
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')">English</button>
+    <span>·</span>
+    <button class="lang-btn" data-lang="pt" onclick="setLang('pt')">Português</button>
+  </div>
+  <div class="footer-right"><p data-i18n="footer.hosted">Hospedado no GitHub Pages</p></div>
+</footer>
+
+<script>
+  // CURSOR
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+    (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animRing); })();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.classList.add('hover'); ring.classList.add('hover'); });
+      el.addEventListener('mouseleave',()=>{ cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+    });
+  }
+
+  // NAV SCROLL
+  window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+
+  // REVEAL
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+</script>
+</body>
+</html>
