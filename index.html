@@ -306,7 +306,7 @@
     <li class="nav-dropdown">
       <a href="#product-thinking" data-section="product-thinking" data-i18n="nav.cases">Product Thinking</a>
       <ul class="nav-dropdown-menu">
-        <li><a href="#product-thinking" data-panel="work" data-i18n="pt.tab.work">Selected Work</a></li>
+        <li style="display:none"><a href="#product-thinking" data-panel="work" data-i18n="pt.tab.work">Selected Work</a></li>
         <li><a href="#product-thinking" data-panel="articles" data-i18n="pt.tab.articles">Articles</a></li>
       </ul>
     </li>
@@ -376,12 +376,12 @@
 <section id="product-thinking">
   <p class="section-label" data-i18n="pt.label">Product Thinking</p>
 
-  <div class="pt-tabs">
-    <button class="pt-tab active" data-panel="work" data-i18n="pt.tab.work">Selected Work</button>
-    <button class="pt-tab" data-panel="articles" data-i18n="pt.tab.articles">Articles</button>
+  <div class="pt-tabs" style="display:none">
+    <button class="pt-tab" data-panel="work" data-i18n="pt.tab.work">Selected Work</button>
+    <button class="pt-tab active" data-panel="articles" data-i18n="pt.tab.articles">Articles</button>
   </div>
 
-  <div class="pt-panel active" id="panel-work">
+  <div class="pt-panel" id="panel-work" style="display:none">
     <div class="pt-grid">
       <a href="cases/weni-chats.html" class="pt-card reveal">
         <div class="pt-card-image-wrap"><img src="images/Weni-chats.webp" alt="Weni Chats" class="pt-card-image" loading="lazy" /><div class="pt-card-overlay"><span data-i18n="cases.cta">Ver case →</span></div></div>
@@ -398,7 +398,7 @@
     </div>
   </div>
 
-  <div class="pt-panel" id="panel-articles">
+  <div class="pt-panel active" id="panel-articles">
     <div class="art-grid">
       <a href="articles/meridian-cx-ai-insights.html" class="art-item reveal">
         <div class="art-date-col">
